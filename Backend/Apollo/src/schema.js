@@ -2,16 +2,17 @@ const { gql } = require('apollo-server');
 
 const typeDefs = gql `
   type Query {
-    recipes: Recipe
+    recipes: [Recipe]
   }
   
   type Recipe {
-    id: String!
-    name: String!
-    yield: String
+    id: String
+    totalTime: Int
+    name: String
     ingredients: [String]
-    url: string
+    rating: Int
   }
+
 `;
 
-module.exports(typeDefs);
+module.exports = typeDefs;
