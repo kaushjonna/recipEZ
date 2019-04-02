@@ -1,0 +1,39 @@
+type User {
+  id: ID! @unique
+  firstName: String!
+  lastName: String!
+  email: String! @unique
+  password: String!
+}
+
+type Creation {
+  id: ID! @unique
+  userId: User
+  name: String!
+  description: String!
+
+}
+
+type Comment {
+  id: ID! @unique
+  userId: User!
+  text: String!
+}
+
+type Saved_Recipe {
+  id: ID! @unique
+  userId: User
+  recipeLink: String!
+}
+
+type Ingredient_Type {
+  id: ID! @unique
+  description: String! @unique
+
+}
+
+type Ingredient {
+  id: ID! @unique
+  ingredientTypeCode: Ingredient_Type
+  name: String!
+}

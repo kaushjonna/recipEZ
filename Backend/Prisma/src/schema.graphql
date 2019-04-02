@@ -1,0 +1,68 @@
+type Query{
+  # what to put here?
+}
+
+type Mutation {
+  signup(email: String!, password: String!, name: String!): AuthPayload
+  login(email: String!, password: String!): AuthPayload
+  updateComment(id: ID!, userId: User!, text: String!): Comment
+  removeComment(id: ID!): Comment
+  removeIngredient(id: ID!): Ingredient
+  removeSavedRecipe(id: ID!): Saved_Recipe
+  updateCreation(id: ID!, name: String!, description: String!): Creation
+  removeCreation(id: ID!): Creation
+}
+
+type User{
+  id: ID!
+  firstName: String!
+  lastName: String!
+  email: String!
+  creations: [Creation!]!
+  savedRecipes: [Saved_Recipe!]!
+}
+
+type Creation{
+  id: ID!
+  userId: User
+  name: String!
+  description: String!
+}
+
+type Comment {
+  id: ID!
+  userId: User!
+  text: String!
+}
+
+type Ingredient_Type {
+  id: ID!
+  description: String! 
+
+}
+
+type Ingredient {
+  id: ID!
+  ingredientTypeCode: Ingredient_Type
+  name: String!
+}
+
+type Saved_Recipe {
+  id: ID! 
+  userId: User
+  recipeLink: String!
+}
+
+type Subscription{
+  newCreation: Creation
+  newComment: Comment
+  newSavedRecipe: Saved_Recipe
+  newIngredient: Ingredient
+}
+
+
+enum LinkOrderByInput{
+  ingredients_ASC
+  createdAt_ASC
+  createdAt_DESC
+}
