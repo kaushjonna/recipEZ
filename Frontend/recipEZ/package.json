@@ -7,19 +7,20 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "expo": "^32.0.0",
-    "react": "16.5.0",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
     "apollo-boost": "^0.3.1",
     "apollo-cache-inmemory": "^1.5.1",
     "apollo-link-http": "^1.5.14",
+    "expo": "^32.0.0",
     "graphql": "^14.2.1",
     "graphql-tag": "^2.10.1",
     "node-fetch": "^2.3.0",
-    "react-apollo": "^2.5.3"
+    "react": "16.5.0",
+    "react-apollo": "^2.5.3",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz"
   },
   "devDependencies": {
-    "babel-preset-expo": "^5.0.0"
+    "babel-preset-expo": "^5.0.0",
+    "path": "^0.12.7"
   },
   "private": true
 }
