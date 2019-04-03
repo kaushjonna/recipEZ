@@ -813,6 +813,11 @@
     pouchdb-collections "^1.0.1"
     tiny-queue "^0.2.1"
 
+"@tensorflow-models/coco-ssd@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@tensorflow-models/coco-ssd/-/coco-ssd-1.0.0.tgz#29acf8c1d5aeb0bde5c0f9f87fb718e9f2b87bd1"
+  integrity sha512-j6fpkBWD8f8Qi0jgnJ4SM4uJr7bfq281rRyrUEszO8k/Jfzi6Mnsd9vTtBvv3SPTLYaJGsZHOBjzUsW4z1XWXg==
+
 "@types/fbemitter@^2.0.32":
   version "2.0.32"
   resolved "https://registry.yarnpkg.com/@types/fbemitter/-/fbemitter-2.0.32.tgz#8ed204da0f54e9c8eaec31b1eec91e25132d082c"
