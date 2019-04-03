@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
-import {createHttpLink } from "apollo-link-http";
+import { createHttpLink } from "apollo-link-http";
 import fetch from 'node-fetch';
 import gql from 'graphql-tag';
 

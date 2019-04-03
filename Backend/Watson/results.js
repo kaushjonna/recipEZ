@@ -1,6 +1,6 @@
 const watson = require("./watson");
 
-const heyDude = ['https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Banana-Single.jpg/1200px-Banana-Single.jpg', 'http://cdn1.medicalnewstoday.com/content/images/articles/304/304448/limes.jpg']
+const heyDude = ['https://dvineuncorked.files.wordpress.com/2011/09/orange.jpg']
 
 
 function getClassifications(imgLink) {
