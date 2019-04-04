@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, AppRegistry, ScrollView, View, Image, Button } from 'react-native';
+import { StyleSheet, AppRegistry, ScrollView, View, Image, Button, Text } from 'react-native';
 import { createStackNavigator, createAppContainer, StackViewTransitionConfigs } from "react-navigation";
 
 class SavedScreen extends Component {
@@ -10,10 +10,6 @@ class SavedScreen extends Component {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <Text>Saved Recipes Screen</Text>
-        <Button
-          title="Go back"
-          onPress={() => this.props.navigation.goBack()}
-        />
       </View>
     );
   }
