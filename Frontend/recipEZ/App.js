@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-
-import { StyleSheet, Text, Image, View, Alert, Title, Button, ScrollView } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { AppRegistry } from 'react-native';
 import { ApolloClient } from "apollo-client";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { createHttpLink } from "apollo-link-http";
@@ -8,7 +8,8 @@ import fetch from 'node-fetch';
 import gql from 'graphql-tag';
 import styled from 'styled-components/native'
 import { Accelerometer } from 'expo-sensors';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { Appbar, Provider as PaperProvider, Text } from 'react-native-paper';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 
 
@@ -35,58 +36,38 @@ import { Provider as PaperProvider } from 'react-native-paper';
 // //   done()
 // // }).then(console.log);
 
-const StyledView = styled.ScrollView`
-  background-color: papayawhip;
-  flex: 1;
-  padding: 50px;
-`
-const StyledButton = styled.Button`
-  background-color: #ff00cc;
-  border: 2px solid black;
-  border-radius: 3px;
-  font-size: 3px;
-`;
-
-class Greeting extends Component {
+export default class App extends Component {
   render() {
     return (
-      <View style={{ alignItems: 'center' }}>
-        <Text>Welcome, {this.props.name}!</Text>
-      </View>
-    );
-  }
-}
-
-class CallToAction extends Component {
-  render() {
-    return (
-      <View style={{ alignItems: 'center' }}>
-        <Text>Wanna Cook?</Text>
-        <Button title="Give Me a Recipe"></Button>
-        <Button title="I Have a Recipe"></Button>
-      </View>
+      <PaperProvider>
+        <Appbar style={styles.bottom}>
+          <Appbar.Action icon="home" onPress={() => alert('Pressed Home')} />
+          <Appbar.Action icon="person" onPress={() => alert('Pressed Profile')} />
+          <Appbar.Action icon="camera" onPress={() => alert('Pressed Camera')} />
+          <Appbar.Action icon="label" onPress={() => alert('Pressed Label')} />
+          <Appbar.Action icon="settings" onPress={() => alert('Pressed Settings')} />
+        </Appbar>
+      </PaperProvider>
     )
   }
 }
 
 
-export default class App extends Component {
-  render() {
-    let pic = {
-      uri: 'https://i.ibb.co/fCnnJGz/appLogo.png'
-    }
-    return (
-      <StyledView>
-        <Image source={require('./assets/appLogo.png')} style={{ resizeMode: 'contain', width: 300, height: 150 }}></Image>
-        <Greeting name="Nik"></Greeting>
-        <CallToAction></CallToAction>
-      </StyledView>
-    );
-  }
-}
+
+AppRegistry.registerComponent('main', () => Main);
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
 
+  },
+  bottom: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
 });
