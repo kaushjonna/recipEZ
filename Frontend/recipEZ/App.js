@@ -11,8 +11,130 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { createHttpLink } from "apollo-link-http";
 import fetch from 'node-fetch';
 import gql from 'graphql-tag';
-import { Camera } from 'expo-camera';
 
+
+import CameraParts from "./screens/camera"
+import HomeParts from "./screens/home"
+import LoginParts from "./screens/login"
+import ProfileParts from "./screens/profile"
+import SavedParts from "./screens/saved"
+import SearchParts from "./screens/search"
+import SettingsParts from "./screens/settings"
+
+class HomeScreen extends Component {
+  render() {
+    return (
+      <HomeParts />
+    )
+  }
+}
+
+class CameraScreen extends Component {
+  render() {
+    return (
+      <CameraParts />
+    )
+  }
+}
+
+class LoginScreen extends Component {
+  render() {
+    return (
+      <LoginParts />
+    )
+  }
+}
+
+class ProfileScreen extends Component {
+  render() {
+    return (
+      <ProfileParts />
+    )
+  }
+}
+
+class SavedScreen extends Component {
+  render() {
+    return (
+      <SavedParts />
+    )
+  }
+}
+
+class SettingsScreen extends Component {
+  render() {
+    return (
+      <SettingsParts />
+    )
+  }
+}
+
+class SearchScreen extends Component {
+  render() {
+    return (
+      <SearchParts />
+    )
+  }
+}
+
+const RootStack = createStackNavigator(
+  {
+    Home: HomeScreen,
+    Login: LoginScreen,
+    Profile: ProfileScreen,
+    Camera: CameraScreen,
+    Saved: SavedScreen,
+    Settings: SettingsScreen,
+    Search: SearchScreen,
+  },
+  {
+    initialRouteName: 'Home',
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: '#6200ee',
+        title: '#fff'
+      }
+    }
+  }
+);
+
+const AppContainer = createAppContainer(RootStack);
+
+export default class App extends Component {
+  render() {
+    return <AppContainer />;
+  }
+}
+
+AppRegistry.registerComponent('main', () => Main);
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#ff00cc',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+  },
+  bottom: {
+    flex: 1,
+    justifyContent: 'space-between',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+  },
+  top: {
+    backgroundColor: '#6200ee',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+
+  button: {
+    margin: 10
+  }
+
+});
 
 // class TopBanner extends Component {
 //   render() {
@@ -57,240 +179,6 @@ import { Camera } from 'expo-camera';
 //     )
 //   }
 // }
-
-class LogoTitle extends React.Component {
-  render() {
-    return (
-      <Image
-        source={require('./assets/appLogoWhite.png')}
-        style={{ width: 100, height: 40 }}
-      />
-    );
-  }
-}
-
-
-class HomeScreen extends Component {
-  static navigationOptions = {
-    headerTitle: <LogoTitle />,
-    headerRight: (
-      <Button
-        onPress={() => alert('This is a button!')}
-        icon="settings"
-        color="#fff"
-        title="Settings"
-      />
-    ),
-  };
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Home Screen</Text>
-        <Button
-          title="Go to Home"
-          onPress={() => this.props.navigation.popToTop()}
-        />
-        <Button
-          title="Go to Profile"
-          onPress={() => this.props.navigation.navigate('Profile')}
-        />
-        <Button
-          title="Go to Camera"
-          onPress={() => this.props.navigation.navigate('Camera')}
-        />
-        <Button
-          title="Go to Saved Recipes"
-          onPress={() => this.props.navigation.navigate('Saved')}
-        />
-        <Button
-          title="Go to Settings"
-          onPress={() => this.props.navigation.navigate('Settings')}
-        />
-        <Button
-          title="Go to Recipe Search"
-          onPress={() => this.props.navigation.navigate('Search')}
-        />
-        <Button
-          title="Go to Login"
-          onPress={() => this.props.navigation.navigate('Login')}
-        />
-        <Button
-          title="Go to Details (Test)"
-          onPress={() => this.props.navigation.navigate('Details')}
-        />
-
-      </View>
-    );
-  }
-}
-
-class ProfileScreen extends Component {
-  static navigationOptions = {
-    title: 'Your Profile',
-  };
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Profile Screen</Text>
-        <Button
-          title="Go back"
-          onPress={() => this.props.navigation.goBack()}
-        />
-      </View>
-    );
-  }
-}
-
-
-class CameraScreen extends Component {
-  static navigationOptions = {
-    title: 'Camera',
-  };
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Camera Screen</Text>
-        <Button
-          title="Go back"
-          onPress={() => this.props.navigation.goBack()}
-        />
-      </View>
-    );
-  }
-}
-
-class SavedScreen extends Component {
-  static navigationOptions = {
-    title: 'Saved Recipes',
-  };
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Saved Recipes Screen</Text>
-        <Button
-          title="Go back"
-          onPress={() => this.props.navigation.goBack()}
-        />
-      </View>
-    );
-  }
-}
-
-class SettingsScreen extends Component {
-  static navigationOptions = {
-    title: 'Settings',
-  };
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Settings Screen</Text>
-        <Button
-          title="Go back"
-          onPress={() => this.props.navigation.goBack()}
-        />
-      </View>
-    );
-  }
-}
-
-
-
-class RecipeSearchScreen extends Component {
-  static navigationOptions = {
-    title: 'Find a Recipe',
-  };
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Recipe Search Screen</Text>
-        <Button
-          title="Go back"
-          onPress={() => this.props.navigation.goBack()}
-        />
-      </View>
-    );
-  }
-}
-
-class LoginScreen extends Component {
-  static navigationOptions = {
-    title: 'Login',
-  };
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Login Screen</Text>
-        <Button
-          title="Go back"
-          onPress={() => this.props.navigation.goBack()}
-        />
-      </View>
-    );
-  }
-}
-
-
-
-
-
-class DetailsScreen extends Component {
-  static navigationOptions = {
-    title: 'Details',
-  };
-  render() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Details Screen</Text>
-        <Button
-          title="Go to Details... again"
-          onPress={() => this.props.navigation.push('Details')}
-        />
-        <Button
-          title="Go to Home"
-          onPress={() => this.props.navigation.navigate('Home')}
-        />
-        <Button
-          title="Go back"
-          onPress={() => this.props.navigation.goBack()}
-        />
-      </View>
-    );
-  }
-}
-
-
-
-
-const RootStack = createStackNavigator(
-  {
-    Home: HomeScreen,
-    Login: LoginScreen,
-    Profile: ProfileScreen,
-    Camera: CameraScreen,
-    Saved: SavedScreen,
-    Settings: SettingsScreen,
-    Details: DetailsScreen,
-    Search: RecipeSearchScreen,
-  },
-  {
-    initialRouteName: 'Home',
-    defaultNavigationOptions: {
-      headerStyle: {
-        backgroundColor: '#6200ee',
-        title: '#fff'
-      }
-    }
-  }
-);
-
-const AppContainer = createAppContainer(RootStack);
-
-export default class App extends React.Component {
-  render() {
-    return <AppContainer />;
-  }
-}
-
 // export default class App extends Component {
 //   render() {
 //     return (
@@ -313,37 +201,6 @@ export default class App extends React.Component {
 //   }
 // }
 
-
-
-AppRegistry.registerComponent('main', () => Main);
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ff00cc',
-    alignItems: 'center',
-    justifyContent: 'center',
-
-  },
-  bottom: {
-    flex: 1,
-    justifyContent: 'space-between',
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  top: {
-    backgroundColor: '#6200ee',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-
-  button: {
-    margin: 10
-  }
-
-});
 
 
 // GQL/Apollo stuff
