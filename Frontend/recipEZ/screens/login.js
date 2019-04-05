@@ -16,6 +16,7 @@ class LoginScreen extends Component {
 
     return (
       <View>
+
         <Image
           style={{ width: 300, height: 120 }}
           source={require('../assets/appLogo.png')}

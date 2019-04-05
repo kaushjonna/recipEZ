@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, AppRegistry, ScrollView, View, Image } from 'react-native';
 import { Avatar, Title, Text, Button, Surface, Paragraph, Divider } from 'react-native-paper'
 import { createStackNavigator, createAppContainer, StackViewTransitionConfigs } from "react-navigation";
+import { withNavigation, } from "react-navigation";
 
 class CreationWrapper extends Component {
   render() {
@@ -25,7 +26,7 @@ class ProfileScreen extends Component {
   };
   render() {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <ScrollView>
         <Avatar.Image size={100} source={require('../assets/avatar.png')} />
         <Title>Nik's Profile</Title>
         <Paragraph>Bio: Hey, Nik here. Big fan of cooking. Especially when I know what to make with all the groceries I buy!</Paragraph>
@@ -38,7 +39,7 @@ class ProfileScreen extends Component {
         <CreationWrapper />
         <CreationWrapper />
         <CreationWrapper />
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -54,4 +55,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default ProfileScreen;
+export default withNavigation(ProfileScreen);

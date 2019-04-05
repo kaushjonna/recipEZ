@@ -22,12 +22,12 @@ class SavedScreen extends Component {
   };
   render() {
     return (
-      <View >
+      <ScrollView >
         <Title>Saved Recipes</Title>
         <ListItemWrapper />
         <ListItemWrapper />
         <ListItemWrapper />
-      </View>
+      </ScrollView>
     );
   }
 }

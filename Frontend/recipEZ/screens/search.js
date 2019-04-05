@@ -14,14 +14,14 @@ class RecipeSearchScreen extends Component {
   render() {
     const { firstQuery } = this.setState;
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <ScrollView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <Title>Recipe Search Screen</Title>
         <Searchbar
           placeholder="Search"
           onChangeText={query => { this.setState({ firstQuery: query }); }}
           value={firstQuery}
         />
-      </View>
+      </ScrollView>
     );
   }
 }

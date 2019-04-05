@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { AppRegistry } from 'react-native';
-import { createAppContainer, createBottomTabNavigator } from "react-navigation";
+import { AppRegistry, Button } from 'react-native';
+import { createAppContainer, createBottomTabNavigator, createStackNavigator } from "react-navigation";
 import { Appbar, Provider as PaperProvider, Text, Title, Paragraph, ActivityIndicator, Card, ScrollView, View, Image } from 'react-native-paper';
 import icons from 'react-native-vector-icons'
+
 
 // GQL + Apollo
 import { Accelerometer } from 'expo-sensors';
@@ -20,7 +21,8 @@ import ProfileParts from "./screens/profile"
 import SavedParts from "./screens/saved"
 import SearchParts from "./screens/search"
 import SettingsParts from "./screens/settings"
-
+import IHaveParts from "./screens/iHave"
+import ModalScreen from "./screens/myModal"
 
 class HomeScreen extends Component {
   render() {
@@ -78,6 +80,27 @@ class SearchScreen extends Component {
   }
 }
 
+class IHaveScreen extends Component {
+  render() {
+    return (
+      <IHaveParts />
+    )
+  }
+}
+
+class LogoTitle extends React.Component {
+  render() {
+    return (
+      <Image
+        source={require('./assets/appLogoWhite.png')}
+        style={{ width: 200, height: 80 }}
+      />
+    );
+  }
+}
+
+
+
 const RootStack = createBottomTabNavigator(
   {
     Home: { screen: HomeScreen },
@@ -85,6 +108,8 @@ const RootStack = createBottomTabNavigator(
     EZCam: { screen: CameraScreen },
     Saved: { screen: SavedScreen },
     Settings: { screen: SettingsScreen },
+    Have: { screen: IHaveScreen },
+    Login: { screen: LoginScreen },
   },
   {
     initialRouteName: 'Home',
@@ -101,7 +126,22 @@ const RootStack = createBottomTabNavigator(
   }
 );
 
-const AppContainer = createAppContainer(RootStack);
+const OtherStack = createStackNavigator(
+  {
+    Main: {
+      screen: RootStack,
+    },
+    MyModal: {
+      screen: ModalScreen,
+    },
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none',
+  }
+);
+
+const AppContainer = createAppContainer(OtherStack);
 
 export default class App extends Component {
   render() {
@@ -110,7 +150,13 @@ export default class App extends Component {
         <Appbar.Header>
           <Appbar.Content title="RecipEZ"></Appbar.Content>
         </Appbar.Header>
+        <Button
+          onPress={() => this.props.navigation.navigate('MyModal')}
+          title="Info"
+          color="#000000"
+        />
         <AppContainer />
+
       </PaperProvider>
     );
   }
@@ -119,72 +165,6 @@ export default class App extends Component {
 
 
 AppRegistry.registerComponent('main', () => Main);
-
-
-// class TopBanner extends Component {
-//   render() {
-//     return (
-//       <View style={{ backgroundColor: "#6200ee", paddingLeft: 100, paddingTop: 40, paddingBottom: 20 }}>
-//         <Image source={require('./assets/appLogoWhite.png')} ></Image>
-//       </View>
-//     )
-//   }
-// }
-
-// class Loading extends Component {
-//   render() {
-//     return (
-//       <PaperProvider>
-//         <ActivityIndicator animating={true} />
-//       </PaperProvider>
-//     )
-//   }
-// }
-
-// class Intro extends Component {
-//   render() {
-//     return (
-//       <PaperProvider>
-//         <Title>
-//           Welcome, {this.props.name}!
-//         </Title>
-//       </PaperProvider>
-//     )
-//   }
-// }
-
-// class CallToAction extends Component {
-//   render() {
-//     return (
-//       <PaperProvider style={styles.container}>
-//         <Title style={{ textAlign: 'center' }}>Wanna Cook?</Title>
-//         <Button style={styles.button} mode="contained" onPress={() => alert('Find Me A Recipe Pressed')}>Find Me a Recipe</Button>
-//         <Button style={styles.button} mode="contained" onPress={() => alert('Find Me A Recipe Pressed')}>I Have a Recipe</Button>
-//       </PaperProvider>
-//     )
-//   }
-// }
-// export default class App extends Component {
-//   render() {
-//     return (
-//       <PaperProvider>
-//         <TopBanner></TopBanner>
-//         <ScrollView>
-//           <Intro name="Nik"></Intro>
-//           <CallToAction></CallToAction>
-//           <Loading></Loading>
-//         </ScrollView>
-//         <Appbar style={styles.bottom}>
-//           <Appbar.Action icon="home" onPress={() => alert('Pressed Home')} />
-//           <Appbar.Action icon="person" onPress={() => alert('Pressed Profile')} />
-//           <Appbar.Action icon="camera" onPress={() => alert('Pressed Camera')} />
-//           <Appbar.Action icon="save" onPress={() => alert('Pressed Saved')} />
-//           <Appbar.Action icon="settings" onPress={() => alert('Pressed Settings')} />
-//         </Appbar>
-//       </PaperProvider>
-//     )
-//   }
-// }
 
 
 
@@ -213,6 +193,4 @@ AppRegistry.registerComponent('main', () => Main);
 // //   done()
 // // }).then(console.log);
 
-
-// old app component stuff
 

@@ -1,43 +1,80 @@
 import React, { Component } from 'react';
-import { StyleSheet, AppRegistry, ScrollView, View, Image, Text } from 'react-native';
+import { StyleSheet, AppRegistry, ScrollView, View, Image, Text, Button } from 'react-native';
 import { withNavigation, } from "react-navigation";
-import { Title, Button, TextInput } from 'react-native-paper'
+import { Title, TextInput, Card, Paragraph, Avatar } from 'react-native-paper'
 
-class HomeParts extends Component {
+class Greeting extends Component {
   render() {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Home Screen</Text>
-        <Button
-          title="Go to Home"
-          onPress={() => this.props.navigation.popToTop()}
-        />
-        <Button
-          title="Go to Profile"
-          onPress={() => this.props.navigation.navigate('Profile')}
-        />
-        <Button
-          title="Go to Camera"
-          onPress={() => this.props.navigation.navigate('Camera')}
-        />
-        <Button
-          title="Go to Saved Recipes"
-          onPress={() => this.props.navigation.navigate('Saved')}
-        />
-        <Button
-          title="Go to Settings"
-          onPress={() => this.props.navigation.navigate('Settings')}
-        />
-        <Button
-          title="Go to Recipe Search"
-          onPress={() => this.props.navigation.navigate('Search')}
-        />
-        <Button
-          title="Go to Login"
-          onPress={() => this.props.navigation.navigate('Login')}
-        />
+      <Card>
+        <Card.Content>
+          <Title>What's New</Title>
+          <Paragraph>Bruh try this chicken cordon BLEU</Paragraph>
+        </Card.Content>
+      </Card>
+    );
+  }
+}
 
-      </View>
+class FriendActivity extends Component {
+  render() {
+    return (
+      <Card>
+        <Card.Content>
+          <Title>Your Friends Creations</Title>
+          <Paragraph>Add a friend to get started</Paragraph>
+        </Card.Content>
+      </Card>
+    );
+  }
+}
+
+class Misc extends Component {
+  render() {
+    return (
+      <Card>
+        <Card.Content>
+          <Title>Miscellaneous</Title>
+          <Paragraph>Add what we want here...</Paragraph>
+        </Card.Content>
+      </Card>
+    );
+  }
+}
+
+
+class HomeParts extends Component {
+  static navigationOptions = ({ navigation }) => {
+    const params = navigation.state.params || {};
+
+    return {
+      headerTitle: <LogoTitle />,
+      headerLeft: (
+        <Button
+          onPress={() => navigation.navigate('MyModal')}
+          title="Info"
+          color="#fff"
+        />
+      ),
+      headerRight: (
+        <Button onPress={params.increaseCount} title="+1" color="#fff" />
+      ),
+    };
+  };
+  render() {
+    return (
+      <ScrollView>
+        <Image source={require('../assets/appLogo.png')} style={{ width: 300, height: 120 }}></Image>
+        <Text>Home Screen</Text>
+        <Greeting />
+        <FriendActivity />
+        <Misc />
+        <Button
+          onPress={() => this.props.navigation.navigate('MyModal')}
+          title="Info"
+          color="#000000"
+        />
+      </ScrollView>
     );
   }
 }
