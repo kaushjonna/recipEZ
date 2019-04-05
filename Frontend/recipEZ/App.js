@@ -12,6 +12,7 @@ import fetch from 'node-fetch';
 import gql from 'graphql-tag';
 
 // Screens
+import HomeParts from "./screens/home"
 import CameraParts from "./screens/camera"
 import LoginParts from "./screens/login"
 import ProfileParts from "./screens/profile"
@@ -19,6 +20,14 @@ import SavedParts from "./screens/saved"
 import SearchParts from "./screens/search"
 import SettingsParts from "./screens/settings"
 
+
+class HomeScreen extends Component {
+  render() {
+    return (
+      <HomeParts />
+    )
+  }
+}
 
 class CameraScreen extends Component {
   render() {
@@ -68,48 +77,19 @@ class SearchScreen extends Component {
   }
 }
 
-class HomeScreen extends Component {
-  static navigationOptions = {
-    headerTitle: <Image
-      source={require('./assets/appLogoWhite.png')}
-      style={{ width: 100, height: 40 }}
-    />
-  };
+class BottomNav extends Component {
   render() {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Text>Home Screen</Text>
-        <Button
-          title="Go to Home"
-          onPress={() => this.props.navigation.popToTop()}
-        />
-        <Button
-          title="Go to Profile"
-          onPress={() => this.props.navigation.navigate('Profile')}
-        />
-        <Button
-          title="Go to Camera"
-          onPress={() => this.props.navigation.navigate('Camera')}
-        />
-        <Button
-          title="Go to Saved Recipes"
-          onPress={() => this.props.navigation.navigate('Saved')}
-        />
-        <Button
-          title="Go to Settings"
-          onPress={() => this.props.navigation.navigate('Settings')}
-        />
-        <Button
-          title="Go to Recipe Search"
-          onPress={() => this.props.navigation.navigate('Search')}
-        />
-        <Button
-          title="Go to Login"
-          onPress={() => this.props.navigation.navigate('Login')}
-        />
-
+      <View>
+        <Appbar style={styles.bottom}>
+          <Appbar.Action icon="home" onPress={() => alert('Pressed Home')} />
+          <Appbar.Action icon="person" onPress={() => alert('Pressed Profile')} />
+          <Appbar.Action icon="camera-alt" onPress={() => alert('Pressed Camera')} />
+          <Appbar.Action icon="save" onPress={() => alert('Pressed Saved')} />
+          <Appbar.Action icon="settings" onPress={() => alert('Pressed Settings')} />
+        </Appbar>
       </View>
-    );
+    )
   }
 }
 
@@ -137,10 +117,23 @@ const RootStack = createStackNavigator(
 const AppContainer = createAppContainer(RootStack);
 
 export default class App extends Component {
+  static navigationOptions = {
+    headerTitle: <Image
+      source={require('./assets/appLogoWhite.png')}
+      style={{ width: 100, height: 40 }}
+    />
+  };
   render() {
-    return <AppContainer />;
+    return (
+      <PaperProvider>
+        <AppContainer />
+        <BottomNav />
+      </PaperProvider>
+    );
   }
 }
+
+
 
 AppRegistry.registerComponent('main', () => Main);
 
