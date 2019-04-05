@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, AppRegistry, ScrollView, View, Image, Button, Text } from 'react-native';
+import { StyleSheet, AppRegistry, ScrollView, View, Image, Text } from 'react-native';
 import { withNavigation, } from "react-navigation";
+import { Title, Button, TextInput } from 'react-native-paper'
 
 class HomeParts extends Component {
   render() {

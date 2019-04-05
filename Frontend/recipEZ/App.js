@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { StyleSheet, AppRegistry, ScrollView, View, Image, Button } from 'react-native';
-import { createStackNavigator, createAppContainer, StackViewTransitionConfigs } from "react-navigation";
-import { Appbar, Provider as PaperProvider, Text, Title, Paragraph, ActivityIndicator, Card } from 'react-native-paper';
+import { AppRegistry } from 'react-native';
+import { createAppContainer, createBottomTabNavigator } from "react-navigation";
+import { Appbar, Provider as PaperProvider, Text, Title, Paragraph, ActivityIndicator, Card, ScrollView, View, Image } from 'react-native-paper';
+import icons from 'react-native-vector-icons'
 
 // GQL + Apollo
 import { Accelerometer } from 'expo-sensors';
@@ -77,38 +78,24 @@ class SearchScreen extends Component {
   }
 }
 
-class BottomNav extends Component {
-  render() {
-    return (
-      <View>
-        <Appbar style={styles.bottom}>
-          <Appbar.Action icon="home" onPress={() => alert('Pressed Home')} />
-          <Appbar.Action icon="person" onPress={() => alert('Pressed Profile')} />
-          <Appbar.Action icon="camera-alt" onPress={() => alert('Pressed Camera')} />
-          <Appbar.Action icon="save" onPress={() => alert('Pressed Saved')} />
-          <Appbar.Action icon="settings" onPress={() => alert('Pressed Settings')} />
-        </Appbar>
-      </View>
-    )
-  }
-}
-
-const RootStack = createStackNavigator(
+const RootStack = createBottomTabNavigator(
   {
-    Home: HomeScreen,
-    Login: LoginScreen,
-    Profile: ProfileScreen,
-    Camera: CameraScreen,
-    Saved: SavedScreen,
-    Settings: SettingsScreen,
-    Search: SearchScreen,
+    Home: { screen: HomeScreen },
+    Profile: { screen: ProfileScreen },
+    Camera: { screen: CameraScreen },
+    Saved: { screen: SavedScreen },
+    Settings: { screen: SettingsScreen },
   },
   {
     initialRouteName: 'Home',
-    defaultNavigationOptions: {
-      headerStyle: {
+    tabBarOptions: {
+      activeTintColor: '#ffffff',
+      inactiveTintColor: '#d3d3d3',
+      labelStyle: {
+        fontSize: 12,
+      },
+      style: {
         backgroundColor: '#6200ee',
-        title: '#fff'
       }
     }
   }
@@ -117,17 +104,10 @@ const RootStack = createStackNavigator(
 const AppContainer = createAppContainer(RootStack);
 
 export default class App extends Component {
-  static navigationOptions = {
-    headerTitle: <Image
-      source={require('./assets/appLogoWhite.png')}
-      style={{ width: 100, height: 40 }}
-    />
-  };
   render() {
     return (
       <PaperProvider>
         <AppContainer />
-        <BottomNav />
       </PaperProvider>
     );
   }
@@ -137,33 +117,6 @@ export default class App extends Component {
 
 AppRegistry.registerComponent('main', () => Main);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ff00cc',
-    alignItems: 'center',
-    justifyContent: 'center',
-
-  },
-  bottom: {
-    flex: 1,
-    justifyContent: 'space-between',
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    bottom: 0,
-  },
-  top: {
-    backgroundColor: '#6200ee',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-
-  button: {
-    margin: 10
-  }
-
-});
 
 // class TopBanner extends Component {
 //   render() {
