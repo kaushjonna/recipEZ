@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, AppRegistry, ScrollView, View, Image, Button, Text } from 'react-native';
-import { createStackNavigator, createAppContainer, StackViewTransitionConfigs } from "react-navigation";
+import { View, ScrollView } from 'react-native';
 import { List, Title } from 'react-native-paper';
 class SettingsScreen extends Component {
   static navigationOptions = {
@@ -8,7 +7,7 @@ class SettingsScreen extends Component {
   };
   render() {
     return (
-      <View>
+      <ScrollView>
         <Title>Settings</Title>
         <List.Section>
           <List.Subheader>Recipe Settings</List.Subheader>
@@ -36,8 +35,7 @@ class SettingsScreen extends Component {
             left={() => <List.Icon color="#000" icon="clear" />}
           />
         </List.Section>
-
-      </View>
+      </ScrollView>
     );
   }
 }

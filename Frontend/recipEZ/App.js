@@ -82,7 +82,7 @@ const RootStack = createBottomTabNavigator(
   {
     Home: { screen: HomeScreen },
     Profile: { screen: ProfileScreen },
-    Camera: { screen: CameraScreen },
+    EZCam: { screen: CameraScreen },
     Saved: { screen: SavedScreen },
     Settings: { screen: SettingsScreen },
   },
@@ -107,6 +107,9 @@ export default class App extends Component {
   render() {
     return (
       <PaperProvider>
+        <Appbar.Header>
+          <Appbar.Content title="RecipEZ"></Appbar.Content>
+        </Appbar.Header>
         <AppContainer />
       </PaperProvider>
     );
