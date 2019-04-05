@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, AppRegistry, ScrollView, View, Image, Button } from 'react-native';
 import { createStackNavigator, createAppContainer, StackViewTransitionConfigs } from "react-navigation";
-
-
 import { Appbar, Provider as PaperProvider, Text, Title, Paragraph, ActivityIndicator, Card } from 'react-native-paper';
 
 // GQL + Apollo
@@ -109,16 +107,11 @@ class HomeScreen extends Component {
           title="Go to Login"
           onPress={() => this.props.navigation.navigate('Login')}
         />
-        <Button
-          title="Go to Details (Test)"
-          onPress={() => this.props.navigation.navigate('Details')}
-        />
 
       </View>
     );
   }
 }
-
 
 const RootStack = createStackNavigator(
   {
