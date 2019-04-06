@@ -35,10 +35,16 @@ class ProfileScreen extends Component {
           onPress={() => console.log('To be implemented... LOL')}>
           Edit Profile</Button>
         <Divider />
-        <Title>Nik's Creations (5)</Title>
-        <CreationWrapper />
-        <CreationWrapper />
-        <CreationWrapper />
+        <Title>Nik's Creations (3)</Title>
+        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
+          <CreationWrapper />
+          <CreationWrapper />
+          <CreationWrapper />
+        </View>
+        <Button icon="edit"
+          mode="contained"
+          onPress={() => console.log('To be implemented... LOL')}>
+          Add a Creation</Button>
       </ScrollView>
     );
   }

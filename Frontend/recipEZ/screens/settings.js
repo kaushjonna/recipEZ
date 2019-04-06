@@ -13,26 +13,23 @@ class SettingsScreen extends Component {
           <List.Subheader>Recipe Settings</List.Subheader>
           <List.Item
             title="Configure Dietary Choices"
-            left={() => <List.Icon icon="folder" />}
+            left={() => <List.Icon icon="local-dining" />}
           />
           <List.Item
             title="Clear Search History"
-            left={() => <List.Icon color="#000" icon="folder" />}
+            left={() => <List.Icon icon="clear-all" />}
           />
-        </List.Section>
-        <List.Section>
-          <List.Subheader>Account Settings</List.Subheader>
           <List.Item
             title="Change Password"
-            left={() => <List.Icon icon="folder" />}
+            left={() => <List.Icon icon="lock" />}
           />
           <List.Item
             title="Log Out"
-            left={() => <List.Icon color="#000" icon="folder" />}
+            left={() => <List.Icon icon="input" />}
           />
           <List.Item
             title="Delete Account"
-            left={() => <List.Icon color="#000" icon="clear" />}
+            left={() => <List.Icon icon="delete-forever" />}
           />
         </List.Section>
       </ScrollView>

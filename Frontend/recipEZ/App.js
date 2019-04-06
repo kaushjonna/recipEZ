@@ -21,8 +21,8 @@ import ProfileParts from "./screens/profile"
 import SavedParts from "./screens/saved"
 import SearchParts from "./screens/search"
 import SettingsParts from "./screens/settings"
-import IHaveParts from "./screens/iHave"
-import ModalScreen from "./screens/myModal"
+import ModalScreen from "./screens/recipeModal"
+import Detected from "./screens/detectedIngredients"
 
 class HomeScreen extends Component {
   render() {
@@ -133,6 +133,7 @@ const OtherStack = createStackNavigator(
     },
     MyModal: {
       screen: ModalScreen,
+      detected: Detected,
     },
   },
   {
@@ -150,13 +151,7 @@ export default class App extends Component {
         <Appbar.Header>
           <Appbar.Content title="RecipEZ"></Appbar.Content>
         </Appbar.Header>
-        <Button
-          onPress={() => this.props.navigation.navigate('MyModal')}
-          title="Info"
-          color="#000000"
-        />
         <AppContainer />
-
       </PaperProvider>
     );
   }
