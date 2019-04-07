@@ -6,12 +6,13 @@ import icons from 'react-native-vector-icons'
 
 
 // GQL + Apollo
-import { Accelerometer } from 'expo-sensors';
-import { ApolloClient } from "apollo-client";
+import { ApolloProvider } from 'react-apollo';
+import { ApolloClient } from "apollo-boost";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { createHttpLink } from "apollo-link-http";
 import fetch from 'node-fetch';
 import gql from 'graphql-tag';
+
 
 
 // Screens
@@ -25,6 +26,18 @@ import SettingsParts from "./screens/settings"
 import ModalScreen from "./screens/recipeModal"
 import Detected from "./screens/detectedIngredients"
 import Found from "./screens/foundRecipes"
+
+// GQL/Apollo stuff
+
+const client = new ApolloClient({
+  link: createHttpLink({
+    uri: "http://localhost:4000/",
+    fetch: fetch
+  }),
+  cache: new InMemoryCache()
+});
+
+
 
 class HomeScreen extends Component {
   render() {
@@ -175,12 +188,14 @@ const AppContainer = createAppContainer(OtherStack);
 export default class App extends Component {
   render() {
     return (
-      <PaperProvider>
-        <Appbar.Header>
-          <Appbar.Content title="RecipEZ"></Appbar.Content>
-        </Appbar.Header>
-        <AppContainer />
-      </PaperProvider>
+      <ApolloProvider client={client}>
+        <PaperProvider>
+          <Appbar.Header>
+            <Appbar.Content title="RecipEZ"></Appbar.Content>
+          </Appbar.Header>
+          <AppContainer />
+        </PaperProvider>
+      </ApolloProvider>
     );
   }
 }
@@ -191,15 +206,7 @@ AppRegistry.registerComponent('main', () => Main);
 
 
 
-// GQL/Apollo stuff
 
-// const client = new ApolloClient({
-//   link: createHttpLink({
-//     uri: "http://localhost:4000/",
-//     fetch: fetch
-//   }),
-//   cache: new InMemoryCache()
-// });
 
 
 // const query = gql`

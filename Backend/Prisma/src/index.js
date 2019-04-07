@@ -10,6 +10,7 @@ const Ingredient_Type = require('./resolvers/Ingredient_Type')
 const Ingredient = require('./resolvers/Ingredient')
 const Saved_Recipe = require('./resolvers/Saved_Recipe')
 const User = require('./resolvers/User')
+const schema = require('./schema.graphql');
 
 
 
@@ -26,7 +27,7 @@ const resolvers = {
 }
 
 const server = new GraphQLServer({
-  typeDefs: './src/schema.graphql',
+  typeDefs: schema,
   resolvers,
   context: request => {
     return {
