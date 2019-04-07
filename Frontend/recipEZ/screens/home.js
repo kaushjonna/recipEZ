@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, AppRegistry, ScrollView, View, Image, Text, Button } from 'react-native';
 import { withNavigation, } from "react-navigation";
-import { Title, TextInput, Card, Paragraph, Avatar } from 'react-native-paper'
+import { Title, TextInput, Card, Paragraph, Avatar, List } from 'react-native-paper'
 
 class Greeting extends Component {
   render() {
@@ -9,23 +9,12 @@ class Greeting extends Component {
       <Card>
         <Card.Content>
           <Title>Hey, using RecipEZ is E-Z!</Title>
-          <List>
-            <List.Item
-              title="1. Lay out your ingredients "
-              left={props => <List.Icon {...props} icon="local-dining" />}
-            />
-            <List.Item
-              title="2. Open the EZCam"
-              left={props => <List.Icon {...props} icon="add-a-photo" />}
-            />
-            <List.Item
-              title="3. Find a Recipe that you can make based on your ingredients!"
-              left={props => <List.Icon {...props} icon="fastfood" />}
-            />
-          </List>
+          <Text>1. Lay out your ingredients </Text>
+          <Text>2. Open the EZCam</Text>
+          <Text>3. Find a Recipe that you can make based on your ingredients! </Text>
           <Text>Click on the EZCam to get started.</Text>
         </Card.Content>
-      </Card>
+      </Card >
     );
   }
 }

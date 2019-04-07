@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, Button } from 'react-native';
 import { createAppContainer, createBottomTabNavigator, createStackNavigator } from "react-navigation";
-import { Appbar, Provider as PaperProvider, Text, Title, Paragraph, ActivityIndicator, Card, ScrollView, View, Image } from 'react-native-paper';
+import { Appbar, Provider as PaperProvider, Text, Title, Paragraph, ActivityIndicator, Card, ScrollView, View, Image, List } from 'react-native-paper';
 import icons from 'react-native-vector-icons'
 
 
@@ -133,7 +133,7 @@ const RootStack = createBottomTabNavigator(
     Saved: { screen: SavedScreen },
     Settings: { screen: SettingsScreen },
     Login: { screen: LoginScreen },
-    Search: { screen: SearchStack },
+    Search: { screen: SearchScreen },
   },
   {
     initialRouteName: 'Home',
