@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { Component } from 'react';
 import { AppRegistry, Button } from 'react-native';
 import { createAppContainer, createBottomTabNavigator, createStackNavigator } from "react-navigation";
@@ -12,6 +13,15 @@ import { InMemoryCache } from "apollo-cache-inmemory";
 import { createHttpLink } from "apollo-link-http";
 import fetch from 'node-fetch';
 import gql from 'graphql-tag';
+=======
+import React, { Component, Fragment } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import {ApolloProvider, Query} from "react-apollo";
+import { ApolloClient } from "apollo-client";
+import {createHttpLink} from "apollo-link-http";
+import {InMemoryCache} from "apollo-cache-inmemory";
+import gql from "graphql-tag";
+>>>>>>> 9968914ab6ab1fb3aba0e7e0fca3cbf7aa37495c
 
 // Screens
 import HomeParts from "./screens/home"
@@ -25,6 +35,7 @@ import ModalScreen from "./screens/recipeModal"
 import Detected from "./screens/detectedIngredients"
 import Found from "./screens/foundRecipes"
 
+<<<<<<< HEAD
 class HomeScreen extends Component {
   render() {
     return (
@@ -96,6 +107,45 @@ class LogoTitle extends React.Component {
         source={require('./assets/appLogoWhite.png')}
         style={{ width: 200, height: 80 }}
       />
+=======
+const getRecipes = gql`
+    query {
+        recipes {
+            id
+        }
+    }
+`;
+
+const client = new ApolloClient({
+  link: createHttpLink({
+    uri: "http://localhost:4000/",
+    fetch: fetch
+  }),
+  cache: new InMemoryCache()
+});
+
+export default class App extends Component {
+  render() {
+    return (
+      <ApolloProvider client={client} query={getRecipes}>
+        <View style={styles.container}>
+          <Query query={getRecipes}>
+            {({ data, loading, error }) => {
+              if (loading) return <Text>Loading</Text>;
+              if (error) return <Text>ERROR</Text>;
+              if (data) {
+                return data.recipes.map(item => {
+                  <Text>
+                    {item.id}
+                    {item.ingredients}
+                  </Text>
+                })
+              }
+            }}
+          </Query>
+        </View>
+      </ApolloProvider>
+>>>>>>> 9968914ab6ab1fb3aba0e7e0fca3cbf7aa37495c
     );
   }
 }
