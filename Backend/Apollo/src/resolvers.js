@@ -1,6 +1,8 @@
 module.exports = {
   Query: {
-    recipes: async (_, { pageSize = 20, after }, { dataSources }) =>
+    recipes: async (_, __, { dataSources }) =>
       dataSources.recipeAPI.getAllRecipes(),
+    getRecipesByIngredients: async (_, { ingredients }, { dataSources }) =>
+      dataSources.recipeAPI.getRecipeByIngredientList( { ingredients } ),
   }
 };

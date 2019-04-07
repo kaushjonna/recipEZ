@@ -28,12 +28,28 @@ class RecipeAPI extends RESTDataSource {
   }
 
   async getAllRecipes() {
+
     const response = await this.get('/recipes');
     const results = response.matches;
-    const out  = results.map(recipe => this.recipeReducer(recipe));
-    return out;
-
+    return results.map(recipe => this.recipeReducer(recipe));
   }
+
+  async getRecipeByIngredientList(ingredientList) {
+    let yummlyQuery = '';
+
+
+    ingredientList.ingredients.forEach(ingredient => {
+      yummlyQuery += this.buildQuery(ingredient);
+    });
+
+    const response = await this.get(`/recipes?${yummlyQuery}`);
+    return response.matches.map(recipe => this.recipeReducer(recipe));
+  }
+
+  buildQuery(input){
+    return `&allowedIngredient[]=${input}`
+  }
+
 
 }
 
