@@ -19,6 +19,16 @@ class Greeting extends Component {
   }
 }
 
+class LogoTitle extends React.Component {
+  render() {
+    return (
+      <Image
+        source={require('../assets/appLogoWhite.png')}
+        style={{ width: 200, height: 80 }}
+      />
+    );
+  }
+}
 
 class Misc extends Component {
   render() {
@@ -46,9 +56,6 @@ class HomeParts extends Component {
           title="Info"
           color="#fff"
         />
-      ),
-      headerRight: (
-        <Button onPress={params.increaseCount} title="+1" color="#fff" />
       ),
     };
   };

@@ -16,13 +16,13 @@ import gql from 'graphql-tag';
 
 
 // Screens
-import HomeParts from "./screens/home"
-import CameraParts from "./screens/camera"
-import LoginParts from "./screens/login"
-import ProfileParts from "./screens/profile"
-import SavedParts from "./screens/saved"
-import SearchParts from "./screens/search"
-import SettingsParts from "./screens/settings"
+import HomeScreen from "./screens/home"
+import CameraScreen from "./screens/camera"
+import LoginScreen from "./screens/login"
+import ProfileScreen from "./screens/profile"
+import SavedScreen from "./screens/saved"
+import SearchScreen from "./screens/search"
+import SettingsScreen from "./screens/settings"
 import ModalScreen from "./screens/recipeModal"
 import Detected from "./screens/detectedIngredients"
 import Found from "./screens/foundRecipes"
@@ -31,88 +31,12 @@ import Found from "./screens/foundRecipes"
 
 const client = new ApolloClient({
   link: createHttpLink({
-    uri: "http://localhost:4000/",
+    uri: "http://192.168.0.11:4000/",
     fetch: fetch
   }),
   cache: new InMemoryCache()
 });
 
-
-
-class HomeScreen extends Component {
-  render() {
-    return (
-      <HomeParts />
-    )
-  }
-}
-
-class CameraScreen extends Component {
-  render() {
-    return (
-      <CameraParts />
-    )
-  }
-}
-
-class LoginScreen extends Component {
-  render() {
-    return (
-      <LoginParts />
-    )
-  }
-}
-
-class ProfileScreen extends Component {
-  render() {
-    return (
-      <ProfileParts />
-    )
-  }
-}
-
-class SavedScreen extends Component {
-  render() {
-    return (
-      <SavedParts />
-    )
-  }
-}
-
-class SettingsScreen extends Component {
-  render() {
-    return (
-      <SettingsParts />
-    )
-  }
-}
-
-class SearchScreen extends Component {
-  render() {
-    return (
-      <SearchParts />
-    )
-  }
-}
-
-class IHaveScreen extends Component {
-  render() {
-    return (
-      <IHaveParts />
-    )
-  }
-}
-
-class LogoTitle extends React.Component {
-  render() {
-    return (
-      <Image
-        source={require('./assets/appLogoWhite.png')}
-        style={{ width: 200, height: 80 }}
-      />
-    );
-  }
-}
 
 const CameraStack = createStackNavigator(
   {
@@ -200,27 +124,6 @@ export default class App extends Component {
   }
 }
 
-
-
 AppRegistry.registerComponent('main', () => Main);
-
-
-
-
-
-
-// const query = gql`
-//     query {
-//         recipes {
-//           id
-//         }
-//     }
-// `;
-// // client.query({
-// //   query
-// // }).catch((error) => {
-// //   console.log(error);
-// //   done()
-// // }).then(console.log);
 
 
