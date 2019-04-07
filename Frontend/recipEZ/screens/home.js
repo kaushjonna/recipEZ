@@ -8,34 +8,36 @@ class Greeting extends Component {
     return (
       <Card>
         <Card.Content>
-          <Title>What's New</Title>
-          <Paragraph>Bruh try this chicken cordon BLEU</Paragraph>
+          <Title>Hey, using RecipEZ is E-Z!</Title>
+          <List>
+            <List.Item
+              title="1. Lay out your ingredients "
+              left={props => <List.Icon {...props} icon="local-dining" />}
+            />
+            <List.Item
+              title="2. Open the EZCam"
+              left={props => <List.Icon {...props} icon="add-a-photo" />}
+            />
+            <List.Item
+              title="3. Find a Recipe that you can make based on your ingredients!"
+              left={props => <List.Icon {...props} icon="fastfood" />}
+            />
+          </List>
+          <Text>Click on the EZCam to get started.</Text>
         </Card.Content>
       </Card>
     );
   }
 }
 
-class FriendActivity extends Component {
-  render() {
-    return (
-      <Card>
-        <Card.Content>
-          <Title>Your Friends Creations</Title>
-          <Paragraph>Add a friend to get started</Paragraph>
-        </Card.Content>
-      </Card>
-    );
-  }
-}
 
 class Misc extends Component {
   render() {
     return (
       <Card>
         <Card.Content>
-          <Title>Miscellaneous</Title>
-          <Paragraph>Add what we want here...</Paragraph>
+          <Title>Have a recipe in mind?</Title>
+          <Paragraph>Use the Search function to find your recipe. </Paragraph>
         </Card.Content>
       </Card>
     );
@@ -67,7 +69,6 @@ class HomeParts extends Component {
         <Image source={require('../assets/appLogo.png')} style={{ width: 300, height: 120 }}></Image>
         <Text>Home Screen</Text>
         <Greeting />
-        <FriendActivity />
         <Misc />
         <Button
           onPress={() => this.props.navigation.navigate('MyModal')}

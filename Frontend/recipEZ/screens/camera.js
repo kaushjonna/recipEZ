@@ -1,17 +1,24 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { Camera, Permissions } from 'expo';
+import { Button } from 'react-native-paper';
+import { withNavigation, } from "react-navigation";
 
-export default class CameraParts extends React.Component {
+class CameraParts extends React.Component {
   state = {
     hasCameraPermission: null,
     type: Camera.Constants.Type.back,
   };
 
+  static navigationOptions = ({ navigation }) => {
+    const params = navigation.state.params || {};
+  }
+
   async componentDidMount() {
     const { status } = await Permissions.askAsync(Permissions.CAMERA);
     this.setState({ hasCameraPermission: status === 'granted' });
   }
+
 
   render() {
     const { hasCameraPermission } = this.state;
@@ -47,6 +54,15 @@ export default class CameraParts extends React.Component {
                   {' '}Flip{' '}
                 </Text>
               </TouchableOpacity>
+              <TouchableOpacity>
+                <Button icon="add-a-photo" onPress={() => {
+                  this.props.navigation.push('Detected')
+                }} />
+              </TouchableOpacity>
+              <TouchableOpacity>
+                <Text>Ensure that all of your ingredients are evenly spaced out, so that we can detect everything you're working with!</Text>
+              </TouchableOpacity>
+
             </View>
           </Camera>
         </View>
@@ -54,3 +70,5 @@ export default class CameraParts extends React.Component {
     }
   }
 }
+
+export default withNavigation(CameraParts);

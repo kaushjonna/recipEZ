@@ -6,20 +6,19 @@ import { Searchbar, Title, Button, Divider, Subheading, ActivityIndicator } from
 // will need async for this, awaiting the array data to arrive and to display on the app (OR component mount)
 
 class RecipeSearchScreen extends Component {
-  constructor() {
-    super();
-    this.state = {
-      data: ['apple', 'banana', 'carrot', 'cucumber', 'lettuce', 'parmesan cheese'],
-      firstQuery: ''
-    }
-  }
+
   static navigationOptions = {
     title: 'Detected Ingredients',
 
   };
+  state = {
+    firstQuery: ''
+  }
   render() {
+    const { firstQuery } = this.setState;
     return (
-      <ScrollView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <ActivityIndicator size='large' animating={true}></ActivityIndicator>
         <Title>We found these ingredients:</Title>
         <Text>- Apple</Text>
         <Text>- Banana</Text>
@@ -33,12 +32,12 @@ class RecipeSearchScreen extends Component {
           value={firstQuery}
         />
         <Divider />
-        <Button
+        <Button title="Done"
           mode="contained"
-          onPress={() => alert('Done Pressed')}>
-          Done</Button>
-
-      </ScrollView>
+          onPress={() => {
+            this.props.navigation.push('Found')
+          }} />
+      </View>
     );
   }
 }

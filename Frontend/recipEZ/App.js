@@ -23,6 +23,7 @@ import SearchParts from "./screens/search"
 import SettingsParts from "./screens/settings"
 import ModalScreen from "./screens/recipeModal"
 import Detected from "./screens/detectedIngredients"
+import Found from "./screens/foundRecipes"
 
 class HomeScreen extends Component {
   render() {
@@ -99,21 +100,45 @@ class LogoTitle extends React.Component {
   }
 }
 
+const CameraStack = createStackNavigator(
+  {
+    Camera: CameraScreen,
+    Detected: Detected,
+    Found: Found,
+  },
+  {
+    initialRouteName: "Camera",
+    headerMode: 'none',
+  }
+)
+
+// const SearchStack = createStackNavigator(
+//   {
+//     Camera: CameraScreen,
+//     Detected: Detected,
+//     Found: Found,
+//   },
+//   {
+//     initialRouteName: "Camera",
+//     headerMode: 'none',
+//   }
+// )
 
 
 const RootStack = createBottomTabNavigator(
   {
     Home: { screen: HomeScreen },
     Profile: { screen: ProfileScreen },
-    EZCam: { screen: CameraScreen },
+    EZCam: CameraStack,
     Saved: { screen: SavedScreen },
     Settings: { screen: SettingsScreen },
-    Have: { screen: IHaveScreen },
     Login: { screen: LoginScreen },
+    Search: { screen: SearchStack },
   },
   {
     initialRouteName: 'Home',
     tabBarOptions: {
+      showIcon: true,
       activeTintColor: '#ffffff',
       inactiveTintColor: '#d3d3d3',
       labelStyle: {
@@ -133,7 +158,6 @@ const OtherStack = createStackNavigator(
     },
     MyModal: {
       screen: ModalScreen,
-      detected: Detected,
     },
   },
   {
@@ -141,6 +165,9 @@ const OtherStack = createStackNavigator(
     headerMode: 'none',
   }
 );
+
+
+
 
 const AppContainer = createAppContainer(OtherStack);
 

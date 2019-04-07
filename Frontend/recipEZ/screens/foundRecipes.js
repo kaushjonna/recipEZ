@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { View, ScrollView } from 'react-native';
-import { List, Title } from 'react-native-paper';
+import { DataTable, List, Title, Button } from 'react-native-paper';
+
 
 class FoundRecipe extends Component {
   render() {
     return (
       <View>
-        <List.Item
-          title="Delicious Pesto Pasta"
-          left={() => <List.Icon icon="folder" />}
-        />
+        <DataTable.Row>
+          <DataTable.Cell>
+            Pesto Pasta
+          </DataTable.Cell>
+        </DataTable.Row>
       </View>
     );
   }
@@ -24,10 +26,17 @@ class FoundRecipesScreen extends Component {
   render() {
     return (
       <ScrollView>
-        <Title>Found Recipes:</Title>
-        <List.Section>
+        <Title>Here's what we found...</Title>
+        <DataTable>
           <FoundRecipe />
-        </List.Section>
+          <FoundRecipe />
+          <FoundRecipe />
+        </DataTable>
+        <Button
+          mode="contained"
+          onPress={() => {
+            this.props.navigation.popToTop()
+          }}>Start Over</Button>
       </ScrollView>
     );
   }
