@@ -2,6 +2,28 @@ import React, { Component } from 'react';
 import { StyleSheet, AppRegistry, ScrollView, View, Image, Text, Button } from 'react-native';
 import { withNavigation, } from "react-navigation";
 import { Title, TextInput, Card, Paragraph, Avatar, List } from 'react-native-paper'
+import gql from 'graphql-tag';
+import { Query } from "react-apollo";
+import { ApolloClient } from 'apollo-boost';
+import { createHttpLink } from 'apollo-link-http'
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import fetch from 'node-fetch';
+
+const prismaClient = new ApolloClient({
+  link: createHttpLink({
+    uri: "https://eu1.prisma.sh/nik-malhotra-1a119d/recipez-gql/dev",
+    fetch: fetch
+  }),
+  cache: new InMemoryCache()
+});
+
+const getUsers = gql`
+    {
+      users{
+        first_name
+        }
+      }
+`;
 
 class Greeting extends Component {
   render() {
@@ -66,6 +88,17 @@ class HomeParts extends Component {
         <Text>Home Screen</Text>
         <Greeting />
         <Misc />
+        <Query client={prismaClient} query={getUsers}>
+          {({ loading, error, data }) => {
+            if (loading) return <Text>Loading...</Text>;
+            if (error) return <Text>error</Text>
+            console.log(data.users[0].first_name);
+            return (
+              // <Text>{data.users.first_name}</Text>
+              <Text>{data.users[0].first_name}</Text>
+            )
+          }}
+        </Query>
         <Button
           onPress={() => this.props.navigation.navigate('MyModal')}
           title="Info"

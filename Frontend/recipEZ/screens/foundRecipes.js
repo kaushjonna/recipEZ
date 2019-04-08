@@ -1,22 +1,52 @@
 import React, { Component } from 'react';
-import { View, ScrollView } from 'react-native';
-import { DataTable, List, Title, Button } from 'react-native-paper';
+import { View, ScrollView, Option, Text } from 'react-native';
+import { DataTable, List, Title, Button, ActivityIndicator } from 'react-native-paper';
+import gql from 'graphql-tag';
+import { Query } from "react-apollo";
 
 
-class FoundRecipe extends Component {
+
+const getUser = gql`
+    {
+        getRecipesByIngredients(ingredients:["pesto","spaghetti","tomato", "parmesan"]){
+            id
+            name
+            rating
+        }
+    }
+`;
+
+class QueryResults extends Component {
   render() {
     return (
-      <View>
-        <DataTable.Row>
-          <DataTable.Cell>
-            Pesto Pasta
-          </DataTable.Cell>
-        </DataTable.Row>
-      </View>
+      <Query query={getRecipes}>
+        {({ loading, error, data }) => {
+          if (loading) {
+            return (
+              <View>
+                <ActivityIndicator></ActivityIndicator>
+                <Text>Loading...</Text>
+              </View>);
+          }
+          if (error) return <Text>Error! {error.message}</Text>;
+
+
+          return (
+            // data.getRecipesByIngredients.map(recipe => {
+            //   <List.Item title={recipe.name} />
+            // })
+            <View>
+              {data.getRecipesByIngredients.map(recipe => {
+                return (<Text key={recipe.id}>{recipe.name}</Text>)
+              })}
+            </View>
+          );
+        }}
+      </Query>
     );
   }
-
 }
+
 
 
 class FoundRecipesScreen extends Component {
@@ -27,11 +57,10 @@ class FoundRecipesScreen extends Component {
     return (
       <ScrollView>
         <Title>Here's what we found...</Title>
-        <DataTable>
-          <FoundRecipe />
-          <FoundRecipe />
-          <FoundRecipe />
-        </DataTable>
+        <View>
+          <QueryResults />
+        </View>
+
         <Button
           mode="contained"
           onPress={() => {
