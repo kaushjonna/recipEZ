@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Option, Text } from 'react-native';
-import { DataTable, List, Title, Button, ActivityIndicator } from 'react-native-paper';
+import { View, ScrollView, Text, StyleSheet, Image } from 'react-native';
+import { Title, Button, ActivityIndicator, Surface } from 'react-native-paper';
 import gql from 'graphql-tag';
 import { Query } from "react-apollo";
 
-
-
-const getUser = gql`
+const getRecipes = gql`
     {
         getRecipesByIngredients(ingredients:["pesto","spaghetti","tomato", "parmesan"]){
             id
             name
             rating
+            image
+            totalTime
         }
     }
 `;
+
+const getStars = function (stars) {
+  return ('⭐'.repeat(stars))
+};
 
 class QueryResults extends Component {
   render() {
@@ -32,12 +36,22 @@ class QueryResults extends Component {
 
 
           return (
-            // data.getRecipesByIngredients.map(recipe => {
-            //   <List.Item title={recipe.name} />
-            // })
-            <View>
+            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap' }}>
               {data.getRecipesByIngredients.map(recipe => {
-                return (<Text key={recipe.id}>{recipe.name}</Text>)
+                return (
+                  <Surface style={styles.surface} key={recipe.id}>
+                    <Image
+                      style={{ width: 100, height: 100, margin: 'auto' }}
+                      source={{ uri: recipe.image + "?.jpg" }}
+                    />
+                    <Text style={{ fontWeight: 'bold' }}>{recipe.name}</Text>
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly' }} >
+                      <Text style={{ fontSize: 8, paddingEnd: 5 }}>{getStars(recipe.rating)}</Text>
+                      <Text style={{ fontStyle: 'italic', fontSize: 10 }} >{(recipe.totalTime / 60) + ' mins.'}</Text>
+
+                    </View>
+                  </Surface>
+                )
               })}
             </View>
           );
@@ -72,3 +86,15 @@ class FoundRecipesScreen extends Component {
 }
 
 export default FoundRecipesScreen;
+
+const styles = StyleSheet.create({
+  surface: {
+    padding: 8,
+    margin: 5,
+    height: 185,
+    width: 180,
+    elevation: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
+});
