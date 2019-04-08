@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 import { Camera, Permissions } from 'expo';
-import { Button } from 'react-native-paper';
+import { IconButton } from 'react-native-paper';
 import { withNavigation, } from "react-navigation";
 
 class CameraParts extends React.Component {
@@ -36,7 +36,7 @@ class CameraParts extends React.Component {
                 backgroundColor: 'transparent',
                 flexDirection: 'row',
               }}>
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={{
                   flex: 0.1,
                   alignSelf: 'flex-end',
@@ -53,19 +53,20 @@ class CameraParts extends React.Component {
                   style={{ fontSize: 18, marginBottom: 10, color: 'white' }}>
                   {' '}Flip{' '}
                 </Text>
-              </TouchableOpacity>
-              <TouchableOpacity>
-                <Button icon="add-a-photo" onPress={() => {
+              </TouchableOpacity> */}
+              <TouchableOpacity style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center' }}>
+                <Text style={{ color: '#fff', textAlign: 'center', paddingTop: 20 }}>Ensure that all of your ingredients are evenly spaced out, so that we can detect everything you're working with!</Text>
+                <IconButton size={40} color={'#6200ee'} icon="camera" onPress={() => {
                   this.props.navigation.push('Detected')
                 }} />
               </TouchableOpacity>
               <TouchableOpacity>
-                <Text>Ensure that all of your ingredients are evenly spaced out, so that we can detect everything you're working with!</Text>
+
               </TouchableOpacity>
 
             </View>
           </Camera>
-        </View>
+        </View >
       );
     }
   }
