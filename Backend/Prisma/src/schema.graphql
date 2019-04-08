@@ -9,7 +9,11 @@ type Mutation {
   removeComment(id: ID!): Comment
   removeIngredient(id: ID!): Ingredient
   removeSavedRecipe(id: ID!): Saved_Recipe
+<<<<<<< HEAD
   updateCreation(id: ID!, name: String!, photo: String!, description: String!): Creation
+=======
+  updateCreation(id: ID!, name: String!, photo: String! description: String!): Creation
+>>>>>>> integrate-yummly
   removeCreation(id: ID!): Creation
 }
 
@@ -36,15 +40,8 @@ type Comment {
   text: String!
 }
 
-type Ingredient_Type {
-  id: ID!
-  description: String! 
-
-}
-
 type Ingredient {
   id: ID!
-  ingredientTypeCode: Ingredient_Type
   name: String!
 }
 

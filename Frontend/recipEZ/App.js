@@ -23,7 +23,7 @@ import ProfileScreen from "./screens/profile"
 import SavedScreen from "./screens/saved"
 import SearchScreen from "./screens/search"
 import SettingsScreen from "./screens/settings"
-import ModalScreen from "./screens/recipeModal"
+import RecipeModalScreen from "./screens/recipeModal"
 import Detected from "./screens/detectedIngredients"
 import Found from "./screens/foundRecipes"
 
@@ -37,31 +37,32 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
+const RecipeDetailStack = createStackNavigator(
+  {
+    Main: {
+      screen: Found,
+    },
+    MyModal: {
+      screen: RecipeModalScreen,
+    },
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none',
+  }
+);
 
 const CameraStack = createStackNavigator(
   {
     Camera: CameraScreen,
     Detected: Detected,
-    Found: Found,
+    Found: RecipeDetailStack,
   },
   {
     initialRouteName: "Camera",
     headerMode: 'none',
   }
 )
-
-// const SearchStack = createStackNavigator(
-//   {
-//     Camera: CameraScreen,
-//     Detected: Detected,
-//     Found: Found,
-//   },
-//   {
-//     initialRouteName: "Camera",
-//     headerMode: 'none',
-//   }
-// )
-
 
 const RootStack = createBottomTabNavigator(
   {
@@ -89,25 +90,11 @@ const RootStack = createBottomTabNavigator(
   }
 );
 
-const OtherStack = createStackNavigator(
-  {
-    Main: {
-      screen: RootStack,
-    },
-    MyModal: {
-      screen: ModalScreen,
-    },
-  },
-  {
-    mode: 'modal',
-    headerMode: 'none',
-  }
-);
 
 
 
 
-const AppContainer = createAppContainer(OtherStack);
+const AppContainer = createAppContainer(RootStack);
 
 export default class App extends Component {
   render() {

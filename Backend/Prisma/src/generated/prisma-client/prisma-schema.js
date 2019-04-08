@@ -15,10 +15,6 @@ type AggregateIngredient {
   count: Int!
 }
 
-type AggregateIngredient_Type {
-  count: Int!
-}
-
 type AggregateSaved_Recipe {
   count: Int!
 }
@@ -283,132 +279,7 @@ input CreationWhereUniqueInput {
 
 type Ingredient {
   id: ID!
-  ingredientTypeCode: Ingredient_Type
   name: String!
-}
-
-type Ingredient_Type {
-  id: ID!
-  description: String!
-}
-
-type Ingredient_TypeConnection {
-  pageInfo: PageInfo!
-  edges: [Ingredient_TypeEdge]!
-  aggregate: AggregateIngredient_Type!
-}
-
-input Ingredient_TypeCreateInput {
-  description: String!
-}
-
-input Ingredient_TypeCreateOneInput {
-  create: Ingredient_TypeCreateInput
-  connect: Ingredient_TypeWhereUniqueInput
-}
-
-type Ingredient_TypeEdge {
-  node: Ingredient_Type!
-  cursor: String!
-}
-
-enum Ingredient_TypeOrderByInput {
-  id_ASC
-  id_DESC
-  description_ASC
-  description_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
-type Ingredient_TypePreviousValues {
-  id: ID!
-  description: String!
-}
-
-type Ingredient_TypeSubscriptionPayload {
-  mutation: MutationType!
-  node: Ingredient_Type
-  updatedFields: [String!]
-  previousValues: Ingredient_TypePreviousValues
-}
-
-input Ingredient_TypeSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: Ingredient_TypeWhereInput
-  AND: [Ingredient_TypeSubscriptionWhereInput!]
-  OR: [Ingredient_TypeSubscriptionWhereInput!]
-  NOT: [Ingredient_TypeSubscriptionWhereInput!]
-}
-
-input Ingredient_TypeUpdateDataInput {
-  description: String
-}
-
-input Ingredient_TypeUpdateInput {
-  description: String
-}
-
-input Ingredient_TypeUpdateManyMutationInput {
-  description: String
-}
-
-input Ingredient_TypeUpdateOneInput {
-  create: Ingredient_TypeCreateInput
-  update: Ingredient_TypeUpdateDataInput
-  upsert: Ingredient_TypeUpsertNestedInput
-  delete: Boolean
-  disconnect: Boolean
-  connect: Ingredient_TypeWhereUniqueInput
-}
-
-input Ingredient_TypeUpsertNestedInput {
-  update: Ingredient_TypeUpdateDataInput!
-  create: Ingredient_TypeCreateInput!
-}
-
-input Ingredient_TypeWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  description: String
-  description_not: String
-  description_in: [String!]
-  description_not_in: [String!]
-  description_lt: String
-  description_lte: String
-  description_gt: String
-  description_gte: String
-  description_contains: String
-  description_not_contains: String
-  description_starts_with: String
-  description_not_starts_with: String
-  description_ends_with: String
-  description_not_ends_with: String
-  AND: [Ingredient_TypeWhereInput!]
-  OR: [Ingredient_TypeWhereInput!]
-  NOT: [Ingredient_TypeWhereInput!]
-}
-
-input Ingredient_TypeWhereUniqueInput {
-  id: ID
-  description: String
 }
 
 type IngredientConnection {
@@ -418,7 +289,6 @@ type IngredientConnection {
 }
 
 input IngredientCreateInput {
-  ingredientTypeCode: Ingredient_TypeCreateOneInput
   name: String!
 }
 
@@ -462,7 +332,6 @@ input IngredientSubscriptionWhereInput {
 }
 
 input IngredientUpdateInput {
-  ingredientTypeCode: Ingredient_TypeUpdateOneInput
   name: String
 }
 
@@ -485,7 +354,6 @@ input IngredientWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  ingredientTypeCode: Ingredient_TypeWhereInput
   name: String
   name_not: String
   name_in: [String!]
@@ -530,12 +398,6 @@ type Mutation {
   upsertIngredient(where: IngredientWhereUniqueInput!, create: IngredientCreateInput!, update: IngredientUpdateInput!): Ingredient!
   deleteIngredient(where: IngredientWhereUniqueInput!): Ingredient
   deleteManyIngredients(where: IngredientWhereInput): BatchPayload!
-  createIngredient_Type(data: Ingredient_TypeCreateInput!): Ingredient_Type!
-  updateIngredient_Type(data: Ingredient_TypeUpdateInput!, where: Ingredient_TypeWhereUniqueInput!): Ingredient_Type
-  updateManyIngredient_Types(data: Ingredient_TypeUpdateManyMutationInput!, where: Ingredient_TypeWhereInput): BatchPayload!
-  upsertIngredient_Type(where: Ingredient_TypeWhereUniqueInput!, create: Ingredient_TypeCreateInput!, update: Ingredient_TypeUpdateInput!): Ingredient_Type!
-  deleteIngredient_Type(where: Ingredient_TypeWhereUniqueInput!): Ingredient_Type
-  deleteManyIngredient_Types(where: Ingredient_TypeWhereInput): BatchPayload!
   createSaved_Recipe(data: Saved_RecipeCreateInput!): Saved_Recipe!
   updateSaved_Recipe(data: Saved_RecipeUpdateInput!, where: Saved_RecipeWhereUniqueInput!): Saved_Recipe
   updateManySaved_Recipes(data: Saved_RecipeUpdateManyMutationInput!, where: Saved_RecipeWhereInput): BatchPayload!
@@ -577,9 +439,6 @@ type Query {
   ingredient(where: IngredientWhereUniqueInput!): Ingredient
   ingredients(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ingredient]!
   ingredientsConnection(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IngredientConnection!
-  ingredient_Type(where: Ingredient_TypeWhereUniqueInput!): Ingredient_Type
-  ingredient_Types(where: Ingredient_TypeWhereInput, orderBy: Ingredient_TypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ingredient_Type]!
-  ingredient_TypesConnection(where: Ingredient_TypeWhereInput, orderBy: Ingredient_TypeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): Ingredient_TypeConnection!
   saved_Recipe(where: Saved_RecipeWhereUniqueInput!): Saved_Recipe
   saved_Recipes(where: Saved_RecipeWhereInput, orderBy: Saved_RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Saved_Recipe]!
   saved_RecipesConnection(where: Saved_RecipeWhereInput, orderBy: Saved_RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): Saved_RecipeConnection!
@@ -697,7 +556,6 @@ type Subscription {
   comment(where: CommentSubscriptionWhereInput): CommentSubscriptionPayload
   creation(where: CreationSubscriptionWhereInput): CreationSubscriptionPayload
   ingredient(where: IngredientSubscriptionWhereInput): IngredientSubscriptionPayload
-  ingredient_Type(where: Ingredient_TypeSubscriptionWhereInput): Ingredient_TypeSubscriptionPayload
   saved_Recipe(where: Saved_RecipeSubscriptionWhereInput): Saved_RecipeSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }

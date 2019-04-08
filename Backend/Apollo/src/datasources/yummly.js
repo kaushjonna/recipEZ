@@ -3,7 +3,7 @@ const app_id = '28da6923';
 const app_key = '6e01410ac6dc18e0ab8c86743d51eedf';
 
 class RecipeAPI extends RESTDataSource {
-  constructor () {
+  constructor() {
     super();
     this.baseURL = 'http://api.yummly.com/v1/api';
   }
@@ -13,13 +13,14 @@ class RecipeAPI extends RESTDataSource {
     request.headers.set('X-Yummly-App-Key', app_key);
   }
 
-  async recipeReducer (recipe) {
+  async recipeReducer(recipe) {
 
     return {
 
       id: recipe.id,
       totalTime: recipe.totalTimeInSeconds,
       name: recipe.recipeName,
+      image: recipe.smallImageUrls[0],
       ingredients: recipe.ingredients,
       rating: recipe.rating
 
@@ -46,7 +47,7 @@ class RecipeAPI extends RESTDataSource {
     return response.matches.map(recipe => this.recipeReducer(recipe));
   }
 
-  buildQuery(input){
+  buildQuery(input) {
     return `&allowedIngredient[]=${input}`
   }
 

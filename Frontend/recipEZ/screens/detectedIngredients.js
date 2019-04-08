@@ -20,11 +20,10 @@ class RecipeSearchScreen extends Component {
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <ActivityIndicator size='large' animating={true}></ActivityIndicator>
         <Title>We found these ingredients:</Title>
-        <Text>- Apple</Text>
-        <Text>- Banana</Text>
-        <Text>- Carrot</Text>
-        <Text>- Cucumber</Text>
-        <Text>- Parmesan Cheese</Text>
+        <Text>- Parmesan</Text>
+        <Text>- Pesto</Text>
+        <Text>- Tomato</Text>
+        <Text>- Spaghetti</Text>
         <Subheading>Something missing? Add ingredients below:</Subheading>
         <Searchbar
           placeholder="Search"
@@ -32,11 +31,11 @@ class RecipeSearchScreen extends Component {
           value={firstQuery}
         />
         <Divider />
-        <Button title="Done"
+        <Button
           mode="contained"
           onPress={() => {
             this.props.navigation.push('Found')
-          }} />
+          }}>Done!</Button>
       </View>
     );
   }

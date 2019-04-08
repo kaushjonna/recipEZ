@@ -27,14 +27,8 @@ type Saved_Recipe {
   recipeLink: String!
 }
 
-type Ingredient_Type {
-  id: ID! @unique
-  description: String! @unique
-
-}
 
 type Ingredient {
   id: ID! @unique
-  ingredientTypeCode: Ingredient_Type
   name: String!
 }
