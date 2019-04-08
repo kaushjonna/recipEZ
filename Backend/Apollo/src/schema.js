@@ -1,6 +1,6 @@
 const { gql } = require('apollo-server');
 
-const typeDefs = gql `
+const typeDefs = gql`
   type Query {
     recipes: [Recipe]
     getRecipesByIngredients(ingredients: [String]): [Recipe]
@@ -9,6 +9,7 @@ const typeDefs = gql `
   type Recipe {
     id: String
     totalTime: Int
+    image: String
     name: String
     ingredients: [String]
     rating: Int
