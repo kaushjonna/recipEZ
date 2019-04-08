@@ -94,7 +94,6 @@ class HomeParts extends Component {
             if (error) return <Text>error</Text>
             console.log(data.users[0].first_name);
             return (
-              // <Text>{data.users.first_name}</Text>
               <Text>{data.users[0].first_name}</Text>
             )
           }}

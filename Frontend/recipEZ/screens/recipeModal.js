@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { StyleSheet, AppRegistry, ScrollView, View, Image, Button, Text } from 'react-native';
 import { createStackNavigator, createAppContainer, StackViewTransitionConfigs } from "react-navigation";
 import { Searchbar, Title } from 'react-native-paper'
+import { withNavigation } from 'react-navigation';
+
 
 class ModalScreen extends React.Component {
   render() {
@@ -18,11 +20,11 @@ class ModalScreen extends React.Component {
         />
         <Button
           onPress={() => this.props.navigation.goBack()}
-          title="Start Creation"
+          title="Dismiss"
         />
       </View>
     );
   }
 }
 
-export default ModalScreen;
+export default withNavigation(ModalScreen);

@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     height: 120,
     width: 120,
     elevation: 4,
-    justifyContent: 'center'
+
   },
 });
 

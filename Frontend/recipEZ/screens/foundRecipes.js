@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { View, ScrollView, Text, StyleSheet, Image } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, Image, Linking } from 'react-native';
 import { Title, Button, ActivityIndicator, Surface } from 'react-native-paper';
 import gql from 'graphql-tag';
 import { Query } from "react-apollo";
+import { withNavigation, } from "react-navigation";
 
 const getRecipes = gql`
     {
@@ -21,6 +22,9 @@ const getStars = function (stars) {
 };
 
 class QueryResults extends Component {
+  static navigationOptions = {
+    title: 'Recipe Details',
+  };
   render() {
     return (
       <Query query={getRecipes}>
@@ -33,8 +37,6 @@ class QueryResults extends Component {
               </View>);
           }
           if (error) return <Text>Error! {error.message}</Text>;
-
-
           return (
             <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap' }}>
               {data.getRecipesByIngredients.map(recipe => {
@@ -45,11 +47,25 @@ class QueryResults extends Component {
                       source={{ uri: recipe.image + "?.jpg" }}
                     />
                     <Text style={{ fontWeight: 'bold' }}>{recipe.name}</Text>
-                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly' }} >
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly', paddingTop: 10 }} >
                       <Text style={{ fontSize: 8, paddingEnd: 5 }}>{getStars(recipe.rating)}</Text>
                       <Text style={{ fontStyle: 'italic', fontSize: 10 }} >{(recipe.totalTime / 60) + ' mins.'}</Text>
-
                     </View>
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly' }} >
+                      <Button
+                        onPress={() => Linking.openURL(`https://www.yummly.com/recipe/${recipe.id}`)}
+                      >View</Button>
+                      <Button
+                        onPress={() => alert('Recipe Saved ✅')}
+                      >Save</Button>
+                    </View>
+
+                    {/* 
+                      NOT WORKING, NEED TO FIX
+                    <Button
+                      onPress={() => this.props.navigation.push('MyModal')}
+                      color="#000000"
+                    >Details</Button> */}
                   </Surface>
                 )
               })}
@@ -85,13 +101,13 @@ class FoundRecipesScreen extends Component {
   }
 }
 
-export default FoundRecipesScreen;
+export default withNavigation(FoundRecipesScreen);
 
 const styles = StyleSheet.create({
   surface: {
     padding: 8,
     margin: 5,
-    height: 185,
+    height: 240,
     width: 180,
     elevation: 4,
     justifyContent: 'center',
