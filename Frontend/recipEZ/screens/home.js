@@ -20,7 +20,7 @@ const prismaClient = new ApolloClient({
 const getUsers = gql`
     {
       users{
-        first_name
+        firstName
         }
       }
 `;
@@ -91,10 +91,15 @@ class HomeParts extends Component {
         <Query client={prismaClient} query={getUsers}>
           {({ loading, error, data }) => {
             if (loading) return <Text>Loading...</Text>;
+<<<<<<< HEAD
             if (error) return <Text>{error.message}</Text>
             console.log(data.users[0].first_name);
+=======
+            if (error) return <Text>error</Text>
+            console.log(data.users[0].firstName);
+>>>>>>> 4a74a69b886a9c30ac172d3da4b71d25aa6a0f48
             return (
-              <Text>{data.users[0].first_name}</Text>
+              <Text>{data.users[0].firstName}</Text>
             )
           }}
         </Query>
