@@ -96,6 +96,13 @@ const RootStack = createBottomTabNavigator(
 const AppContainer = createAppContainer(RootStack);
 
 export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      titleText: "Bird's Nest",
+      bodyText: 'This is not really a bird nest.'
+    };
+  }
   render() {
     return (
       <ApolloProvider client={client}>

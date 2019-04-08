@@ -22,6 +22,12 @@ const getStars = function (stars) {
 };
 
 class QueryResults extends Component {
+
+  constructor(props) {
+    super(props);
+
+  }
+
   static navigationOptions = {
     title: 'Recipe Details',
   };
@@ -59,13 +65,10 @@ class QueryResults extends Component {
                         onPress={() => alert('Recipe Saved ✅')}
                       >Save</Button>
                     </View>
-
-                    {/* 
-                      NOT WORKING, NEED TO FIX
                     <Button
                       onPress={() => this.props.navigation.push('MyModal')}
                       color="#000000"
-                    >Details</Button> */}
+                    >Details</Button>
                   </Surface>
                 )
               })}
@@ -88,7 +91,7 @@ class FoundRecipesScreen extends Component {
       <ScrollView>
         <Title>Here's what we found...</Title>
         <View>
-          <QueryResults />
+          <QueryResults navigation={this.props.navigation} />
         </View>
 
         <Button
@@ -96,6 +99,10 @@ class FoundRecipesScreen extends Component {
           onPress={() => {
             this.props.navigation.popToTop()
           }}>Start Over</Button>
+        <Button
+          onPress={() => this.props.navigation.push('MyModal')}
+          color="#000000"
+        >Details</Button>
       </ScrollView>
     );
   }

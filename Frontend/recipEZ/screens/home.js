@@ -41,25 +41,25 @@ class HomeParts extends Component {
                   if (error) return <Text>Error, {error.message}</Text>
                   console.log(data.users[0].firstName);
                   return (
-                    <Title style={{ alignSelf: 'center' }}>Hey {data.users[0].firstName} {data.users[0].lastName}, using RecipEZ is E-Z!</Title>
+                    <Title style={{ alignSelf: 'center' }}>Hey {data.users[0].firstName}, using RecipEZ is E-Z!</Title>
                   )
                 }}
               </Query>
-              <Subheading>1. Lay out your ingredients </Subheading>
-              <Subheading>2. Open the EZCam</Subheading>
+              <Subheading>1. Lay out your ingredients. </Subheading>
+              <Subheading>2. Open the EZCam, and take a photo of all your ingredients.</Subheading>
               <Subheading>3. Find a Recipe that you can make based on your ingredients! </Subheading>
-              <Title style={{ alignSelf: 'center', margin: 5 }}>Click on the EZCam to get started.</Title>
+              <Title style={{ alignSelf: 'center', margin: 5 }}>Click on the EZCam to get started!</Title>
             </View>
           </Surface >
           <Surface style={styles.surface}>
             <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
               <Avatar.Icon size={80} icon="search" />
               <Title>Have a recipe in mind?</Title>
-              <Subheading>Use the Search function to find your recipe. </Subheading>
+              <Subheading style={{ textAlign: 'center' }}>Use the Search function to find your recipe. With your ingredients in front of you, we can tell you which ingredients you're missing! </Subheading>
             </View>
           </Surface>
         </ScrollView>
-      </View>
+      </View >
     );
   }
 }
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     padding: 8,
     margin: 8,
     height: 200,
-    width: '100%',
+    width: '95%',
     elevation: 9,
   },
 });

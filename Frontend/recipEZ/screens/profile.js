@@ -1,45 +1,103 @@
 import React, { Component } from 'react';
-import { StyleSheet, AppRegistry, ScrollView, View, Image } from 'react-native';
-import { Avatar, Title, Text, Button, Surface, Paragraph, Divider } from 'react-native-paper'
+import { StyleSheet, AppRegistry, ScrollView, View, Image, ImageBackground, Text } from 'react-native';
+import { Avatar, Title, Button, Surface, Paragraph, Divider, Card, ActivityIndicator } from 'react-native-paper'
 import { createStackNavigator, createAppContainer, StackViewTransitionConfigs } from "react-navigation";
 import { withNavigation, } from "react-navigation";
+import gql from 'graphql-tag';
+import { Query } from "react-apollo";
+import { ApolloClient } from "apollo-boost";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { createHttpLink } from "apollo-link-http";
 
-class CreationWrapper extends Component {
+const prismaClient = new ApolloClient({
+  link: createHttpLink({
+    uri: "https://eu1.prisma.sh/nik-malhotra-1a119d/recipez/dev",
+    fetch: fetch
+  }),
+  cache: new InMemoryCache()
+});
+
+const getUserCreations = gql`
+{
+  creations{
+    id
+    name
+    photo
+  }
+}
+`;
+
+
+class CreationQuery extends Component {
   render() {
     return (
-      <Surface style={styles.surface}>
-        <Image
-          style={{ width: 100, height: 100 }}
-          source={require('../assets/pesto.jpg')}
-        />
-        <Text>Pesto Pasta</Text>
-      </Surface>
+      <Query client={prismaClient} query={getUserCreations}>
+        {({ loading, error, data }) => {
+          if (loading) {
+            return (
+              <View>
+                <ActivityIndicator></ActivityIndicator>
+                <Text>Loading...</Text>
+              </View>
+            );
+          }
+          if (error) {
+            return (<Text>Error: {error.message}</Text>)
+          } else {
+            return (
+              <View>
+                <Title style={{ textAlign: "center" }}>Nik's Creations ({data.creations.length})</Title>
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: "center", flexWrap: 'wrap' }}>
+                  {data.creations.map(creation => {
+                    return (
+                      <Surface key={creation.id} style={styles.surface}>
+                        <Image
+                          style={{ width: 100, height: 100 }}
+                          source={{ uri: creation.photo }}
+                        />
+                        <Text style={{ fontSize: 12, fontWeight: 'bold', paddingTop: 5 }}>{creation.name}</Text>
+                      </Surface>
+                    )
+                  })}
+                </View>
+              </View>
+            )
+          }
+        }
+        }
+
+      </Query>
     )
   }
-
 }
 
 
+
 class ProfileScreen extends Component {
-  static navigationOptions = {
-    title: 'Your Profile',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      someting: 'wong'
+    }
+
+  }
   render() {
     return (
       <ScrollView>
-        <Avatar.Image size={100} source={require('../assets/avatar.png')} />
-        <Title>Nik's Profile</Title>
-        <Paragraph>Bio: Hey, Nik here. Big fan of cooking. Especially when I know what to make with all the groceries I buy!</Paragraph>
-        <Button icon="edit"
-          mode="contained"
-          onPress={() => console.log('To be implemented... LOL')}>
-          Edit Profile</Button>
+        <ImageBackground shadowColor={'#000'} shadowOpacity={0.8} blurRadius={8} source={require('../assets/avatar.png')} style={{ backgroundColor: 'rgba(0,0,0,)', width: '100%', height: 250 }}>
+          <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center' }}>
+            <Avatar.Image size={100} source={require('../assets/avatar.png')} />
+            <Title style={{ fontWeight: 'bold', color: '#fff', fontSize: 24 }}>Nik's Profile</Title>
+            <Paragraph style={{ color: '#fff', textAlign: 'center' }}>Hey, Nik here. Big fan of cooking. Especially when I know what to make with all the groceries I buy!</Paragraph>
+            <Button icon="edit"
+              mode="contained"
+              onPress={() => console.log('To be implemented... LOL')}>
+              Edit Profile</Button>
+          </View>
+        </ImageBackground>
         <Divider />
-        <Title>Nik's Creations (3)</Title>
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
-          <CreationWrapper />
-          <CreationWrapper />
-          <CreationWrapper />
+          <CreationQuery />
         </View>
         <Button icon="edit"
           mode="contained"
@@ -53,11 +111,13 @@ class ProfileScreen extends Component {
 const styles = StyleSheet.create({
   surface: {
     padding: 8,
-    height: 120,
+    margin: 5,
+    height: 140,
     width: 120,
     elevation: 4,
-
-  },
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
 
 
