@@ -11,6 +11,7 @@ type Creation {
   userId: User
   name: String!
   description: String!
+  photo: String!
 
 }
 

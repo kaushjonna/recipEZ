@@ -33,7 +33,7 @@ type BatchPayload {
 
 type Comment {
   id: ID!
-  userId: User
+  userId: User!
   text: String!
 }
 
@@ -44,7 +44,7 @@ type CommentConnection {
 }
 
 input CommentCreateInput {
-  userId: UserCreateOneInput
+  userId: UserCreateOneInput!
   text: String!
 }
 
@@ -88,7 +88,7 @@ input CommentSubscriptionWhereInput {
 }
 
 input CommentUpdateInput {
-  userId: UserUpdateOneInput
+  userId: UserUpdateOneRequiredInput
   text: String
 }
 
@@ -140,6 +140,7 @@ type Creation {
   userId: User
   name: String!
   description: String!
+  photo: String!
 }
 
 type CreationConnection {
@@ -152,6 +153,7 @@ input CreationCreateInput {
   userId: UserCreateOneInput
   name: String!
   description: String!
+  photo: String!
 }
 
 type CreationEdge {
@@ -166,6 +168,8 @@ enum CreationOrderByInput {
   name_DESC
   description_ASC
   description_DESC
+  photo_ASC
+  photo_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -176,6 +180,7 @@ type CreationPreviousValues {
   id: ID!
   name: String!
   description: String!
+  photo: String!
 }
 
 type CreationSubscriptionPayload {
@@ -200,11 +205,13 @@ input CreationUpdateInput {
   userId: UserUpdateOneInput
   name: String
   description: String
+  photo: String
 }
 
 input CreationUpdateManyMutationInput {
   name: String
   description: String
+  photo: String
 }
 
 input CreationWhereInput {
@@ -251,6 +258,20 @@ input CreationWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
+  photo: String
+  photo_not: String
+  photo_in: [String!]
+  photo_not_in: [String!]
+  photo_lt: String
+  photo_lte: String
+  photo_gt: String
+  photo_gte: String
+  photo_contains: String
+  photo_not_contains: String
+  photo_starts_with: String
+  photo_not_starts_with: String
+  photo_ends_with: String
+  photo_not_ends_with: String
   AND: [CreationWhereInput!]
   OR: [CreationWhereInput!]
   NOT: [CreationWhereInput!]
@@ -782,6 +803,13 @@ input UserUpdateOneInput {
   upsert: UserUpsertNestedInput
   delete: Boolean
   disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredInput {
+  create: UserCreateInput
+  update: UserUpdateDataInput
+  upsert: UserUpsertNestedInput
   connect: UserWhereUniqueInput
 }
 
