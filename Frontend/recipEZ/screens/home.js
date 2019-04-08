@@ -11,7 +11,7 @@ import fetch from 'node-fetch';
 
 const prismaClient = new ApolloClient({
   link: createHttpLink({
-    uri: "https://eu1.prisma.sh/nik-malhotra-1a119d/recipez-gql/dev",
+    uri: "https://eu1.prisma.sh/nik-malhotra-1a119d/recipez/dev",
     fetch: fetch
   }),
   cache: new InMemoryCache()
@@ -20,7 +20,7 @@ const prismaClient = new ApolloClient({
 const getUsers = gql`
     {
       users{
-        first_name
+        firstName
         }
       }
 `;
@@ -92,9 +92,9 @@ class HomeParts extends Component {
           {({ loading, error, data }) => {
             if (loading) return <Text>Loading...</Text>;
             if (error) return <Text>error</Text>
-            console.log(data.users[0].first_name);
+            console.log(data.users[0].firstName);
             return (
-              <Text>{data.users[0].first_name}</Text>
+              <Text>{data.users[0].firstName}</Text>
             )
           }}
         </Query>
