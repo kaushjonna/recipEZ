@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, AppRegistry, ScrollView, View, Image, Text, Button } from 'react-native';
+import { StyleSheet, AppRegistry, ScrollView, View, Image, Text, Button, } from 'react-native';
 import { withNavigation, } from "react-navigation";
-import { Title, TextInput, Card, Paragraph, Avatar, List } from 'react-native-paper'
+import { Title, TextInput, Card, Paragraph, Surface, Avatar, Subheading } from 'react-native-paper'
 import gql from 'graphql-tag';
 import { Query } from "react-apollo";
 import { ApolloClient } from 'apollo-boost';
@@ -21,96 +21,57 @@ const getUsers = gql`
     {
       users{
         firstName
+        lastName
+
         }
       }
 `;
 
-class Greeting extends Component {
-  render() {
-    return (
-      <Card>
-        <Card.Content>
-          <Title>Hey, using RecipEZ is E-Z!</Title>
-          <Text>1. Lay out your ingredients </Text>
-          <Text>2. Open the EZCam</Text>
-          <Text>3. Find a Recipe that you can make based on your ingredients! </Text>
-          <Text>Click on the EZCam to get started.</Text>
-        </Card.Content>
-      </Card >
-    );
-  }
-}
-
-class LogoTitle extends React.Component {
-  render() {
-    return (
-      <Image
-        source={require('../assets/appLogoWhite.png')}
-        style={{ width: 200, height: 80 }}
-      />
-    );
-  }
-}
-
-class Misc extends Component {
-  render() {
-    return (
-      <Card>
-        <Card.Content>
-          <Title>Have a recipe in mind?</Title>
-          <Paragraph>Use the Search function to find your recipe. </Paragraph>
-        </Card.Content>
-      </Card>
-    );
-  }
-}
-
-
 class HomeParts extends Component {
-  static navigationOptions = ({ navigation }) => {
-    const params = navigation.state.params || {};
-
-    return {
-      headerTitle: <LogoTitle />,
-      headerLeft: (
-        <Button
-          onPress={() => navigation.navigate('MyModal')}
-          title="Info"
-          color="#fff"
-        />
-      ),
-    };
-  };
   render() {
     return (
-      <ScrollView>
-        <Image source={require('../assets/appLogo.png')} style={{ width: 300, height: 120 }}></Image>
-        <Text>Home Screen</Text>
-        <Greeting />
-        <Misc />
-        <Query client={prismaClient} query={getUsers}>
-          {({ loading, error, data }) => {
-            if (loading) return <Text>Loading...</Text>;
-<<<<<<< HEAD
-            if (error) return <Text>{error.message}</Text>
-            console.log(data.users[0].first_name);
-=======
-            if (error) return <Text>error</Text>
-            console.log(data.users[0].firstName);
->>>>>>> 4a74a69b886a9c30ac172d3da4b71d25aa6a0f48
-            return (
-              <Text>{data.users[0].firstName}</Text>
-            )
-          }}
-        </Query>
-        <Button
-          onPress={() => this.props.navigation.navigate('MyModal')}
-          title="Info"
-          color="#000000"
-        />
-      </ScrollView>
+      <View style={{ flex: 1, justifyContent: "space-between" }}>
+        <ScrollView>
+          <Image style={{ width: 300, height: 120, alignSelf: "center" }} source={require('../assets/appLogo.png')}></Image>
+          <Surface style={styles.surface}>
+            <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center' }}>
+              <Query client={prismaClient} query={getUsers}>
+                {({ loading, error, data }) => {
+                  if (loading) return <Text>Loading...</Text>;
+                  if (error) return <Text>Error, {error.message}</Text>
+                  console.log(data.users[0].firstName);
+                  return (
+                    <Title style={{ alignSelf: 'center' }}>Hey {data.users[0].firstName} {data.users[0].lastName}, using RecipEZ is E-Z!</Title>
+                  )
+                }}
+              </Query>
+              <Subheading>1. Lay out your ingredients </Subheading>
+              <Subheading>2. Open the EZCam</Subheading>
+              <Subheading>3. Find a Recipe that you can make based on your ingredients! </Subheading>
+              <Title style={{ alignSelf: 'center', margin: 5 }}>Click on the EZCam to get started.</Title>
+            </View>
+          </Surface >
+          <Surface style={styles.surface}>
+            <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+              <Avatar.Icon size={80} icon="search" />
+              <Title>Have a recipe in mind?</Title>
+              <Subheading>Use the Search function to find your recipe. </Subheading>
+            </View>
+          </Surface>
+        </ScrollView>
+      </View>
     );
   }
 }
 
 export default withNavigation(HomeParts);
+
+const styles = StyleSheet.create({
+  surface: {
+    padding: 8,
+    margin: 8,
+    height: 200,
+    width: '100%',
+    elevation: 9,
+  },
+});

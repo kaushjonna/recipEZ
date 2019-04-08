@@ -55,15 +55,11 @@ class CameraParts extends React.Component {
                 </Text>
               </TouchableOpacity> */}
               <TouchableOpacity style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center' }}>
-                <Text style={{ color: '#fff', textAlign: 'center', paddingTop: 20 }}>Ensure that all of your ingredients are evenly spaced out, so that we can detect everything you're working with!</Text>
-                <IconButton size={40} color={'#6200ee'} icon="camera" onPress={() => {
+                <Text style={{ color: '#fff', textAlign: 'center', paddingTop: 10, fontSize: 16 }}>Be sure to space out your ingredients! </Text>
+                <IconButton size={40} color={'#fff'} icon="brightness-1" onPress={() => {
                   this.props.navigation.push('Detected')
                 }} />
               </TouchableOpacity>
-              <TouchableOpacity>
-
-              </TouchableOpacity>
-
             </View>
           </Camera>
         </View >

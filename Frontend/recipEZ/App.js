@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, Button } from 'react-native';
 import { createAppContainer, createBottomTabNavigator, createStackNavigator } from "react-navigation";
-import { Appbar, Provider as PaperProvider, Text, Title, Paragraph, ActivityIndicator, Card, ScrollView, View, Image, List } from 'react-native-paper';
-import icons from 'react-native-vector-icons'
+import { Appbar, Provider as PaperProvider } from 'react-native-paper';
 
 
 // GQL + Apollo
@@ -100,7 +99,7 @@ export default class App extends Component {
   render() {
     return (
       <ApolloProvider client={client}>
-        <PaperProvider>
+        <PaperProvider style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-between' }} >
           <Appbar.Header>
             <Appbar.Content title="RecipEZ"></Appbar.Content>
           </Appbar.Header>
