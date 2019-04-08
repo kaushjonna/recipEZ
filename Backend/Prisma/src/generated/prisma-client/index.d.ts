@@ -17,7 +17,6 @@ export interface Exists {
   comment: (where?: CommentWhereInput) => Promise<boolean>;
   creation: (where?: CreationWhereInput) => Promise<boolean>;
   ingredient: (where?: IngredientWhereInput) => Promise<boolean>;
-  ingredient_Type: (where?: Ingredient_TypeWhereInput) => Promise<boolean>;
   saved_Recipe: (where?: Saved_RecipeWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
 }
@@ -110,31 +109,6 @@ export interface Prisma {
       last?: Int;
     }
   ) => IngredientConnectionPromise;
-  ingredient_Type: (
-    where: Ingredient_TypeWhereUniqueInput
-  ) => Ingredient_TypePromise;
-  ingredient_Types: (
-    args?: {
-      where?: Ingredient_TypeWhereInput;
-      orderBy?: Ingredient_TypeOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => FragmentableArray<Ingredient_Type>;
-  ingredient_TypesConnection: (
-    args?: {
-      where?: Ingredient_TypeWhereInput;
-      orderBy?: Ingredient_TypeOrderByInput;
-      skip?: Int;
-      after?: String;
-      before?: String;
-      first?: Int;
-      last?: Int;
-    }
-  ) => Ingredient_TypeConnectionPromise;
   saved_Recipe: (where: Saved_RecipeWhereUniqueInput) => Saved_RecipePromise;
   saved_Recipes: (
     args?: {
@@ -238,34 +212,6 @@ export interface Prisma {
   ) => IngredientPromise;
   deleteIngredient: (where: IngredientWhereUniqueInput) => IngredientPromise;
   deleteManyIngredients: (where?: IngredientWhereInput) => BatchPayloadPromise;
-  createIngredient_Type: (
-    data: Ingredient_TypeCreateInput
-  ) => Ingredient_TypePromise;
-  updateIngredient_Type: (
-    args: {
-      data: Ingredient_TypeUpdateInput;
-      where: Ingredient_TypeWhereUniqueInput;
-    }
-  ) => Ingredient_TypePromise;
-  updateManyIngredient_Types: (
-    args: {
-      data: Ingredient_TypeUpdateManyMutationInput;
-      where?: Ingredient_TypeWhereInput;
-    }
-  ) => BatchPayloadPromise;
-  upsertIngredient_Type: (
-    args: {
-      where: Ingredient_TypeWhereUniqueInput;
-      create: Ingredient_TypeCreateInput;
-      update: Ingredient_TypeUpdateInput;
-    }
-  ) => Ingredient_TypePromise;
-  deleteIngredient_Type: (
-    where: Ingredient_TypeWhereUniqueInput
-  ) => Ingredient_TypePromise;
-  deleteManyIngredient_Types: (
-    where?: Ingredient_TypeWhereInput
-  ) => BatchPayloadPromise;
   createSaved_Recipe: (data: Saved_RecipeCreateInput) => Saved_RecipePromise;
   updateSaved_Recipe: (
     args: { data: Saved_RecipeUpdateInput; where: Saved_RecipeWhereUniqueInput }
@@ -323,9 +269,6 @@ export interface Subscription {
   ingredient: (
     where?: IngredientSubscriptionWhereInput
   ) => IngredientSubscriptionPayloadSubscription;
-  ingredient_Type: (
-    where?: Ingredient_TypeSubscriptionWhereInput
-  ) => Ingredient_TypeSubscriptionPayloadSubscription;
   saved_Recipe: (
     where?: Saved_RecipeSubscriptionWhereInput
   ) => Saved_RecipeSubscriptionPayloadSubscription;
@@ -361,16 +304,18 @@ export type CreationOrderByInput =
   | "name_DESC"
   | "description_ASC"
   | "description_DESC"
+  | "photo_ASC"
+  | "photo_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export type Ingredient_TypeOrderByInput =
+export type IngredientOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "description_ASC"
-  | "description_DESC"
+  | "name_ASC"
+  | "name_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -402,31 +347,69 @@ export type UserOrderByInput =
   | "updatedAt_ASC"
   | "updatedAt_DESC";
 
-export type IngredientOrderByInput =
-  | "id_ASC"
-  | "id_DESC"
-  | "name_ASC"
-  | "name_DESC"
-  | "createdAt_ASC"
-  | "createdAt_DESC"
-  | "updatedAt_ASC"
-  | "updatedAt_DESC";
-
-export interface CommentUpdateInput {
-  userId?: UserUpdateOneInput;
-  text?: String;
+export interface IngredientCreateInput {
+  name: String;
 }
 
-export type Ingredient_TypeWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-  description?: String;
-}>;
+export interface UserCreateOneInput {
+  create?: UserCreateInput;
+  connect?: UserWhereUniqueInput;
+}
+
+export interface UserUpdateOneInput {
+  create?: UserCreateInput;
+  update?: UserUpdateDataInput;
+  upsert?: UserUpsertNestedInput;
+  delete?: Boolean;
+  disconnect?: Boolean;
+  connect?: UserWhereUniqueInput;
+}
 
 export type CommentWhereUniqueInput = AtLeastOne<{
   id: ID_Input;
 }>;
 
-export interface CommentWhereInput {
+export interface CreationUpdateInput {
+  userId?: UserUpdateOneInput;
+  name?: String;
+  description?: String;
+  photo?: String;
+}
+
+export interface CreationSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: CreationWhereInput;
+  AND?: CreationSubscriptionWhereInput[] | CreationSubscriptionWhereInput;
+  OR?: CreationSubscriptionWhereInput[] | CreationSubscriptionWhereInput;
+  NOT?: CreationSubscriptionWhereInput[] | CreationSubscriptionWhereInput;
+}
+
+export type Saved_RecipeWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface UserUpdateManyMutationInput {
+  firstName?: String;
+  lastName?: String;
+  email?: String;
+  password?: String;
+}
+
+export interface CreationCreateInput {
+  userId?: UserCreateOneInput;
+  name: String;
+  description: String;
+  photo: String;
+}
+
+export interface Saved_RecipeUpdateManyMutationInput {
+  recipeLink?: String;
+}
+
+export interface Saved_RecipeWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -442,75 +425,40 @@ export interface CommentWhereInput {
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
   userId?: UserWhereInput;
-  text?: String;
-  text_not?: String;
-  text_in?: String[] | String;
-  text_not_in?: String[] | String;
-  text_lt?: String;
-  text_lte?: String;
-  text_gt?: String;
-  text_gte?: String;
-  text_contains?: String;
-  text_not_contains?: String;
-  text_starts_with?: String;
-  text_not_starts_with?: String;
-  text_ends_with?: String;
-  text_not_ends_with?: String;
-  AND?: CommentWhereInput[] | CommentWhereInput;
-  OR?: CommentWhereInput[] | CommentWhereInput;
-  NOT?: CommentWhereInput[] | CommentWhereInput;
+  recipeLink?: String;
+  recipeLink_not?: String;
+  recipeLink_in?: String[] | String;
+  recipeLink_not_in?: String[] | String;
+  recipeLink_lt?: String;
+  recipeLink_lte?: String;
+  recipeLink_gt?: String;
+  recipeLink_gte?: String;
+  recipeLink_contains?: String;
+  recipeLink_not_contains?: String;
+  recipeLink_starts_with?: String;
+  recipeLink_not_starts_with?: String;
+  recipeLink_ends_with?: String;
+  recipeLink_not_ends_with?: String;
+  AND?: Saved_RecipeWhereInput[] | Saved_RecipeWhereInput;
+  OR?: Saved_RecipeWhereInput[] | Saved_RecipeWhereInput;
+  NOT?: Saved_RecipeWhereInput[] | Saved_RecipeWhereInput;
 }
 
-export interface CreationSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: CreationWhereInput;
-  AND?: CreationSubscriptionWhereInput[] | CreationSubscriptionWhereInput;
-  OR?: CreationSubscriptionWhereInput[] | CreationSubscriptionWhereInput;
-  NOT?: CreationSubscriptionWhereInput[] | CreationSubscriptionWhereInput;
-}
-
-export interface IngredientUpdateInput {
-  ingredientTypeCode?: Ingredient_TypeUpdateOneInput;
-  name?: String;
-}
-
-export interface CommentSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: CommentWhereInput;
-  AND?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput;
-  OR?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput;
-  NOT?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput;
-}
-
-export interface Ingredient_TypeCreateInput {
-  description: String;
-}
-
-export interface UserUpdateInput {
-  firstName?: String;
-  lastName?: String;
-  email?: String;
-  password?: String;
-}
-
-export interface Ingredient_TypeCreateOneInput {
-  create?: Ingredient_TypeCreateInput;
-  connect?: Ingredient_TypeWhereUniqueInput;
-}
-
-export interface Saved_RecipeUpdateManyMutationInput {
+export interface Saved_RecipeUpdateInput {
+  userId?: UserUpdateOneInput;
   recipeLink?: String;
 }
 
-export type Saved_RecipeWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
+export interface IngredientSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: IngredientWhereInput;
+  AND?: IngredientSubscriptionWhereInput[] | IngredientSubscriptionWhereInput;
+  OR?: IngredientSubscriptionWhereInput[] | IngredientSubscriptionWhereInput;
+  NOT?: IngredientSubscriptionWhereInput[] | IngredientSubscriptionWhereInput;
+}
 
 export interface UserWhereInput {
   id?: ID_Input;
@@ -588,82 +536,31 @@ export interface UserWhereInput {
   NOT?: UserWhereInput[] | UserWhereInput;
 }
 
-export interface IngredientCreateInput {
-  ingredientTypeCode?: Ingredient_TypeCreateOneInput;
-  name: String;
-}
-
-export interface Saved_RecipeCreateInput {
-  userId?: UserCreateOneInput;
-  recipeLink: String;
-}
-
-export interface Saved_RecipeWhereInput {
-  id?: ID_Input;
-  id_not?: ID_Input;
-  id_in?: ID_Input[] | ID_Input;
-  id_not_in?: ID_Input[] | ID_Input;
-  id_lt?: ID_Input;
-  id_lte?: ID_Input;
-  id_gt?: ID_Input;
-  id_gte?: ID_Input;
-  id_contains?: ID_Input;
-  id_not_contains?: ID_Input;
-  id_starts_with?: ID_Input;
-  id_not_starts_with?: ID_Input;
-  id_ends_with?: ID_Input;
-  id_not_ends_with?: ID_Input;
-  userId?: UserWhereInput;
-  recipeLink?: String;
-  recipeLink_not?: String;
-  recipeLink_in?: String[] | String;
-  recipeLink_not_in?: String[] | String;
-  recipeLink_lt?: String;
-  recipeLink_lte?: String;
-  recipeLink_gt?: String;
-  recipeLink_gte?: String;
-  recipeLink_contains?: String;
-  recipeLink_not_contains?: String;
-  recipeLink_starts_with?: String;
-  recipeLink_not_starts_with?: String;
-  recipeLink_ends_with?: String;
-  recipeLink_not_ends_with?: String;
-  AND?: Saved_RecipeWhereInput[] | Saved_RecipeWhereInput;
-  OR?: Saved_RecipeWhereInput[] | Saved_RecipeWhereInput;
-  NOT?: Saved_RecipeWhereInput[] | Saved_RecipeWhereInput;
-}
-
-export type IngredientWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface Ingredient_TypeSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: Ingredient_TypeWhereInput;
-  AND?:
-    | Ingredient_TypeSubscriptionWhereInput[]
-    | Ingredient_TypeSubscriptionWhereInput;
-  OR?:
-    | Ingredient_TypeSubscriptionWhereInput[]
-    | Ingredient_TypeSubscriptionWhereInput;
-  NOT?:
-    | Ingredient_TypeSubscriptionWhereInput[]
-    | Ingredient_TypeSubscriptionWhereInput;
+export interface CommentUpdateManyMutationInput {
+  text?: String;
 }
 
 export interface IngredientUpdateManyMutationInput {
   name?: String;
 }
 
-export interface CreationUpdateManyMutationInput {
-  name?: String;
-  description?: String;
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
 }
 
-export interface Ingredient_TypeWhereInput {
+export type IngredientWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface UserUpdateDataInput {
+  firstName?: String;
+  lastName?: String;
+  email?: String;
+  password?: String;
+}
+
+export interface IngredientWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -678,49 +575,23 @@ export interface Ingredient_TypeWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  description?: String;
-  description_not?: String;
-  description_in?: String[] | String;
-  description_not_in?: String[] | String;
-  description_lt?: String;
-  description_lte?: String;
-  description_gt?: String;
-  description_gte?: String;
-  description_contains?: String;
-  description_not_contains?: String;
-  description_starts_with?: String;
-  description_not_starts_with?: String;
-  description_ends_with?: String;
-  description_not_ends_with?: String;
-  AND?: Ingredient_TypeWhereInput[] | Ingredient_TypeWhereInput;
-  OR?: Ingredient_TypeWhereInput[] | Ingredient_TypeWhereInput;
-  NOT?: Ingredient_TypeWhereInput[] | Ingredient_TypeWhereInput;
-}
-
-export interface CreationUpdateInput {
-  userId?: UserUpdateOneInput;
   name?: String;
-  description?: String;
-}
-
-export interface Ingredient_TypeUpsertNestedInput {
-  update: Ingredient_TypeUpdateDataInput;
-  create: Ingredient_TypeCreateInput;
-}
-
-export interface CreationCreateInput {
-  userId?: UserCreateOneInput;
-  name: String;
-  description: String;
-}
-
-export interface Ingredient_TypeUpdateOneInput {
-  create?: Ingredient_TypeCreateInput;
-  update?: Ingredient_TypeUpdateDataInput;
-  upsert?: Ingredient_TypeUpsertNestedInput;
-  delete?: Boolean;
-  disconnect?: Boolean;
-  connect?: Ingredient_TypeWhereUniqueInput;
+  name_not?: String;
+  name_in?: String[] | String;
+  name_not_in?: String[] | String;
+  name_lt?: String;
+  name_lte?: String;
+  name_gt?: String;
+  name_gte?: String;
+  name_contains?: String;
+  name_not_contains?: String;
+  name_starts_with?: String;
+  name_not_starts_with?: String;
+  name_ends_with?: String;
+  name_not_ends_with?: String;
+  AND?: IngredientWhereInput[] | IngredientWhereInput;
+  OR?: IngredientWhereInput[] | IngredientWhereInput;
+  NOT?: IngredientWhereInput[] | IngredientWhereInput;
 }
 
 export type UserWhereUniqueInput = AtLeastOne<{
@@ -728,11 +599,10 @@ export type UserWhereUniqueInput = AtLeastOne<{
   email?: String;
 }>;
 
-export interface UserUpdateManyMutationInput {
-  firstName?: String;
-  lastName?: String;
-  email?: String;
-  password?: String;
+export interface CreationUpdateManyMutationInput {
+  name?: String;
+  description?: String;
+  photo?: String;
 }
 
 export interface Saved_RecipeSubscriptionWhereInput {
@@ -750,6 +620,20 @@ export interface Saved_RecipeSubscriptionWhereInput {
   NOT?:
     | Saved_RecipeSubscriptionWhereInput[]
     | Saved_RecipeSubscriptionWhereInput;
+}
+
+export interface UserUpdateInput {
+  firstName?: String;
+  lastName?: String;
+  email?: String;
+  password?: String;
+}
+
+export interface UserUpdateOneRequiredInput {
+  create?: UserCreateInput;
+  update?: UserUpdateDataInput;
+  upsert?: UserUpsertNestedInput;
+  connect?: UserWhereUniqueInput;
 }
 
 export interface CreationWhereInput {
@@ -796,25 +680,78 @@ export interface CreationWhereInput {
   description_not_starts_with?: String;
   description_ends_with?: String;
   description_not_ends_with?: String;
+  photo?: String;
+  photo_not?: String;
+  photo_in?: String[] | String;
+  photo_not_in?: String[] | String;
+  photo_lt?: String;
+  photo_lte?: String;
+  photo_gt?: String;
+  photo_gte?: String;
+  photo_contains?: String;
+  photo_not_contains?: String;
+  photo_starts_with?: String;
+  photo_not_starts_with?: String;
+  photo_ends_with?: String;
+  photo_not_ends_with?: String;
   AND?: CreationWhereInput[] | CreationWhereInput;
   OR?: CreationWhereInput[] | CreationWhereInput;
   NOT?: CreationWhereInput[] | CreationWhereInput;
 }
 
-export interface CommentUpdateManyMutationInput {
+export interface IngredientUpdateInput {
+  name?: String;
+}
+
+export interface CommentCreateInput {
+  userId: UserCreateOneInput;
+  text: String;
+}
+
+export interface UserCreateInput {
+  firstName: String;
+  lastName: String;
+  email: String;
+  password: String;
+}
+
+export interface CommentUpdateInput {
+  userId?: UserUpdateOneRequiredInput;
   text?: String;
 }
 
-export interface Ingredient_TypeUpdateManyMutationInput {
-  description?: String;
+export interface UserSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: UserWhereInput;
+  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
+  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
 }
 
-export interface UserUpsertNestedInput {
-  update: UserUpdateDataInput;
-  create: UserCreateInput;
+export interface Saved_RecipeCreateInput {
+  userId?: UserCreateOneInput;
+  recipeLink: String;
 }
 
-export interface IngredientWhereInput {
+export type CreationWhereUniqueInput = AtLeastOne<{
+  id: ID_Input;
+}>;
+
+export interface CommentSubscriptionWhereInput {
+  mutation_in?: MutationType[] | MutationType;
+  updatedFields_contains?: String;
+  updatedFields_contains_every?: String[] | String;
+  updatedFields_contains_some?: String[] | String;
+  node?: CommentWhereInput;
+  AND?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput;
+  OR?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput;
+  NOT?: CommentSubscriptionWhereInput[] | CommentSubscriptionWhereInput;
+}
+
+export interface CommentWhereInput {
   id?: ID_Input;
   id_not?: ID_Input;
   id_in?: ID_Input[] | ID_Input;
@@ -829,122 +766,61 @@ export interface IngredientWhereInput {
   id_not_starts_with?: ID_Input;
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
-  ingredientTypeCode?: Ingredient_TypeWhereInput;
-  name?: String;
-  name_not?: String;
-  name_in?: String[] | String;
-  name_not_in?: String[] | String;
-  name_lt?: String;
-  name_lte?: String;
-  name_gt?: String;
-  name_gte?: String;
-  name_contains?: String;
-  name_not_contains?: String;
-  name_starts_with?: String;
-  name_not_starts_with?: String;
-  name_ends_with?: String;
-  name_not_ends_with?: String;
-  AND?: IngredientWhereInput[] | IngredientWhereInput;
-  OR?: IngredientWhereInput[] | IngredientWhereInput;
-  NOT?: IngredientWhereInput[] | IngredientWhereInput;
-}
-
-export interface UserUpdateDataInput {
-  firstName?: String;
-  lastName?: String;
-  email?: String;
-  password?: String;
-}
-
-export interface Ingredient_TypeUpdateDataInput {
-  description?: String;
-}
-
-export type CreationWhereUniqueInput = AtLeastOne<{
-  id: ID_Input;
-}>;
-
-export interface UserCreateInput {
-  firstName: String;
-  lastName: String;
-  email: String;
-  password: String;
-}
-
-export interface UserCreateOneInput {
-  create?: UserCreateInput;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface CommentCreateInput {
-  userId?: UserCreateOneInput;
-  text: String;
-}
-
-export interface UserUpdateOneInput {
-  create?: UserCreateInput;
-  update?: UserUpdateDataInput;
-  upsert?: UserUpsertNestedInput;
-  delete?: Boolean;
-  disconnect?: Boolean;
-  connect?: UserWhereUniqueInput;
-}
-
-export interface Saved_RecipeUpdateInput {
-  userId?: UserUpdateOneInput;
-  recipeLink?: String;
-}
-
-export interface IngredientSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: IngredientWhereInput;
-  AND?: IngredientSubscriptionWhereInput[] | IngredientSubscriptionWhereInput;
-  OR?: IngredientSubscriptionWhereInput[] | IngredientSubscriptionWhereInput;
-  NOT?: IngredientSubscriptionWhereInput[] | IngredientSubscriptionWhereInput;
-}
-
-export interface UserSubscriptionWhereInput {
-  mutation_in?: MutationType[] | MutationType;
-  updatedFields_contains?: String;
-  updatedFields_contains_every?: String[] | String;
-  updatedFields_contains_some?: String[] | String;
-  node?: UserWhereInput;
-  AND?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  OR?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-  NOT?: UserSubscriptionWhereInput[] | UserSubscriptionWhereInput;
-}
-
-export interface Ingredient_TypeUpdateInput {
-  description?: String;
+  userId?: UserWhereInput;
+  text?: String;
+  text_not?: String;
+  text_in?: String[] | String;
+  text_not_in?: String[] | String;
+  text_lt?: String;
+  text_lte?: String;
+  text_gt?: String;
+  text_gte?: String;
+  text_contains?: String;
+  text_not_contains?: String;
+  text_starts_with?: String;
+  text_not_starts_with?: String;
+  text_ends_with?: String;
+  text_not_ends_with?: String;
+  AND?: CommentWhereInput[] | CommentWhereInput;
+  OR?: CommentWhereInput[] | CommentWhereInput;
+  NOT?: CommentWhereInput[] | CommentWhereInput;
 }
 
 export interface NodeNode {
   id: ID_Output;
 }
 
-export interface Creation {
-  id: ID_Output;
-  name: String;
-  description: String;
+export interface AggregateUser {
+  count: Int;
 }
 
-export interface CreationPromise extends Promise<Creation>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  userId: <T = UserPromise>() => T;
-  name: () => Promise<String>;
-  description: () => Promise<String>;
-}
-
-export interface CreationSubscription
-  extends Promise<AsyncIterator<Creation>>,
+export interface AggregateUserPromise
+  extends Promise<AggregateUser>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  userId: <T = UserSubscription>() => T;
-  name: () => Promise<AsyncIterator<String>>;
-  description: () => Promise<AsyncIterator<String>>;
+  count: () => Promise<Int>;
+}
+
+export interface AggregateUserSubscription
+  extends Promise<AsyncIterator<AggregateUser>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface CommentEdge {
+  node: Comment;
+  cursor: String;
+}
+
+export interface CommentEdgePromise extends Promise<CommentEdge>, Fragmentable {
+  node: <T = CommentPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface CommentEdgeSubscription
+  extends Promise<AsyncIterator<CommentEdge>>,
+    Fragmentable {
+  node: <T = CommentSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserPreviousValues {
@@ -991,6 +867,31 @@ export interface AggregateCommentSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface Saved_RecipeSubscriptionPayload {
+  mutation: MutationType;
+  node: Saved_Recipe;
+  updatedFields: String[];
+  previousValues: Saved_RecipePreviousValues;
+}
+
+export interface Saved_RecipeSubscriptionPayloadPromise
+  extends Promise<Saved_RecipeSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = Saved_RecipePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = Saved_RecipePreviousValuesPromise>() => T;
+}
+
+export interface Saved_RecipeSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<Saved_RecipeSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = Saved_RecipeSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = Saved_RecipePreviousValuesSubscription>() => T;
+}
+
 export interface UserEdge {
   node: User;
   cursor: String;
@@ -1008,37 +909,85 @@ export interface UserEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface CommentEdge {
-  node: Comment;
-  cursor: String;
+export interface UserConnection {
+  pageInfo: PageInfo;
+  edges: UserEdge[];
 }
 
-export interface CommentEdgePromise extends Promise<CommentEdge>, Fragmentable {
-  node: <T = CommentPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface CommentEdgeSubscription
-  extends Promise<AsyncIterator<CommentEdge>>,
+export interface UserConnectionPromise
+  extends Promise<UserConnection>,
     Fragmentable {
-  node: <T = CommentSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
 }
 
-export interface BatchPayload {
-  count: Long;
-}
-
-export interface BatchPayloadPromise
-  extends Promise<BatchPayload>,
+export interface UserConnectionSubscription
+  extends Promise<AsyncIterator<UserConnection>>,
     Fragmentable {
-  count: () => Promise<Long>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
 }
 
-export interface BatchPayloadSubscription
-  extends Promise<AsyncIterator<BatchPayload>>,
+export interface AggregateSaved_Recipe {
+  count: Int;
+}
+
+export interface AggregateSaved_RecipePromise
+  extends Promise<AggregateSaved_Recipe>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>;
+  count: () => Promise<Int>;
+}
+
+export interface AggregateSaved_RecipeSubscription
+  extends Promise<AsyncIterator<AggregateSaved_Recipe>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface Saved_RecipeConnection {
+  pageInfo: PageInfo;
+  edges: Saved_RecipeEdge[];
+}
+
+export interface Saved_RecipeConnectionPromise
+  extends Promise<Saved_RecipeConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<Saved_RecipeEdge>>() => T;
+  aggregate: <T = AggregateSaved_RecipePromise>() => T;
+}
+
+export interface Saved_RecipeConnectionSubscription
+  extends Promise<AsyncIterator<Saved_RecipeConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<Saved_RecipeEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateSaved_RecipeSubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -1066,108 +1015,41 @@ export interface UserSubscriptionPayloadSubscription
   previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
-export interface Saved_RecipeSubscriptionPayload {
-  mutation: MutationType;
-  node: Saved_Recipe;
-  updatedFields: String[];
-  previousValues: Saved_RecipePreviousValues;
+export interface CommentConnection {
+  pageInfo: PageInfo;
+  edges: CommentEdge[];
 }
 
-export interface Saved_RecipeSubscriptionPayloadPromise
-  extends Promise<Saved_RecipeSubscriptionPayload>,
+export interface CommentConnectionPromise
+  extends Promise<CommentConnection>,
     Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = Saved_RecipePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = Saved_RecipePreviousValuesPromise>() => T;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<CommentEdge>>() => T;
+  aggregate: <T = AggregateCommentPromise>() => T;
 }
 
-export interface Saved_RecipeSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<Saved_RecipeSubscriptionPayload>>,
+export interface CommentConnectionSubscription
+  extends Promise<AsyncIterator<CommentConnection>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = Saved_RecipeSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = Saved_RecipePreviousValuesSubscription>() => T;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CommentEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCommentSubscription>() => T;
 }
 
-export interface Saved_RecipeEdge {
-  node: Saved_Recipe;
-  cursor: String;
-}
-
-export interface Saved_RecipeEdgePromise
-  extends Promise<Saved_RecipeEdge>,
-    Fragmentable {
-  node: <T = Saved_RecipePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface Saved_RecipeEdgeSubscription
-  extends Promise<AsyncIterator<Saved_RecipeEdge>>,
-    Fragmentable {
-  node: <T = Saved_RecipeSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateSaved_Recipe {
+export interface AggregateIngredient {
   count: Int;
 }
 
-export interface AggregateSaved_RecipePromise
-  extends Promise<AggregateSaved_Recipe>,
+export interface AggregateIngredientPromise
+  extends Promise<AggregateIngredient>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateSaved_RecipeSubscription
-  extends Promise<AsyncIterator<AggregateSaved_Recipe>>,
+export interface AggregateIngredientSubscription
+  extends Promise<AsyncIterator<AggregateIngredient>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface Saved_Recipe {
-  id: ID_Output;
-  recipeLink: String;
-}
-
-export interface Saved_RecipePromise
-  extends Promise<Saved_Recipe>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  userId: <T = UserPromise>() => T;
-  recipeLink: () => Promise<String>;
-}
-
-export interface Saved_RecipeSubscription
-  extends Promise<AsyncIterator<Saved_Recipe>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  userId: <T = UserSubscription>() => T;
-  recipeLink: () => Promise<AsyncIterator<String>>;
 }
 
 export interface CommentSubscriptionPayload {
@@ -1195,23 +1077,25 @@ export interface CommentSubscriptionPayloadSubscription
   previousValues: <T = CommentPreviousValuesSubscription>() => T;
 }
 
-export interface Ingredient_TypeEdge {
-  node: Ingredient_Type;
-  cursor: String;
+export interface IngredientConnection {
+  pageInfo: PageInfo;
+  edges: IngredientEdge[];
 }
 
-export interface Ingredient_TypeEdgePromise
-  extends Promise<Ingredient_TypeEdge>,
+export interface IngredientConnectionPromise
+  extends Promise<IngredientConnection>,
     Fragmentable {
-  node: <T = Ingredient_TypePromise>() => T;
-  cursor: () => Promise<String>;
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<IngredientEdge>>() => T;
+  aggregate: <T = AggregateIngredientPromise>() => T;
 }
 
-export interface Ingredient_TypeEdgeSubscription
-  extends Promise<AsyncIterator<Ingredient_TypeEdge>>,
+export interface IngredientConnectionSubscription
+  extends Promise<AsyncIterator<IngredientConnection>>,
     Fragmentable {
-  node: <T = Ingredient_TypeSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<IngredientEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateIngredientSubscription>() => T;
 }
 
 export interface CommentPreviousValues {
@@ -1233,62 +1117,60 @@ export interface CommentPreviousValuesSubscription
   text: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateIngredient {
+export interface AggregateCreation {
   count: Int;
 }
 
-export interface AggregateIngredientPromise
-  extends Promise<AggregateIngredient>,
+export interface AggregateCreationPromise
+  extends Promise<AggregateCreation>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateIngredientSubscription
-  extends Promise<AsyncIterator<AggregateIngredient>>,
+export interface AggregateCreationSubscription
+  extends Promise<AsyncIterator<AggregateCreation>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface CommentConnection {
-  pageInfo: PageInfo;
-  edges: CommentEdge[];
+export interface Comment {
+  id: ID_Output;
+  text: String;
 }
 
-export interface CommentConnectionPromise
-  extends Promise<CommentConnection>,
+export interface CommentPromise extends Promise<Comment>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  userId: <T = UserPromise>() => T;
+  text: () => Promise<String>;
+}
+
+export interface CommentSubscription
+  extends Promise<AsyncIterator<Comment>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  userId: <T = UserSubscription>() => T;
+  text: () => Promise<AsyncIterator<String>>;
+}
+
+export interface CreationConnection {
+  pageInfo: PageInfo;
+  edges: CreationEdge[];
+}
+
+export interface CreationConnectionPromise
+  extends Promise<CreationConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<CommentEdge>>() => T;
-  aggregate: <T = AggregateCommentPromise>() => T;
+  edges: <T = FragmentableArray<CreationEdge>>() => T;
+  aggregate: <T = AggregateCreationPromise>() => T;
 }
 
-export interface CommentConnectionSubscription
-  extends Promise<AsyncIterator<CommentConnection>>,
+export interface CreationConnectionSubscription
+  extends Promise<AsyncIterator<CreationConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<CommentEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateCommentSubscription>() => T;
-}
-
-export interface IngredientConnection {
-  pageInfo: PageInfo;
-  edges: IngredientEdge[];
-}
-
-export interface IngredientConnectionPromise
-  extends Promise<IngredientConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<IngredientEdge>>() => T;
-  aggregate: <T = AggregateIngredientPromise>() => T;
-}
-
-export interface IngredientConnectionSubscription
-  extends Promise<AsyncIterator<IngredientConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<IngredientEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateIngredientSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<CreationEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateCreationSubscription>() => T;
 }
 
 export interface CreationSubscriptionPayload {
@@ -1316,29 +1198,30 @@ export interface CreationSubscriptionPayloadSubscription
   previousValues: <T = CreationPreviousValuesSubscription>() => T;
 }
 
-export interface Ingredient {
-  id: ID_Output;
-  name: String;
+export interface Saved_RecipeEdge {
+  node: Saved_Recipe;
+  cursor: String;
 }
 
-export interface IngredientPromise extends Promise<Ingredient>, Fragmentable {
-  id: () => Promise<ID_Output>;
-  ingredientTypeCode: <T = Ingredient_TypePromise>() => T;
-  name: () => Promise<String>;
-}
-
-export interface IngredientSubscription
-  extends Promise<AsyncIterator<Ingredient>>,
+export interface Saved_RecipeEdgePromise
+  extends Promise<Saved_RecipeEdge>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  ingredientTypeCode: <T = Ingredient_TypeSubscription>() => T;
-  name: () => Promise<AsyncIterator<String>>;
+  node: <T = Saved_RecipePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface Saved_RecipeEdgeSubscription
+  extends Promise<AsyncIterator<Saved_RecipeEdge>>,
+    Fragmentable {
+  node: <T = Saved_RecipeSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface CreationPreviousValues {
   id: ID_Output;
   name: String;
   description: String;
+  photo: String;
 }
 
 export interface CreationPreviousValuesPromise
@@ -1347,6 +1230,7 @@ export interface CreationPreviousValuesPromise
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
   description: () => Promise<String>;
+  photo: () => Promise<String>;
 }
 
 export interface CreationPreviousValuesSubscription
@@ -1355,165 +1239,45 @@ export interface CreationPreviousValuesSubscription
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
   description: () => Promise<AsyncIterator<String>>;
+  photo: () => Promise<AsyncIterator<String>>;
 }
 
-export interface CreationEdge {
-  node: Creation;
-  cursor: String;
-}
-
-export interface CreationEdgePromise
-  extends Promise<CreationEdge>,
-    Fragmentable {
-  node: <T = CreationPromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface CreationEdgeSubscription
-  extends Promise<AsyncIterator<CreationEdge>>,
-    Fragmentable {
-  node: <T = CreationSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface Comment {
+export interface Saved_Recipe {
   id: ID_Output;
-  text: String;
+  recipeLink: String;
 }
 
-export interface CommentPromise extends Promise<Comment>, Fragmentable {
+export interface Saved_RecipePromise
+  extends Promise<Saved_Recipe>,
+    Fragmentable {
   id: () => Promise<ID_Output>;
   userId: <T = UserPromise>() => T;
-  text: () => Promise<String>;
+  recipeLink: () => Promise<String>;
 }
 
-export interface CommentSubscription
-  extends Promise<AsyncIterator<Comment>>,
+export interface Saved_RecipeSubscription
+  extends Promise<AsyncIterator<Saved_Recipe>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   userId: <T = UserSubscription>() => T;
-  text: () => Promise<AsyncIterator<String>>;
+  recipeLink: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateUser {
-  count: Int;
-}
-
-export interface AggregateUserPromise
-  extends Promise<AggregateUser>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateUserSubscription
-  extends Promise<AsyncIterator<AggregateUser>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
-export interface IngredientSubscriptionPayload {
-  mutation: MutationType;
-  node: Ingredient;
-  updatedFields: String[];
-  previousValues: IngredientPreviousValues;
-}
-
-export interface IngredientSubscriptionPayloadPromise
-  extends Promise<IngredientSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = IngredientPromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = IngredientPreviousValuesPromise>() => T;
-}
-
-export interface IngredientSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<IngredientSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = IngredientSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = IngredientPreviousValuesSubscription>() => T;
-}
-
-export interface Saved_RecipeConnection {
-  pageInfo: PageInfo;
-  edges: Saved_RecipeEdge[];
-}
-
-export interface Saved_RecipeConnectionPromise
-  extends Promise<Saved_RecipeConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<Saved_RecipeEdge>>() => T;
-  aggregate: <T = AggregateSaved_RecipePromise>() => T;
-}
-
-export interface Saved_RecipeConnectionSubscription
-  extends Promise<AsyncIterator<Saved_RecipeConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<Saved_RecipeEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateSaved_RecipeSubscription>() => T;
-}
-
-export interface IngredientPreviousValues {
+export interface Ingredient {
   id: ID_Output;
   name: String;
 }
 
-export interface IngredientPreviousValuesPromise
-  extends Promise<IngredientPreviousValues>,
-    Fragmentable {
+export interface IngredientPromise extends Promise<Ingredient>, Fragmentable {
   id: () => Promise<ID_Output>;
   name: () => Promise<String>;
 }
 
-export interface IngredientPreviousValuesSubscription
-  extends Promise<AsyncIterator<IngredientPreviousValues>>,
+export interface IngredientSubscription
+  extends Promise<AsyncIterator<Ingredient>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   name: () => Promise<AsyncIterator<String>>;
-}
-
-export interface Ingredient_TypeConnection {
-  pageInfo: PageInfo;
-  edges: Ingredient_TypeEdge[];
-}
-
-export interface Ingredient_TypeConnectionPromise
-  extends Promise<Ingredient_TypeConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<Ingredient_TypeEdge>>() => T;
-  aggregate: <T = AggregateIngredient_TypePromise>() => T;
-}
-
-export interface Ingredient_TypeConnectionSubscription
-  extends Promise<AsyncIterator<Ingredient_TypeConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<Ingredient_TypeEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateIngredient_TypeSubscription>() => T;
-}
-
-export interface Ingredient_Type {
-  id: ID_Output;
-  description: String;
-}
-
-export interface Ingredient_TypePromise
-  extends Promise<Ingredient_Type>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-  description: () => Promise<String>;
-}
-
-export interface Ingredient_TypeSubscription
-  extends Promise<AsyncIterator<Ingredient_Type>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-  description: () => Promise<AsyncIterator<String>>;
 }
 
 export interface User {
@@ -1542,48 +1306,48 @@ export interface UserSubscription
   password: () => Promise<AsyncIterator<String>>;
 }
 
-export interface Ingredient_TypePreviousValues {
+export interface IngredientPreviousValues {
   id: ID_Output;
-  description: String;
+  name: String;
 }
 
-export interface Ingredient_TypePreviousValuesPromise
-  extends Promise<Ingredient_TypePreviousValues>,
+export interface IngredientPreviousValuesPromise
+  extends Promise<IngredientPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  description: () => Promise<String>;
+  name: () => Promise<String>;
 }
 
-export interface Ingredient_TypePreviousValuesSubscription
-  extends Promise<AsyncIterator<Ingredient_TypePreviousValues>>,
+export interface IngredientPreviousValuesSubscription
+  extends Promise<AsyncIterator<IngredientPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  description: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
 }
 
-export interface Ingredient_TypeSubscriptionPayload {
+export interface IngredientSubscriptionPayload {
   mutation: MutationType;
-  node: Ingredient_Type;
+  node: Ingredient;
   updatedFields: String[];
-  previousValues: Ingredient_TypePreviousValues;
+  previousValues: IngredientPreviousValues;
 }
 
-export interface Ingredient_TypeSubscriptionPayloadPromise
-  extends Promise<Ingredient_TypeSubscriptionPayload>,
+export interface IngredientSubscriptionPayloadPromise
+  extends Promise<IngredientSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = Ingredient_TypePromise>() => T;
+  node: <T = IngredientPromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = Ingredient_TypePreviousValuesPromise>() => T;
+  previousValues: <T = IngredientPreviousValuesPromise>() => T;
 }
 
-export interface Ingredient_TypeSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<Ingredient_TypeSubscriptionPayload>>,
+export interface IngredientSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<IngredientSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = Ingredient_TypeSubscription>() => T;
+  node: <T = IngredientSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = Ingredient_TypePreviousValuesSubscription>() => T;
+  previousValues: <T = IngredientPreviousValuesSubscription>() => T;
 }
 
 export interface Saved_RecipePreviousValues {
@@ -1605,20 +1369,23 @@ export interface Saved_RecipePreviousValuesSubscription
   recipeLink: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateCreation {
-  count: Int;
+export interface CreationEdge {
+  node: Creation;
+  cursor: String;
 }
 
-export interface AggregateCreationPromise
-  extends Promise<AggregateCreation>,
+export interface CreationEdgePromise
+  extends Promise<CreationEdge>,
     Fragmentable {
-  count: () => Promise<Int>;
+  node: <T = CreationPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
-export interface AggregateCreationSubscription
-  extends Promise<AsyncIterator<AggregateCreation>>,
+export interface CreationEdgeSubscription
+  extends Promise<AsyncIterator<CreationEdge>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  node: <T = CreationSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface IngredientEdge {
@@ -1640,62 +1407,45 @@ export interface IngredientEdgeSubscription
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateIngredient_Type {
-  count: Int;
+export interface BatchPayload {
+  count: Long;
 }
 
-export interface AggregateIngredient_TypePromise
-  extends Promise<AggregateIngredient_Type>,
+export interface BatchPayloadPromise
+  extends Promise<BatchPayload>,
     Fragmentable {
-  count: () => Promise<Int>;
+  count: () => Promise<Long>;
 }
 
-export interface AggregateIngredient_TypeSubscription
-  extends Promise<AsyncIterator<AggregateIngredient_Type>>,
+export interface BatchPayloadSubscription
+  extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
+  count: () => Promise<AsyncIterator<Long>>;
 }
 
-export interface UserConnection {
-  pageInfo: PageInfo;
-  edges: UserEdge[];
+export interface Creation {
+  id: ID_Output;
+  name: String;
+  description: String;
+  photo: String;
 }
 
-export interface UserConnectionPromise
-  extends Promise<UserConnection>,
+export interface CreationPromise extends Promise<Creation>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  userId: <T = UserPromise>() => T;
+  name: () => Promise<String>;
+  description: () => Promise<String>;
+  photo: () => Promise<String>;
+}
+
+export interface CreationSubscription
+  extends Promise<AsyncIterator<Creation>>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<UserEdge>>() => T;
-  aggregate: <T = AggregateUserPromise>() => T;
-}
-
-export interface UserConnectionSubscription
-  extends Promise<AsyncIterator<UserConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateUserSubscription>() => T;
-}
-
-export interface CreationConnection {
-  pageInfo: PageInfo;
-  edges: CreationEdge[];
-}
-
-export interface CreationConnectionPromise
-  extends Promise<CreationConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<CreationEdge>>() => T;
-  aggregate: <T = AggregateCreationPromise>() => T;
-}
-
-export interface CreationConnectionSubscription
-  extends Promise<AsyncIterator<CreationConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<CreationEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateCreationSubscription>() => T;
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  userId: <T = UserSubscription>() => T;
+  name: () => Promise<AsyncIterator<String>>;
+  description: () => Promise<AsyncIterator<String>>;
+  photo: () => Promise<AsyncIterator<String>>;
 }
 
 /*
@@ -1740,10 +1490,6 @@ export const models: Model[] = [
   },
   {
     name: "Saved_Recipe",
-    embedded: false
-  },
-  {
-    name: "Ingredient_Type",
     embedded: false
   },
   {

@@ -21,10 +21,6 @@ var models = [
     embedded: false
   },
   {
-    name: "Ingredient_Type",
-    embedded: false
-  },
-  {
     name: "Ingredient",
     embedded: false
   }
@@ -32,6 +28,6 @@ var models = [
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://eu1.prisma.sh/nik-malhotra-1a119d/recipeez/dev`
+  endpoint: `https://eu1.prisma.sh/nik-malhotra-1a119d/recipez-gql/dev`
 });
 exports.prisma = new exports.Prisma();

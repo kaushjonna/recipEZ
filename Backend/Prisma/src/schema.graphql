@@ -9,7 +9,7 @@ type Mutation {
   removeComment(id: ID!): Comment
   removeIngredient(id: ID!): Ingredient
   removeSavedRecipe(id: ID!): Saved_Recipe
-  updateCreation(id: ID!, name: String!, description: String!): Creation
+  updateCreation(id: ID!, name: String!, photo: String! description: String!): Creation
   removeCreation(id: ID!): Creation
 }
 
@@ -27,6 +27,7 @@ type Creation{
   userId: User
   name: String!
   description: String!
+  photo: String!
 }
 
 type Comment {
@@ -35,15 +36,8 @@ type Comment {
   text: String!
 }
 
-type Ingredient_Type {
-  id: ID!
-  description: String! 
-
-}
-
 type Ingredient {
   id: ID!
-  ingredientTypeCode: Ingredient_Type
   name: String!
 }
 
