@@ -12,13 +12,14 @@ type Creation {
   name: String!
   description: String!
   photo: String!
-
+  comments: [Comment]
 }
 
 type Comment {
   id: ID! @unique
   userId: User!
   text: String!
+  creation: Creation
 }
 
 type Saved_Recipe {

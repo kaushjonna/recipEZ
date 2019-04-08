@@ -31,6 +31,7 @@ type Comment {
   id: ID!
   userId: User!
   text: String!
+  creation: Creation
 }
 
 type CommentConnection {
@@ -40,6 +41,17 @@ type CommentConnection {
 }
 
 input CommentCreateInput {
+  userId: UserCreateOneInput!
+  text: String!
+  creation: CreationCreateOneWithoutCommentsInput
+}
+
+input CommentCreateManyWithoutCreationInput {
+  create: [CommentCreateWithoutCreationInput!]
+  connect: [CommentWhereUniqueInput!]
+}
+
+input CommentCreateWithoutCreationInput {
   userId: UserCreateOneInput!
   text: String!
 }
@@ -65,6 +77,40 @@ type CommentPreviousValues {
   text: String!
 }
 
+input CommentScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  text: String
+  text_not: String
+  text_in: [String!]
+  text_not_in: [String!]
+  text_lt: String
+  text_lte: String
+  text_gt: String
+  text_gte: String
+  text_contains: String
+  text_not_contains: String
+  text_starts_with: String
+  text_not_starts_with: String
+  text_ends_with: String
+  text_not_ends_with: String
+  AND: [CommentScalarWhereInput!]
+  OR: [CommentScalarWhereInput!]
+  NOT: [CommentScalarWhereInput!]
+}
+
 type CommentSubscriptionPayload {
   mutation: MutationType!
   node: Comment
@@ -86,10 +132,48 @@ input CommentSubscriptionWhereInput {
 input CommentUpdateInput {
   userId: UserUpdateOneRequiredInput
   text: String
+  creation: CreationUpdateOneWithoutCommentsInput
+}
+
+input CommentUpdateManyDataInput {
+  text: String
 }
 
 input CommentUpdateManyMutationInput {
   text: String
+}
+
+input CommentUpdateManyWithoutCreationInput {
+  create: [CommentCreateWithoutCreationInput!]
+  delete: [CommentWhereUniqueInput!]
+  connect: [CommentWhereUniqueInput!]
+  set: [CommentWhereUniqueInput!]
+  disconnect: [CommentWhereUniqueInput!]
+  update: [CommentUpdateWithWhereUniqueWithoutCreationInput!]
+  upsert: [CommentUpsertWithWhereUniqueWithoutCreationInput!]
+  deleteMany: [CommentScalarWhereInput!]
+  updateMany: [CommentUpdateManyWithWhereNestedInput!]
+}
+
+input CommentUpdateManyWithWhereNestedInput {
+  where: CommentScalarWhereInput!
+  data: CommentUpdateManyDataInput!
+}
+
+input CommentUpdateWithoutCreationDataInput {
+  userId: UserUpdateOneRequiredInput
+  text: String
+}
+
+input CommentUpdateWithWhereUniqueWithoutCreationInput {
+  where: CommentWhereUniqueInput!
+  data: CommentUpdateWithoutCreationDataInput!
+}
+
+input CommentUpsertWithWhereUniqueWithoutCreationInput {
+  where: CommentWhereUniqueInput!
+  update: CommentUpdateWithoutCreationDataInput!
+  create: CommentCreateWithoutCreationInput!
 }
 
 input CommentWhereInput {
@@ -122,6 +206,7 @@ input CommentWhereInput {
   text_not_starts_with: String
   text_ends_with: String
   text_not_ends_with: String
+  creation: CreationWhereInput
   AND: [CommentWhereInput!]
   OR: [CommentWhereInput!]
   NOT: [CommentWhereInput!]
@@ -137,6 +222,7 @@ type Creation {
   name: String!
   description: String!
   photo: String!
+  comments(where: CommentWhereInput, orderBy: CommentOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Comment!]
 }
 
 type CreationConnection {
@@ -146,6 +232,19 @@ type CreationConnection {
 }
 
 input CreationCreateInput {
+  userId: UserCreateOneInput
+  name: String!
+  description: String!
+  photo: String!
+  comments: CommentCreateManyWithoutCreationInput
+}
+
+input CreationCreateOneWithoutCommentsInput {
+  create: CreationCreateWithoutCommentsInput
+  connect: CreationWhereUniqueInput
+}
+
+input CreationCreateWithoutCommentsInput {
   userId: UserCreateOneInput
   name: String!
   description: String!
@@ -202,12 +301,34 @@ input CreationUpdateInput {
   name: String
   description: String
   photo: String
+  comments: CommentUpdateManyWithoutCreationInput
 }
 
 input CreationUpdateManyMutationInput {
   name: String
   description: String
   photo: String
+}
+
+input CreationUpdateOneWithoutCommentsInput {
+  create: CreationCreateWithoutCommentsInput
+  update: CreationUpdateWithoutCommentsDataInput
+  upsert: CreationUpsertWithoutCommentsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: CreationWhereUniqueInput
+}
+
+input CreationUpdateWithoutCommentsDataInput {
+  userId: UserUpdateOneInput
+  name: String
+  description: String
+  photo: String
+}
+
+input CreationUpsertWithoutCommentsInput {
+  update: CreationUpdateWithoutCommentsDataInput!
+  create: CreationCreateWithoutCommentsInput!
 }
 
 input CreationWhereInput {
@@ -268,6 +389,9 @@ input CreationWhereInput {
   photo_not_starts_with: String
   photo_ends_with: String
   photo_not_ends_with: String
+  comments_every: CommentWhereInput
+  comments_some: CommentWhereInput
+  comments_none: CommentWhereInput
   AND: [CreationWhereInput!]
   OR: [CreationWhereInput!]
   NOT: [CreationWhereInput!]
