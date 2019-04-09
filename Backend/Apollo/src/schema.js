@@ -4,6 +4,8 @@ const typeDefs = gql`
   type Query {
     recipes: [Recipe]
     getRecipesByIngredients(ingredients: [String]): [Recipe]
+    getRecipeById(id: String): Recipe
+    getRecipeBySearch(query: String): [Recipe]
   }
   
   type Recipe {

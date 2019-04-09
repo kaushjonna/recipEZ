@@ -28,11 +28,44 @@ class RecipeAPI extends RESTDataSource {
 
   }
 
+  async recipeReducerbyId(recipe) {
+
+    return {
+
+      id: recipe.id,
+      totalTime: recipe.totalTimeInSeconds,
+      name: recipe.recipeName,
+      image: recipe.images[0].hostedSmallUrl,
+      ingredients: recipe.ingredientLines,
+      rating: recipe.rating
+
+    }
+
+  }
+
+  async getRecipeById(id) {
+    const response = await this.get(`/recipe/${id.id}`);
+    return this.recipeReducerbyId(response)
+
+  }
+
   async getAllRecipes() {
 
     const response = await this.get('/recipes');
     const results = response.matches;
     return results.map(recipe => this.recipeReducer(recipe));
+  }
+
+  async getRecipeBySearch(queryString) {
+    let searchParams = '';
+    console.log(queryString);
+    const queryArray = queryString.query.split(" ");
+    queryArray.forEach(query => {
+      searchParams += this.buildSearchQuery(query)
+    });
+
+    const response = await this.get(`/recipes?${searchParams}`);
+    return response.matches.map(recipe => this.recipeReducer(recipe));
   }
 
   async getRecipeByIngredientList(ingredientList) {
@@ -49,6 +82,10 @@ class RecipeAPI extends RESTDataSource {
 
   buildQuery(input) {
     return `&allowedIngredient[]=${input}`
+  }
+
+  buildSearchQuery(input) {
+    return `&q=${input}`;
   }
 
 
