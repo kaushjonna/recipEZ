@@ -59,16 +59,13 @@ class QueryResults extends Component {
                     </View>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly' }} >
                       <Button
-                        onPress={() => Linking.openURL(`https://www.yummly.com/recipe/${recipe.id}`)}
-                      >View</Button>
+                        onPress={() => this.props.navigation.push('MyModal', { recipeId: recipe.id })}
+                      >Details</Button>
                       <Button
                         onPress={() => alert('Recipe Saved ✅')}
                       >Save</Button>
                     </View>
-                    <Button
-                      onPress={() => this.props.navigation.push('MyModal')}
-                      color="#000000"
-                    >Details</Button>
+
                   </Surface>
                 )
               })}

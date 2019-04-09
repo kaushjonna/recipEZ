@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { AppRegistry, Button } from 'react-native';
-import { createAppContainer, createBottomTabNavigator, createStackNavigator } from "react-navigation";
+import { AppRegistry, Button, Text } from 'react-native';
+import { createAppContainer, createBottomTabNavigator, createStackNavigator, createSwitchNavigator } from "react-navigation";
 import { Appbar, Provider as PaperProvider } from 'react-native-paper';
 
 
@@ -25,12 +25,13 @@ import SettingsScreen from "./screens/settings"
 import RecipeModalScreen from "./screens/recipeModal"
 import Detected from "./screens/detectedIngredients"
 import Found from "./screens/foundRecipes"
+import CreationModalScreen from "./screens/creationModal.js"
 
 // GQL/Apollo stuff
 
 const client = new ApolloClient({
   link: createHttpLink({
-    uri: "http://192.168.0.11:4000/",
+    uri: "http://192.168.0.13:4000/",
     fetch: fetch
   }),
   cache: new InMemoryCache()
@@ -51,6 +52,21 @@ const RecipeDetailStack = createStackNavigator(
   }
 );
 
+const CreationStack = createStackNavigator(
+  {
+    Main: {
+      screen: ProfileScreen,
+    },
+    CreationModal: {
+      screen: CreationModalScreen,
+    },
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none',
+  }
+)
+
 const CameraStack = createStackNavigator(
   {
     Camera: CameraScreen,
@@ -63,14 +79,14 @@ const CameraStack = createStackNavigator(
   }
 )
 
+
 const RootStack = createBottomTabNavigator(
   {
     Home: { screen: HomeScreen },
-    Profile: { screen: ProfileScreen },
+    Profile: CreationStack,
     EZCam: CameraStack,
     Saved: { screen: SavedScreen },
     Settings: { screen: SettingsScreen },
-    Login: { screen: LoginScreen },
     Search: { screen: SearchScreen },
   },
   {
@@ -89,11 +105,18 @@ const RootStack = createBottomTabNavigator(
   }
 );
 
+const LoginStack = createSwitchNavigator({
+  Login: LoginScreen,
+  Main: RootStack
+},
+  {
+    initialRouteName: 'Login'
+  }
+)
 
 
 
-
-const AppContainer = createAppContainer(RootStack);
+const AppContainer = createAppContainer(LoginStack);
 
 export default class App extends Component {
   constructor(props) {

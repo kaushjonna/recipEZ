@@ -2,13 +2,10 @@ import React, { Component } from 'react';
 import { StyleSheet, AppRegistry, ScrollView, View, Image, Text } from 'react-native';
 import { createStackNavigator, createAppContainer, StackViewTransitionConfigs, withNavigation } from "react-navigation";
 import { Title, Button, TextInput } from 'react-native-paper'
-import Video from 'react-native-video'
+import { Video } from 'expo';
 import { Query } from "react-apollo";
 import { prismaClient } from "../src/utils";
 import gql from 'graphql-tag';
-
-
-
 
 class LoginScreen extends Component {
   static navigationOptions = {
@@ -25,35 +22,32 @@ class LoginScreen extends Component {
     };
   }
 
-  loginAuth(){
-    console.log(this.state.userText);
-    console.log('hello');
-    console.log(this.state.token);
+  loginAuth() {
 
     const userQuery = gql`
         {
-            users (where: {email: "${this.state.userText}"}) {
+            users (where: {email: "wet_dog@hotmail.com", password:"doodood"}) {
                 id
                 password
             }
         }
     `;
 
-    return(
+    return (
       <View>
         <Query query={userQuery} client={prismaClient}>
-          {({loading, error, data}) => {
-            if(loading) {
+          {({ loading, error, data }) => {
+            if (loading) {
               console.log('loading');
-              return <Text>Loading...</Text>
+              return <Text> </Text>
             }
-            if(error) {
+            if (error) {
               console.log('error');
               return <Text>Errors...</Text>
             }
 
 
-            if(data.users[0].password === this.state.passText) {
+            if (data.users[0].password === this.state.passText) {
               this.setState({
                 token: data.users[0].id,
                 loginAttempt: true
@@ -62,7 +56,7 @@ class LoginScreen extends Component {
                 <Text>Success!</Text>
               )
             } else {
-              return <Text>Go fuck yourself</Text>
+              return <Text style={{ fontWeight: 'bold', color: '#230501', textAlign: 'center' }}> </Text>
             }
 
           }}
@@ -73,39 +67,55 @@ class LoginScreen extends Component {
   }
 
   renderLoginAuth() {
-      return(
+    return (
+      <View>
         <View>
-
-          <Image
-            style={{ width: 300, height: 120 }}
-            source={require('../assets/appLogo.png')}
+          <Video
+            source={require('../assets/video.mp4')}
+            rate={1.0}
+            isMuted={true}
+            resizeMode="cover"
+            shouldPlay
+            isLooping
+            style={{ width: '100%', height: '100%' }}
           />
-          <Title>Login to recipEZ</Title>
-          <TextInput
-            label='Email'
-            value={this.state.userText}
-            onChangeText={userText => this.setState({ userText: userText })}
-          />
-          <TextInput
-            secureTextEntry={true}
-            label='Password'
-            value={this.state.passText}
-            onChangeText={passText => this.setState({ passText: passText })}
-          />
-          <Button
-            mode="contained"
-            onPress={() => this.loginAuth()}>
-            Login</Button>
-          <Button
-            mode="contained"
-            onPress={() => alert('Signup Pressed')}>
-            Sign Up</Button>
-          <Button mode="text" onPress={() => alert('Too Bad')}>Forgot Password</Button>
-          {this.loginAuth()}
-          <Title>Hello</Title>
         </View>
-      )
-    }
+        <View style={{ position: 'absolute', top: '20%', left: 0, right: 0, zIndex: 1 }}>
+          <View style={{ flex: 1, flexDirection: 'column', width: '80%', alignSelf: 'center', }}>
+            <Image
+              style={{ width: 300, height: 120, alignSelf: 'center' }}
+              source={require('../assets/appLogoWhite_lg.png')}
+            />
+            <Title style={{ alignSelf: 'center', color: '#fff' }}>Login to recipEZ</Title>
+            <TextInput style={{ margin: 5 }}
+              label='Email'
+              value={this.state.userText}
+              onChangeText={userText => this.setState({ userText: userText })}
+            />
+            <TextInput
+              style={{ margin: 5 }}
+              secureTextEntry={true}
+              label='Password'
+              value={this.state.passText}
+              onChangeText={passText => this.setState({ passText: passText })}
+            />
+            <Button
+              style={{ alignSelf: 'center', width: '35%', margin: 5 }}
+              mode="contained"
+              onPress={() => this.props.navigation.navigate('Home')}>
+              Login</Button>
+            <Button
+              style={{ alignSelf: 'center', width: '35%', margin: 5 }}
+              mode="contained"
+              onPress={() => alert('Signup Pressed')}>
+              Sign Up</Button>
+            <Button mode="text" onPress={() => alert('Too Bad')}>Forgot Password</Button>
+            {this.loginAuth()}
+          </View>
+        </View>
+      </View>
+    )
+  }
 
 
   render() {

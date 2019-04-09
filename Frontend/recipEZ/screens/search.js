@@ -5,7 +5,7 @@ import { Searchbar, Title } from 'react-native-paper'
 
 class RecipeSearchScreen extends Component {
   static navigationOptions = {
-    title: 'Find a Recipe',
+    title: 'Search',
 
   };
   state = {

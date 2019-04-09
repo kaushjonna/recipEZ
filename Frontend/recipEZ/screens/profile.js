@@ -46,7 +46,7 @@ class CreationQuery extends Component {
           } else {
             return (
               <View>
-                <Title style={{ textAlign: "center" }}>Nik's Creations ({data.creations.length})</Title>
+                <Title style={{ textAlign: "center", paddingBottom: 5 }}>Nik's Creations ({data.creations.length})</Title>
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: "center", flexWrap: 'wrap' }}>
                   {data.creations.map(creation => {
                     return (
@@ -56,6 +56,9 @@ class CreationQuery extends Component {
                           source={{ uri: creation.photo }}
                         />
                         <Text style={{ fontSize: 12, fontWeight: 'bold', paddingTop: 5 }}>{creation.name}</Text>
+                        <Button
+                          onPress={() => this.props.navigation.push('CreationModal', { creationId: creation.id })}
+                        >Details</Button>
                       </Surface>
                     )
                   })}
@@ -77,7 +80,7 @@ class ProfileScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      someting: 'wong'
+      a: 'b'
     }
 
   }
@@ -88,7 +91,7 @@ class ProfileScreen extends Component {
           <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'space-evenly', alignItems: 'center' }}>
             <Avatar.Image size={100} source={require('../assets/avatar.png')} />
             <Title style={{ fontWeight: 'bold', color: '#fff', fontSize: 24 }}>Nik's Profile</Title>
-            <Paragraph style={{ color: '#fff', textAlign: 'center' }}>Hey, Nik here. Big fan of cooking. Especially when I know what to make with all the groceries I buy!</Paragraph>
+            <Paragraph style={{ color: '#fff', textAlign: 'center', width: '80%' }}>Hey, Nik here. Big fan of cooking. Especially when I know what to make with all the groceries I buy!</Paragraph>
             <Button icon="edit"
               mode="contained"
               onPress={() => console.log('To be implemented... LOL')}>
@@ -97,9 +100,9 @@ class ProfileScreen extends Component {
         </ImageBackground>
         <Divider />
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
-          <CreationQuery />
+          <CreationQuery navigation={this.props.navigation} />
         </View>
-        <Button icon="edit"
+        <Button style={{ marginTop: 15 }} icon="add"
           mode="contained"
           onPress={() => console.log('To be implemented... LOL')}>
           Add a Creation</Button>
@@ -112,7 +115,7 @@ const styles = StyleSheet.create({
   surface: {
     padding: 8,
     margin: 5,
-    height: 140,
+    height: 180,
     width: 120,
     elevation: 4,
     justifyContent: 'center',
