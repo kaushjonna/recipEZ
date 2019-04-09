@@ -34,17 +34,19 @@ class RecipeAPI extends RESTDataSource {
 
       id: recipe.id,
       totalTime: recipe.totalTimeInSeconds,
-      name: recipe.recipeName,
-      image: recipe.images[0].hostedSmallUrl,
+      name: recipe.name,
+      image: recipe.images[0].hostedLargeUrl,
       ingredients: recipe.ingredientLines,
-      rating: recipe.rating
+      rating: recipe.rating,
+      serving: recipe.numberOfServings
 
     }
 
   }
 
   async getRecipeById(id) {
-    const response = await this.get(`/recipe/${id.id}`);
+    const recipeId = (id.id)
+    const response = await this.get(`/recipe/${recipeId}?`);
     return this.recipeReducerbyId(response)
 
   }

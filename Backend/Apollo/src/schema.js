@@ -15,6 +15,7 @@ const typeDefs = gql`
     name: String
     ingredients: [String]
     rating: Int
+    serving: Int
   }
   
 
