@@ -55,7 +55,7 @@ class CreationQuery extends Component {
                           style={{ width: 100, height: 100 }}
                           source={{ uri: creation.photo }}
                         />
-                        <Text style={{ fontSize: 12, fontWeight: 'bold', paddingTop: 5 }}>{creation.name}</Text>
+                        <Text style={{ fontSize: 12, fontWeight: 'bold', paddingTop: 5, textAlign: 'center' }}>{creation.name}</Text>
                         <Button
                           onPress={() => this.props.navigation.push('CreationModal', { creationId: creation.id })}
                         >Details</Button>
@@ -102,7 +102,7 @@ class ProfileScreen extends Component {
         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'center' }}>
           <CreationQuery navigation={this.props.navigation} />
         </View>
-        <Button style={{ marginTop: 15 }} icon="add"
+        <Button style={{ marginTop: 15, width: '40%', alignSelf: 'center' }} icon="add"
           mode="contained"
           onPress={() => console.log('To be implemented... LOL')}>
           Add a Creation</Button>

@@ -86,7 +86,7 @@ class FoundRecipesScreen extends Component {
   render() {
     return (
       <ScrollView>
-        <Title>Here's what we found...</Title>
+        <Title>Here's what we've found...</Title>
         <View>
           <QueryResults navigation={this.props.navigation} />
         </View>

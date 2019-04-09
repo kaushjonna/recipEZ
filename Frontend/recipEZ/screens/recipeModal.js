@@ -46,6 +46,7 @@ class ModalScreen extends Component {
                   <Divider style={{ margin: 5 }} />
                   <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly' }}>
                     <Caption>Prep Time: {data.getRecipeById.totalTime / 60} mins.</Caption>
+                    <Caption>Serves: {data.getRecipeById.serving} </Caption>
                     <Caption>Rating: {getStars(data.getRecipeById.rating)} </Caption>
                   </View>
                   <View style={{ paddingBottom: 10 }}>
