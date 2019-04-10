@@ -88,11 +88,7 @@ class FoundRecipesScreen extends Component {
           mode="contained"
           onPress={() => {
             this.props.navigation.popToTop()
-          }}>Start Over</Button>
-        <Button
-          onPress={() => this.props.navigation.push('MyModal')}
-          color="#000000"
-        >Details</Button>
+          }}>Go Back</Button>
       </ScrollView>
     );
   }

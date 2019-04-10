@@ -64,11 +64,11 @@ class ModalScreen extends Component {
           }}
         </Query>
         <View>
-          <Button
+          {!this.props.navigation.state.params.showSave ? <Button
             style={{ margin: 5 }}
             mode="contained"
             onPress={() => alert('Recipe saved ✅')}>
-            Save Recipe</Button>
+            Save Recipe</Button> : <Text />}
           <Button
             style={{ margin: 5 }}
             mode="contained"

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { StyleSheet, AppRegistry, ScrollView, View, Image, Text } from 'react-native';
 import { createStackNavigator, createAppContainer, StackViewTransitionConfigs, withNavigation } from "react-navigation";
-import { Searchbar, Title, Button, Divider, Subheading, ActivityIndicator } from 'react-native-paper'
+import { Searchbar, Title, Button, Divider, Subheading, ActivityIndicator, List } from 'react-native-paper'
 
 const filterObject = function (results) {
-  const filterWords = ['Fruit', 'Food', 'Tableware', 'Vegetable', 'Light', 'Kitchenware', 'Drink']
+  const filterWords = ['Fruit', 'Food', 'Tableware', 'Vegetable', 'Light', 'Kitchenware', 'Drink', 'Baked goods', 'Drink']
   const foodArray = [];
   results.forEach((result, ind) => {
     if ((filterWords.indexOf(result.name) > -1) || result.score < 0.5) {
@@ -36,12 +36,12 @@ class RecipeSearchScreen extends Component {
   }
   render() {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-evenly' }}>
-        <Title>We found these ingredients:</Title>
+      <View>
+        <Title style={{ textAlign: 'center' }}>We found these ingredients:</Title>
         {this.state.ingredients.map((ingredient, ind) => {
           return (
             <View key={ind}>
-              <Text>{ingredient}</Text>
+              <List.Item title={ingredient} left={props => <List.Icon {...props} icon="check-box" />} />
             </View>
           )
         })}
@@ -51,7 +51,7 @@ class RecipeSearchScreen extends Component {
           value={firstQuery}
         /> */}
         <Divider />
-        <View style={{ width: '35%' }}>
+        <View>
           <Button
             mode="contained"
             onPress={() => { this.props.navigation.push('Found', { ingredients: this.state.ingredients }) }}>Done</Button>

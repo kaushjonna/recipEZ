@@ -67,6 +67,21 @@ const SearchStack = createStackNavigator(
   }
 );
 
+const SavedStack = createStackNavigator(
+  {
+    Main: {
+      screen: SavedScreen
+    },
+    MyModal: {
+      screen: RecipeModalScreen
+    },
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none'
+  }
+)
+
 
 const CreationStack = createStackNavigator(
   {
@@ -101,7 +116,7 @@ const RootStack = createBottomTabNavigator(
     Home: { screen: HomeScreen },
     Profile: CreationStack,
     EZCam: CameraStack,
-    Saved: { screen: SavedScreen },
+    Saved: SavedStack,
     Settings: { screen: SettingsScreen },
     Search: SearchStack,
   },
@@ -138,8 +153,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      titleText: "Bird's Nest",
-      bodyText: 'This is not really a bird nest.'
+      currentPage: ''
     };
   }
   render() {
