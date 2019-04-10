@@ -167,15 +167,12 @@ class CameraScreen extends Component {
           style={{ paddingVertical: 10, paddingHorizontal: 10 }}
         />
 
-        <Text>Raw JSON:</Text>
-
         {googleResponse && (
           <Text
             onPress={this._copyToClipboard}
             onLongPress={this._share}
             style={{ paddingVertical: 10, paddingHorizontal: 10 }}
           >
-            JSON.stringify(googleResponse.responses)}
           </Text>
         )}
       </View>
@@ -292,7 +289,7 @@ class CameraScreen extends Component {
 
 
       if (!this.state.uploading) {
-      this.props.navigation.push('Detected', { detectedObjects: this.state.finalOutput });
+        this.props.navigation.push('Detected', { detectedObjects: this.state.finalOutput });
         return;
       }
     } catch (error) {

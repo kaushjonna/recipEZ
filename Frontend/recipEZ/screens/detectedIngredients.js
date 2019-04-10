@@ -3,14 +3,37 @@ import { StyleSheet, AppRegistry, ScrollView, View, Image, Text } from 'react-na
 import { createStackNavigator, createAppContainer, StackViewTransitionConfigs, withNavigation } from "react-navigation";
 import { Searchbar, Title, Button, Divider, Subheading, ActivityIndicator } from 'react-native-paper'
 
-// will need async for this, awaiting the array data to arrive and to display on the app (OR component mount)
+const filterObject = function (results) {
+  const filterWords = ['Fruit', 'Food', 'Tableware', 'Vegetable', 'Light']
+  const foodArray = [];
+  results.forEach((result, ind) => {
+    if ((filterWords.indexOf(result.name) > -1) || result.score < 0.5) {
+      results.splice(ind, 1);
+    } else {
+      foodArray.push(result.name);
+    }
+  });
+
+  return foodArray;
+}
+
 
 class RecipeSearchScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      ingredients: []
+    }
+  }
 
   static navigationOptions = {
     title: 'Detected Ingredients',
 
   };
+  async componentDidMount() {
+    await this.props.navigation.state.params.detectedObjects;
+    this.setState({ ingredients: this.props.navigation.state.params.detectedObjects })
+  }
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -20,8 +43,7 @@ class RecipeSearchScreen extends Component {
         <Text>- Pesto</Text>
         <Text>- Tomato</Text>
         <Text>- Spaghetti</Text>
-        <Text>{console.log(this.props.navigation.state.params)}</Text>
-        <Text>{JSON.stringify(this.props.navigation.state.params.detectedObjects)}</Text>
+        <Text>{console.log(this.state.ingredients)}</Text>
         <Subheading>Something missing? Add ingredients below:</Subheading>
         {/* <Searchbar
           placeholder="Search"
@@ -31,9 +53,9 @@ class RecipeSearchScreen extends Component {
         <Divider />
         <Button
           mode="contained"
-          onPress={() => {
-            this.props.navigation.push('Found', { ingredients: this.props.navigation.state.params.detectedObjects })
-          }}>Done!</Button>
+          onPress={() => { this.props.navigation.push('Found', { ingredients: filterObject(this.state.ingredients) }) }}> </Button>
+
+
       </View>
     );
   }

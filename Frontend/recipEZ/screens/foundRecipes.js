@@ -5,6 +5,7 @@ import gql from 'graphql-tag';
 import { Query } from "react-apollo";
 import { withNavigation, } from "react-navigation";
 
+
 const getRecipes = gql`
       query getRecipesByIngredients($ingredients: [String]){
         getRecipesByIngredients(ingredients:$ingredients){
@@ -21,76 +22,66 @@ const getStars = function (stars) {
   return ('⭐'.repeat(stars))
 };
 
-class QueryResults extends Component {
-
-  constructor(props) {
-    super(props);
-
-  }
-
-  static navigationOptions = {
-    title: 'Recipe Details',
-  };
-  render() {
-    return (
-      <Query query={getRecipes} variables={{ ingredients: this.props.navigation.state.params.ingredients }}>
-        {({ loading, error, data }) => {
-          if (loading) {
-            return (
-              <View>
-                <ActivityIndicator></ActivityIndicator>
-                <Text>Loading...</Text>
-              </View>);
-          }
-          if (error) return <Text>Error! {error.message}</Text>;
-          return (
-            <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap' }}>
-              {data.getRecipesByIngredients.map(recipe => {
-                return (
-                  <Surface style={styles.surface} key={recipe.id}>
-                    <Image
-                      style={{ width: 100, height: 100, margin: 'auto' }}
-                      source={{ uri: recipe.image + "?.jpg" }}
-                    />
-                    <Text style={{ fontWeight: 'bold' }}>{recipe.name}</Text>
-                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly', paddingTop: 10 }} >
-                      <Text style={{ fontSize: 8, paddingEnd: 5 }}>{getStars(recipe.rating)}</Text>
-                      <Text style={{ fontStyle: 'italic', fontSize: 10 }} >{(recipe.totalTime / 60) + ' mins.'}</Text>
-                    </View>
-                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly' }} >
-                      <Button
-                        onPress={() => this.props.navigation.push('MyModal', { recipeId: recipe.id })}
-                      >Details</Button>
-                      <Button
-                        onPress={() => alert('Recipe Saved ✅')}
-                      >Save</Button>
-                    </View>
-
-                  </Surface>
-                )
-              })}
-            </View>
-          );
-        }}
-      </Query>
-    );
-  }
-}
-
-
 
 class FoundRecipesScreen extends Component {
-  static navigationOptions = {
-    title: 'Found Recipes',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      ingredients: []
+    }
+  }
+
+  async componentDidMount() {
+    await this.props.navigation.state.params.ingredients
+    this.setState({ ingredients: this.props.navigation.state.params.ingredients })
+  }
   render() {
     return (
       <ScrollView>
+        {console.log(getIngredients())}
         <Title>Here's what we've found...</Title>
         <View>
-          <QueryResults navigation={this.props.navigation} />
-        </View>
+          <Query navigation={this.props.navigation} query={getRecipes} variables={{ ingredients: this.state.ingredients }}>
+            {({ loading, error, data }) => {
+              if (loading) {
+                return (
+                  <View>
+                    <ActivityIndicator></ActivityIndicator>
+                    <Text>Loading...</Text>
+                  </View>);
+              }
+              if (error) return <Text>Error! {error.message}</Text>;
+              return (
+                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap' }}>
+                  {data.getRecipesByIngredients.map(recipe => {
+                    return (
+                      <Surface style={styles.surface} key={recipe.id}>
+                        <Image
+                          style={{ width: 100, height: 100, margin: 'auto' }}
+                          source={{ uri: recipe.image + "?.jpg" }}
+                        />
+                        <Text style={{ fontWeight: 'bold' }}>{recipe.name}</Text>
+                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly', paddingTop: 10 }} >
+                          <Text style={{ fontSize: 8, paddingEnd: 5 }}>{getStars(recipe.rating)}</Text>
+                          <Text style={{ fontStyle: 'italic', fontSize: 10 }} >{(recipe.totalTime / 60) + ' mins.'}</Text>
+                        </View>
+                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly' }} >
+                          <Button
+                            onPress={() => this.props.navigation.push('MyModal', { recipeId: recipe.id })}
+                          >Details</Button>
+                          <Button
+                            onPress={() => alert('Recipe Saved ✅')}
+                          >Save</Button>
+                        </View>
 
+                      </Surface>
+                    )
+                  })}
+                </View>
+              );
+            }}
+          </Query>
+        </View>
         <Button
           mode="contained"
           onPress={() => {
