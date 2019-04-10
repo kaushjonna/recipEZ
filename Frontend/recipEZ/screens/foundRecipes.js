@@ -42,47 +42,48 @@ class FoundRecipesScreen extends Component {
       <ScrollView>
         <Title>Here's what we've found...</Title>
         <View>
-          {console.log('yoo', this.state.ingredients)}
-          <Query navigation={this.props.navigation} query={getRecipes} variables={{ ingredients: ['cucumber', 'pepper', 'broccoli'] }}>
-            {({ loading, error, data }) => {
-              if (loading || this.state.ingredients.length === 0) {
+          {!this.state.ingredients.length ? null : (
+            <Query navigation={this.props.navigation} query={getRecipes} variables={{ ingredients: this.state.ingredients }}>
+              {({ loading, error, data }) => {
+                if (loading || this.state.ingredients.length === 0) {
+                  return (
+                    <View>
+                      <ActivityIndicator></ActivityIndicator>
+                      <Text>Loading...</Text>
+                    </View>);
+                }
+                if (error) return <Text>Error! {error.message}</Text>;
                 return (
-                  <View>
-                    <ActivityIndicator></ActivityIndicator>
-                    <Text>Loading...</Text>
-                  </View>);
-              }
-              if (error) return <Text>Error! {error.message}</Text>;
-              return (
-                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap' }}>
-                  {data.getRecipesByIngredients.map(recipe => {
-                    return (
-                      <Surface style={styles.surface} key={recipe.id}>
-                        <Image
-                          style={{ width: 100, height: 100, margin: 'auto' }}
-                          source={{ uri: recipe.image + "?.jpg" }}
-                        />
-                        <Text style={{ fontWeight: 'bold' }}>{recipe.name}</Text>
-                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly', paddingTop: 10 }} >
-                          <Text style={{ fontSize: 8, paddingEnd: 5 }}>{getStars(recipe.rating)}</Text>
-                          <Text style={{ fontStyle: 'italic', fontSize: 10 }} >{(recipe.totalTime / 60) + ' mins.'}</Text>
-                        </View>
-                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly' }} >
-                          <Button
-                            onPress={() => this.props.navigation.push('MyModal', { recipeId: recipe.id })}
-                          >Details</Button>
-                          <Button
-                            onPress={() => alert('Recipe Saved ✅')}
-                          >Save</Button>
-                        </View>
+                  <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap' }}>
+                    {data.getRecipesByIngredients.map(recipe => {
+                      return (
+                        <Surface style={styles.surface} key={recipe.id}>
+                          <Image
+                            style={{ width: 100, height: 100, margin: 'auto' }}
+                            source={{ uri: recipe.image + "?.jpg" }}
+                          />
+                          <Text style={{ fontWeight: 'bold' }}>{recipe.name}</Text>
+                          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly', paddingTop: 10 }} >
+                            <Text style={{ fontSize: 8, paddingEnd: 5 }}>{getStars(recipe.rating)}</Text>
+                            <Text style={{ fontStyle: 'italic', fontSize: 10 }} >{(recipe.totalTime / 60) + ' mins.'}</Text>
+                          </View>
+                          <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-evenly' }} >
+                            <Button
+                              onPress={() => this.props.navigation.push('MyModal', { recipeId: recipe.id })}
+                            >Details</Button>
+                            <Button
+                              onPress={() => alert('Recipe Saved ✅')}
+                            >Save</Button>
+                          </View>
 
-                      </Surface>
-                    )
-                  })}
-                </View>
-              );
-            }}
-          </Query>
+                        </Surface>
+                      )
+                    })}
+                  </View>
+                );
+              }}
+            </Query>
+          )}
         </View>
         <Button
           mode="contained"
