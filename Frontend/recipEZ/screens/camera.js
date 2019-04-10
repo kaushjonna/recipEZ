@@ -146,7 +146,7 @@ class CameraScreen extends Component {
           style={{ marginBottom: 10 }}
           onPress={() => this.submitToGoogle()
             .then(console.log("yo", this.state.finalOutput))
-            .then(this.props.navigation.push('Detected', { detectedObjects: 1 }))}
+            .then(this.props.navigation.push('Detected', { detectedObjects: ['broccoli', 'tomato', 'garlic', 'spaghetti'] }))}
           title="Analyze!"
         />
 
