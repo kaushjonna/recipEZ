@@ -6,8 +6,8 @@ import { Query } from "react-apollo";
 import { withNavigation, } from "react-navigation";
 
 const getRecipes = gql`
-    {
-        getRecipesByIngredients(ingredients:["pesto","spaghetti","tomato", "parmesan"]){
+      query getRecipesByIngredients($ingredients: [String]){
+        getRecipesByIngredients(ingredients:$ingredients){
             id
             name
             rating
@@ -33,7 +33,7 @@ class QueryResults extends Component {
   };
   render() {
     return (
-      <Query query={getRecipes}>
+      <Query query={getRecipes} variables={{ ingredients: this.props.navigation.state.params.ingredients }}>
         {({ loading, error, data }) => {
           if (loading) {
             return (

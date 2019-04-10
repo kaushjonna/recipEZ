@@ -32,7 +32,7 @@ class RecipeSearchScreen extends Component {
         <Button
           mode="contained"
           onPress={() => {
-            this.props.navigation.push('Found')
+            this.props.navigation.push('Found', { ingredients: this.props.navigation.state.params.detectedObjects })
           }}>Done!</Button>
       </View>
     );
