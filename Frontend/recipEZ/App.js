@@ -31,7 +31,7 @@ import CreationModalScreen from "./screens/creationModal.js"
 
 const client = new ApolloClient({
   link: createHttpLink({
-    uri: "http://192.168.0.13:4000/",
+    uri: "http://192.168.0.15:4000/",
     fetch: fetch
   }),
   cache: new InMemoryCache()
@@ -51,6 +51,22 @@ const RecipeDetailStack = createStackNavigator(
     headerMode: 'none',
   }
 );
+
+const SearchStack = createStackNavigator(
+  {
+    Main: {
+      screen: SearchScreen,
+    },
+    MyModal: {
+      screen: RecipeModalScreen,
+    },
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none',
+  }
+);
+
 
 const CreationStack = createStackNavigator(
   {
@@ -87,7 +103,7 @@ const RootStack = createBottomTabNavigator(
     EZCam: CameraStack,
     Saved: { screen: SavedScreen },
     Settings: { screen: SettingsScreen },
-    Search: { screen: SearchScreen },
+    Search: SearchStack,
   },
   {
     initialRouteName: 'Home',

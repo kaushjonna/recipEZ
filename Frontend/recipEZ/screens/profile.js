@@ -9,6 +9,7 @@ import { ApolloClient } from "apollo-boost";
 import { InMemoryCache } from "apollo-cache-inmemory";
 import { createHttpLink } from "apollo-link-http";
 
+
 const prismaClient = new ApolloClient({
   link: createHttpLink({
     uri: "https://eu1.prisma.sh/nik-malhotra-1a119d/recipez/dev",
