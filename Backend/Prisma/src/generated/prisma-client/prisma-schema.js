@@ -690,7 +690,8 @@ type Query {
 type Saved_Recipe {
   id: ID!
   userId: User
-  recipeLink: String!
+  recipeId: String!
+  recipeName: String!
 }
 
 type Saved_RecipeConnection {
@@ -701,7 +702,8 @@ type Saved_RecipeConnection {
 
 input Saved_RecipeCreateInput {
   userId: UserCreateOneInput
-  recipeLink: String!
+  recipeId: String!
+  recipeName: String!
 }
 
 type Saved_RecipeEdge {
@@ -712,8 +714,10 @@ type Saved_RecipeEdge {
 enum Saved_RecipeOrderByInput {
   id_ASC
   id_DESC
-  recipeLink_ASC
-  recipeLink_DESC
+  recipeId_ASC
+  recipeId_DESC
+  recipeName_ASC
+  recipeName_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -722,7 +726,8 @@ enum Saved_RecipeOrderByInput {
 
 type Saved_RecipePreviousValues {
   id: ID!
-  recipeLink: String!
+  recipeId: String!
+  recipeName: String!
 }
 
 type Saved_RecipeSubscriptionPayload {
@@ -745,11 +750,13 @@ input Saved_RecipeSubscriptionWhereInput {
 
 input Saved_RecipeUpdateInput {
   userId: UserUpdateOneInput
-  recipeLink: String
+  recipeId: String
+  recipeName: String
 }
 
 input Saved_RecipeUpdateManyMutationInput {
-  recipeLink: String
+  recipeId: String
+  recipeName: String
 }
 
 input Saved_RecipeWhereInput {
@@ -768,20 +775,34 @@ input Saved_RecipeWhereInput {
   id_ends_with: ID
   id_not_ends_with: ID
   userId: UserWhereInput
-  recipeLink: String
-  recipeLink_not: String
-  recipeLink_in: [String!]
-  recipeLink_not_in: [String!]
-  recipeLink_lt: String
-  recipeLink_lte: String
-  recipeLink_gt: String
-  recipeLink_gte: String
-  recipeLink_contains: String
-  recipeLink_not_contains: String
-  recipeLink_starts_with: String
-  recipeLink_not_starts_with: String
-  recipeLink_ends_with: String
-  recipeLink_not_ends_with: String
+  recipeId: String
+  recipeId_not: String
+  recipeId_in: [String!]
+  recipeId_not_in: [String!]
+  recipeId_lt: String
+  recipeId_lte: String
+  recipeId_gt: String
+  recipeId_gte: String
+  recipeId_contains: String
+  recipeId_not_contains: String
+  recipeId_starts_with: String
+  recipeId_not_starts_with: String
+  recipeId_ends_with: String
+  recipeId_not_ends_with: String
+  recipeName: String
+  recipeName_not: String
+  recipeName_in: [String!]
+  recipeName_not_in: [String!]
+  recipeName_lt: String
+  recipeName_lte: String
+  recipeName_gt: String
+  recipeName_gte: String
+  recipeName_contains: String
+  recipeName_not_contains: String
+  recipeName_starts_with: String
+  recipeName_not_starts_with: String
+  recipeName_ends_with: String
+  recipeName_not_ends_with: String
   AND: [Saved_RecipeWhereInput!]
   OR: [Saved_RecipeWhereInput!]
   NOT: [Saved_RecipeWhereInput!]

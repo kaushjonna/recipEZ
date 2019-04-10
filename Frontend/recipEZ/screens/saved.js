@@ -4,12 +4,23 @@ import { createStackNavigator, createAppContainer, StackViewTransitionConfigs } 
 import { Title, Button, TextInput, List } from 'react-native-paper'
 import { Query } from "react-apollo";
 import gql from 'graphql-tag';
+import { ApolloClient } from "apollo-boost";
+import { InMemoryCache } from "apollo-cache-inmemory";
+import { createHttpLink } from "apollo-link-http";
 
-const exampleQuery = gql`
+const prismaClient = new ApolloClient({
+  link: createHttpLink({
+    uri: "https://eu1.prisma.sh/nik-malhotra-1a119d/recipez/dev",
+    fetch: fetch
+  }),
+  cache: new InMemoryCache()
+});
+
+const saved_Recipes = gql`
     {
-        recipes{
-            id
-            name
+        saved_Recipes{
+            recipeId
+            recipeName
         }
     }
 `;
@@ -18,16 +29,24 @@ const exampleQuery = gql`
 class ListItemWrapper extends Component {
   render() {
     return (
-      <Query query={exampleQuery}>
+      <Query client={prismaClient} query={saved_Recipes}>
         {({ loading, error, data }) => {
           if (loading) {
             return <Text>Loading...</Text>;
           }
           if (error) return <Text>Error! {error.message}</Text>;
           return (
-            <List.Item
-              title={data.recipes[0].name}
-            />
+            <View>
+              {data.saved_Recipes.map((saved, ind) => {
+                return (
+                  <View key={ind}>
+                    <Text>{saved.recipeName}</Text>
+                    <Button onPress={alert('hey')}>Delete</Button>
+                  </View>
+                )
+              })}
+            </View>
+
           );
         }}
       </Query>

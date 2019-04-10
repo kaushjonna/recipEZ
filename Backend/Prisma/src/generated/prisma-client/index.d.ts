@@ -322,8 +322,10 @@ export type IngredientOrderByInput =
 export type Saved_RecipeOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "recipeLink_ASC"
-  | "recipeLink_DESC"
+  | "recipeId_ASC"
+  | "recipeId_DESC"
+  | "recipeName_ASC"
+  | "recipeName_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "updatedAt_ASC"
@@ -567,7 +569,8 @@ export interface CreationCreateWithoutCommentsInput {
 
 export interface Saved_RecipeUpdateInput {
   userId?: UserUpdateOneInput;
-  recipeLink?: String;
+  recipeId?: String;
+  recipeName?: String;
 }
 
 export interface UserCreateOneWithoutCreationsInput {
@@ -781,7 +784,8 @@ export interface CommentUpdateWithWhereUniqueWithoutCreationInput {
 }
 
 export interface Saved_RecipeUpdateManyMutationInput {
-  recipeLink?: String;
+  recipeId?: String;
+  recipeName?: String;
 }
 
 export interface CommentUpdateWithoutCreationDataInput {
@@ -933,7 +937,8 @@ export interface CreationUpsertWithWhereUniqueWithoutUserIdInput {
 
 export interface Saved_RecipeCreateInput {
   userId?: UserCreateOneInput;
-  recipeLink: String;
+  recipeId: String;
+  recipeName: String;
 }
 
 export interface UserUpsertNestedInput {
@@ -1030,20 +1035,34 @@ export interface Saved_RecipeWhereInput {
   id_ends_with?: ID_Input;
   id_not_ends_with?: ID_Input;
   userId?: UserWhereInput;
-  recipeLink?: String;
-  recipeLink_not?: String;
-  recipeLink_in?: String[] | String;
-  recipeLink_not_in?: String[] | String;
-  recipeLink_lt?: String;
-  recipeLink_lte?: String;
-  recipeLink_gt?: String;
-  recipeLink_gte?: String;
-  recipeLink_contains?: String;
-  recipeLink_not_contains?: String;
-  recipeLink_starts_with?: String;
-  recipeLink_not_starts_with?: String;
-  recipeLink_ends_with?: String;
-  recipeLink_not_ends_with?: String;
+  recipeId?: String;
+  recipeId_not?: String;
+  recipeId_in?: String[] | String;
+  recipeId_not_in?: String[] | String;
+  recipeId_lt?: String;
+  recipeId_lte?: String;
+  recipeId_gt?: String;
+  recipeId_gte?: String;
+  recipeId_contains?: String;
+  recipeId_not_contains?: String;
+  recipeId_starts_with?: String;
+  recipeId_not_starts_with?: String;
+  recipeId_ends_with?: String;
+  recipeId_not_ends_with?: String;
+  recipeName?: String;
+  recipeName_not?: String;
+  recipeName_in?: String[] | String;
+  recipeName_not_in?: String[] | String;
+  recipeName_lt?: String;
+  recipeName_lte?: String;
+  recipeName_gt?: String;
+  recipeName_gte?: String;
+  recipeName_contains?: String;
+  recipeName_not_contains?: String;
+  recipeName_starts_with?: String;
+  recipeName_not_starts_with?: String;
+  recipeName_ends_with?: String;
+  recipeName_not_ends_with?: String;
   AND?: Saved_RecipeWhereInput[] | Saved_RecipeWhereInput;
   OR?: Saved_RecipeWhereInput[] | Saved_RecipeWhereInput;
   NOT?: Saved_RecipeWhereInput[] | Saved_RecipeWhereInput;
@@ -1391,7 +1410,8 @@ export interface CommentEdgeSubscription
 
 export interface Saved_Recipe {
   id: ID_Output;
-  recipeLink: String;
+  recipeId: String;
+  recipeName: String;
 }
 
 export interface Saved_RecipePromise
@@ -1399,7 +1419,8 @@ export interface Saved_RecipePromise
     Fragmentable {
   id: () => Promise<ID_Output>;
   userId: <T = UserPromise>() => T;
-  recipeLink: () => Promise<String>;
+  recipeId: () => Promise<String>;
+  recipeName: () => Promise<String>;
 }
 
 export interface Saved_RecipeSubscription
@@ -1407,7 +1428,8 @@ export interface Saved_RecipeSubscription
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
   userId: <T = UserSubscription>() => T;
-  recipeLink: () => Promise<AsyncIterator<String>>;
+  recipeId: () => Promise<AsyncIterator<String>>;
+  recipeName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface CreationSubscriptionPayload {
@@ -1514,21 +1536,24 @@ export interface AggregateCreationSubscription
 
 export interface Saved_RecipePreviousValues {
   id: ID_Output;
-  recipeLink: String;
+  recipeId: String;
+  recipeName: String;
 }
 
 export interface Saved_RecipePreviousValuesPromise
   extends Promise<Saved_RecipePreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  recipeLink: () => Promise<String>;
+  recipeId: () => Promise<String>;
+  recipeName: () => Promise<String>;
 }
 
 export interface Saved_RecipePreviousValuesSubscription
   extends Promise<AsyncIterator<Saved_RecipePreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  recipeLink: () => Promise<AsyncIterator<String>>;
+  recipeId: () => Promise<AsyncIterator<String>>;
+  recipeName: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserEdge {

@@ -46,7 +46,8 @@ type Ingredient {
 type Saved_Recipe {
   id: ID! 
   userId: User
-  recipeLink: String!
+  recipeId: String!
+  recipeName: String!
 }
 
 type Subscription{
