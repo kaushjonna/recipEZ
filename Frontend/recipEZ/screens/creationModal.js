@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, AppRegistry, ScrollView, View, Image, Button, Text } from 'react-native';
+import { StyleSheet, AppRegistry, ScrollView, View, Image, Text } from 'react-native';
 import { createStackNavigator, createAppContainer, StackViewTransitionConfigs } from "react-navigation";
-import { TextInput, Title, ActivityIndicator, Surface, Divider } from 'react-native-paper'
+import { TextInput, Title, ActivityIndicator, Surface, Divider, Subheading, Button } from 'react-native-paper'
 import { withNavigation } from 'react-navigation';
 import gql from 'graphql-tag';
 import { Query } from "react-apollo";
@@ -51,16 +51,23 @@ class ModalScreen extends React.Component {
             }
             if (error) return <Text> Error: {error.message}</Text>;
             return (
-              <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+              <View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', paddingTop: 10 }}>
                 <Surface style={styles.titleSurface}>
                   <Image style={{ height: 240, width: 288, alignSelf: "center" }} source={{ uri: data.creation.photo }} />
                   <Title style={{ fontSize: 30, fontWeight: 'bold', marginTop: 5, alignSelf: 'center' }}>{data.creation.name}</Title>
                   <Divider />
                   <View>
-                    <Title style={{ alignSelf: 'center' }}>Comments</Title>
+                    <Title style={{ alignSelf: 'center', paddingTop: 5, paddingBottom: 5 }}>Comments</Title>
                     {data.creation.comments.map((comment, ind) => {
                       return (
-                        <Text key={ind}>- {comment.userId.firstName} {comment.userId.lastName}: {comment.text}</Text>
+                        <View key={ind}>
+                          <View style={{ padding: 20 }}>
+                            <Subheading style={{ fontWeight: 'bold' }}>{comment.userId.firstName} {comment.userId.lastName} on April 1st, 2019</Subheading>
+                            <Text>{comment.text}</Text>
+                          </View>
+                          <Divider />
+                        </View>
+
                       )
                     })}
                   </View>
@@ -72,13 +79,9 @@ class ModalScreen extends React.Component {
         </Query>
         <Text>{}</Text>
         <Button
-          onPress={() => alert('Recipe Saved ✅')}
-          title="Save Recipe"
-        />
-        <Button
+          mode="contained"
           onPress={() => this.props.navigation.goBack()}
-          title="Dismiss"
-        />
+        >Back</Button>
       </ScrollView>
     );
   }
@@ -90,7 +93,7 @@ const styles = StyleSheet.create({
   titleSurface: {
     padding: 8,
     margin: 8,
-    height: '100%',
+    height: '95%',
     width: '95%',
     elevation: 9,
 
