@@ -144,9 +144,7 @@ class CameraScreen extends Component {
       >
         <Button
           style={{ marginBottom: 10 }}
-          onPress={() => this.submitToGoogle()
-            .then(console.log("yo", this.state.finalOutput))
-            .then(this.props.navigation.push('Detected', { detectedObjects: ['broccoli', 'tomato', 'garlic', 'spaghetti'] }))}
+          onPress={() => this.submitToGoogle()}
           title="Analyze!"
         />
 
@@ -292,14 +290,13 @@ class CameraScreen extends Component {
         finalOutput: temp
       });
 
-      console.log(this.state.finalOutput);
 
       if (!this.state.uploading) {
-        console.log('hit');
+      this.props.navigation.push('Detected', { detectedObjects: this.state.finalOutput });
         return;
       }
     } catch (error) {
-      console.log(error);
+      console.log('');
     }
     return;
   };
