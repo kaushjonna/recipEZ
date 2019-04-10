@@ -1,9 +1,8 @@
 
 import { withNavigation, } from "react-navigation";
+import { Title, Button, ActivityIndicator } from 'react-native-paper'
 import React, { Component } from 'react';
 import {
-  ActivityIndicator,
-  Button,
   Clipboard,
   FlatList,
   Image,
@@ -43,22 +42,26 @@ class CameraScreen extends Component {
     return (
       <View style={styles.container}>
         <ScrollView
-          style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
           <View style={styles.getStartedContainer}>
             {image ? null : (
-              <Text style={styles.getStartedText}>CAMERA</Text>
+              <View>
+                <Title style={{ alignSelf: 'center', marginBottom: 5 }}>Camera</Title>
+                <Image source={require('../assets/frameThing.png')} style={{ height: 256, width: 256, alignSelf: 'center' }} />
+                <Title style={{ fontSize: 30, fontWeight: 'bold', textAlign: 'center', justifyContent: 'center', marginTop: 20 }}>Ensure that all your ingredients are evenly spaced out!</Title>
+              </View>
             )}
           </View>
-
           <View style={styles.helpContainer}>
             <Button
+              mode="contained"
               onPress={this._pickImage}
-              title="Pick an image from camera roll"
-            />
+              style={{ marginTop: 5 }}
 
-            <Button onPress={this._takePhoto} title="Take a photo" />
+            >Camera Roll</Button>
+
+            <Button style={{ marginTop: 10 }} mode="contained" onPress={this._takePhoto}>Take a Photo</Button>
             {this.state.googleResponse && (
               <FlatList
                 data={this.state.googleResponse.responses[0].labelAnnotations}
@@ -142,12 +145,6 @@ class CameraScreen extends Component {
           elevation: 2
         }}
       >
-        <Button
-          style={{ marginBottom: 10 }}
-          onPress={() => this.submitToGoogle()}
-          title="Analyze!"
-        />
-
         <View
           style={{
             borderTopRightRadius: 3,
@@ -159,7 +156,15 @@ class CameraScreen extends Component {
             overflow: 'hidden'
           }}
         >
+          <Title style={{ textAlign: 'center' }}>Use the buttons above to retake your photo.</Title>
           <Image source={{ uri: image }} style={{ width: 250, height: 250 }} />
+          <Button
+            mode='contained'
+            style={{ marginBottom: 10 }}
+            onPress={() => this.submitToGoogle()}
+          > Use Photo</Button>
+
+
         </View>
         <Text
           onPress={this._copyToClipboard}
@@ -359,7 +364,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingBottom: 10
+    paddingBottom: 10,
+    justifyContent: 'space-evenly',
+    alignContent: 'center'
   },
   developmentModeText: {
     marginBottom: 20,
@@ -369,7 +376,12 @@ const styles = StyleSheet.create({
     textAlign: 'center'
   },
   contentContainer: {
-    paddingTop: 30
+    paddingTop: 30,
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingBottom: 10,
+    justifyContent: 'space-evenly',
+    alignContent: 'center'
   },
 
   getStartedContainer: {

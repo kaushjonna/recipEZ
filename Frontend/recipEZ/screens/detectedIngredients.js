@@ -4,7 +4,7 @@ import { createStackNavigator, createAppContainer, StackViewTransitionConfigs, w
 import { Searchbar, Title, Button, Divider, Subheading, ActivityIndicator } from 'react-native-paper'
 
 const filterObject = function (results) {
-  const filterWords = ['Fruit', 'Food', 'Tableware', 'Vegetable', 'Light']
+  const filterWords = ['Fruit', 'Food', 'Tableware', 'Vegetable', 'Light', 'Kitchenware', 'Drink']
   const foodArray = [];
   results.forEach((result, ind) => {
     if ((filterWords.indexOf(result.name) > -1) || result.score < 0.5) {
@@ -32,28 +32,33 @@ class RecipeSearchScreen extends Component {
   };
   async componentDidMount() {
     await this.props.navigation.state.params.detectedObjects;
-    this.setState({ ingredients: this.props.navigation.state.params.detectedObjects })
+    this.setState({ ingredients: filterObject(this.props.navigation.state.params.detectedObjects) })
   }
   render() {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <ActivityIndicator size='large' animating={true}></ActivityIndicator>
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'space-evenly' }}>
         <Title>We found these ingredients:</Title>
-        <Text>- Parmesan</Text>
-        <Text>- Pesto</Text>
-        <Text>- Tomato</Text>
-        <Text>- Spaghetti</Text>
-        <Text>{console.log(this.state.ingredients)}</Text>
-        <Subheading>Something missing? Add ingredients below:</Subheading>
+        {this.state.ingredients.map((ingredient, ind) => {
+          return (
+            <View key={ind}>
+              <Text>{ingredient}</Text>
+            </View>
+          )
+        })}
         {/* <Searchbar
           placeholder="Search"
           onChangeText={query => { this.setState({ firstQuery: query }); }}
           value={firstQuery}
         /> */}
         <Divider />
-        <Button
-          mode="contained"
-          onPress={() => { this.props.navigation.push('Found', { ingredients: filterObject(this.state.ingredients) }) }}> </Button>
+        <View style={{ width: '35%' }}>
+          <Button
+            mode="contained"
+            onPress={() => { this.props.navigation.push('Found', { ingredients: this.state.ingredients }) }}>Done</Button>
+          <Button
+            mode="contained" style={{ marginTop: 5 }}
+            onPress={() => { this.props.navigation.popToTop() }}>Retake</Button>
+        </View>
 
 
       </View>

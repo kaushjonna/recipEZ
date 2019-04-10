@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, AppRegistry, ScrollView, View, Image, Text } from 'react-native';
-import { createStackNavigator, createAppContainer, StackViewTransitionConfigs, withNavigation } from "react-navigation";
+import { createStackNavigator, createAppContainer, StackViewTransitionConfigs, withNavigation, } from "react-navigation";
 import { Searchbar, Title, ActivityIndicator, List, Surface, Button, } from 'react-native-paper'
 import gql from 'graphql-tag';
 import { Query } from "react-apollo";
@@ -72,7 +72,7 @@ class RecipeSearchScreen extends Component {
   render() {
     const { firstQuery } = this.setState;
     return (
-      <View>
+      <ScrollView>
         <Title>Recipe Search Screen</Title>
         <Searchbar
           placeholder="Search"
@@ -80,10 +80,10 @@ class RecipeSearchScreen extends Component {
           value={firstQuery}
           onIconPress={() => { this.setState({ showResults: true }) }}
         />
-        <View style={{ height: '90%', width: '90%' }}>
+        <View style={{ height: '90%', width: '100%' }}>
           {this.searchResults()}
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }

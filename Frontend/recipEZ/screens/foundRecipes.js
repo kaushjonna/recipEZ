@@ -6,6 +6,8 @@ import { Query } from "react-apollo";
 import { withNavigation, } from "react-navigation";
 
 
+
+
 const getRecipes = gql`
       query getRecipesByIngredients($ingredients: [String]){
         getRecipesByIngredients(ingredients:$ingredients){
@@ -38,12 +40,12 @@ class FoundRecipesScreen extends Component {
   render() {
     return (
       <ScrollView>
-        {console.log(getIngredients())}
         <Title>Here's what we've found...</Title>
         <View>
-          <Query navigation={this.props.navigation} query={getRecipes} variables={{ ingredients: this.state.ingredients }}>
+          {console.log('yoo', this.state.ingredients)}
+          <Query navigation={this.props.navigation} query={getRecipes} variables={{ ingredients: ['cucumber', 'pepper', 'broccoli'] }}>
             {({ loading, error, data }) => {
-              if (loading) {
+              if (loading || this.state.ingredients.length === 0) {
                 return (
                   <View>
                     <ActivityIndicator></ActivityIndicator>
