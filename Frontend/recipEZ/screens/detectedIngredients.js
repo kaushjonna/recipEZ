@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, AppRegistry, ScrollView, View, Image, Text } from 'react-native';
-import { createStackNavigator, createAppContainer, StackViewTransitionConfigs } from "react-navigation";
+import { createStackNavigator, createAppContainer, StackViewTransitionConfigs, withNavigation } from "react-navigation";
 import { Searchbar, Title, Button, Divider, Subheading, ActivityIndicator } from 'react-native-paper'
 
 // will need async for this, awaiting the array data to arrive and to display on the app (OR component mount)
@@ -24,6 +24,8 @@ class RecipeSearchScreen extends Component {
         <Text>- Pesto</Text>
         <Text>- Tomato</Text>
         <Text>- Spaghetti</Text>
+        <Text>{console.log(this.props.navigation.state.params)}</Text>
+        <Text>{JSON.stringify(this.props.navigation.state.params.detectedObjects)}</Text>
         <Subheading>Something missing? Add ingredients below:</Subheading>
         <Searchbar
           placeholder="Search"
@@ -41,4 +43,4 @@ class RecipeSearchScreen extends Component {
   }
 }
 
-export default RecipeSearchScreen;
+export default withNavigation(RecipeSearchScreen);
