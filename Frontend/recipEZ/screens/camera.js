@@ -20,7 +20,7 @@ import firebase from '../config/firebase';
 
 class CameraScreen extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       image: null,
@@ -80,26 +80,26 @@ class CameraScreen extends Component {
 
     let image = this.state.image;
     Image.getSize(image, (width, height) => {
-      this.setState({dimensions: {height: height, width: width}})
+      this.setState({ dimensions: { height: height, width: width } })
     });
     //
     this.state.croppedImages.forEach(async croppedImage => {
       let tempStore = this.state.finalCropImages;
-      let resulting = await ImageManipulator.manipulateAsync(image, [{crop:croppedImage}], {format: 'jpeg'});
+      let resulting = await ImageManipulator.manipulateAsync(image, [{ crop: croppedImage }], { format: 'jpeg' });
       console.log(resulting, '....resulting');
       tempStore.push(resulting);
-      this.setState({finalCropImages: tempStore})
+      this.setState({ finalCropImages: tempStore })
     });
 
-    const pushImagesUp = async () => {return await uploadImageAsync(this.state.finalCropImages[0].uri)};
+    const pushImagesUp = async () => { return await uploadImageAsync(this.state.finalCropImages[0].uri) };
 
-    if(this.state.finalCropImages.length > 0) {
+    if (this.state.finalCropImages.length > 0) {
       pushImagesUp().then(console.log);
     }
   }
 
   organize = array => {
-    return array.map(function(item, i) {
+    return array.map(function (item, i) {
       return (
         <View key={i}>
           <Text>{item}</Text>
@@ -145,8 +145,8 @@ class CameraScreen extends Component {
         <Button
           style={{ marginBottom: 10 }}
           onPress={() => this.submitToGoogle()
-            .then(console.log(this.state.finalOutput))
-            .then(this.props.navigation.push('Detected', {detectedObjects: this.state.finalOutput}))}
+            .then(console.log("yo", this.state.finalOutput))
+            .then(this.props.navigation.push('Detected', { detectedObjects: 1 }))}
           title="Analyze!"
         />
 
@@ -245,7 +245,7 @@ class CameraScreen extends Component {
         requests: [
           {
             features: [
-              {type: 'OBJECT_LOCALIZATION', maxResults: 10},
+              { type: 'OBJECT_LOCALIZATION', maxResults: 10 },
               // { type: 'LABEL_DETECTION', maxResults: 10 },
               // { type: 'LANDMARK_DETECTION', maxResults: 5 },
               // { type: 'FACE_DETECTION', maxResults: 5 },
@@ -282,7 +282,7 @@ class CameraScreen extends Component {
       const res = responseJson.responses[0].localizedObjectAnnotations;
       let temp = [];
       res.forEach(item => {
-        temp.push({name: item.name, score: item.score});
+        temp.push({ name: item.name, score: item.score });
       });
 
 
@@ -294,7 +294,7 @@ class CameraScreen extends Component {
 
       console.log(this.state.finalOutput);
 
-      if(!this.state.uploading){
+      if (!this.state.uploading) {
         console.log('hit');
         return;
       }
@@ -304,7 +304,7 @@ class CameraScreen extends Component {
     return;
   };
 
-  cropImage(responseJson){
+  cropImage(responseJson) {
     const dimensions = responseJson.responses[0].cropHintsAnnotation.cropHints[0].boundingPoly.vertices;
     // const width = dimensions[1].x;
     // const height = dimensions[3].y;
@@ -320,15 +320,15 @@ class CameraScreen extends Component {
       const top = vertexTL.y;
 
       reducedObjectArray.push({
-        originX: left*this.state.dimensions.width,
-        originY: top*this.state.dimensions.height,
-        height: height*this.state.dimensions.height,
-        width: width*this.state.dimensions.width
+        originX: left * this.state.dimensions.width,
+        originY: top * this.state.dimensions.height,
+        height: height * this.state.dimensions.height,
+        width: width * this.state.dimensions.width
       })
     });
 
-    console.log('ArrayObj: ',reducedObjectArray);
-    this.setState({croppedImages: reducedObjectArray});
+    console.log('ArrayObj: ', reducedObjectArray);
+    this.setState({ croppedImages: reducedObjectArray });
     return reducedObjectArray;
   }
 }
@@ -338,10 +338,10 @@ class CameraScreen extends Component {
 async function uploadImageAsync(uri) {
   const blob = await new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
-    xhr.onload = function() {
+    xhr.onload = function () {
       resolve(xhr.response);
     };
-    xhr.onerror = function(e) {
+    xhr.onerror = function (e) {
       console.log(e);
       reject(new TypeError('Network request failed'));
     };

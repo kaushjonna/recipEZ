@@ -11,11 +11,7 @@ class RecipeSearchScreen extends Component {
     title: 'Detected Ingredients',
 
   };
-  state = {
-    firstQuery: ''
-  }
   render() {
-    const { firstQuery } = this.setState;
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
         <ActivityIndicator size='large' animating={true}></ActivityIndicator>
@@ -27,11 +23,11 @@ class RecipeSearchScreen extends Component {
         <Text>{console.log(this.props.navigation.state.params)}</Text>
         <Text>{JSON.stringify(this.props.navigation.state.params.detectedObjects)}</Text>
         <Subheading>Something missing? Add ingredients below:</Subheading>
-        <Searchbar
+        {/* <Searchbar
           placeholder="Search"
           onChangeText={query => { this.setState({ firstQuery: query }); }}
           value={firstQuery}
-        />
+        /> */}
         <Divider />
         <Button
           mode="contained"
