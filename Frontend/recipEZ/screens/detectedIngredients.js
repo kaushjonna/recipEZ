@@ -2,17 +2,33 @@ import React, { Component } from 'react';
 import { StyleSheet, AppRegistry, ScrollView, View, Image, Text } from 'react-native';
 import { createStackNavigator, createAppContainer, StackViewTransitionConfigs, withNavigation } from "react-navigation";
 import { Searchbar, Title, Button, Divider, Subheading, ActivityIndicator, List } from 'react-native-paper'
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag'
+
+const getRecipes = gql`
+  query getRecipesByIngredients($ingredients: [String]){
+    getRecipesByIngredients(ingredients:$ingredients){
+        id
+        name
+        rating
+        image
+        totalTime
+    }
+  }
+`
 
 const filterObject = function (results) {
   const filterWords = ['Fruit', 'Food', 'Tableware', 'Vegetable', 'Light', 'Kitchenware', 'Drink', 'Baked goods', 'Drink']
   const foodArray = [];
-  results.forEach((result, ind) => {
-    if ((filterWords.indexOf(result.name) > -1) || result.score < 0.5) {
-      results.splice(ind, 1);
-    } else {
-      foodArray.push(result.name);
-    }
-  });
+  // results.forEach((result, ind) => {
+  //   if ((filterWords.indexOf(result.name) > -1) || result.score < 0.5) {
+  //     results.splice(ind, 1);
+  //   } else {
+  //     foodArray.push(result.name);
+  //   }
+  // });
+
+
 
   return foodArray;
 }
@@ -32,11 +48,24 @@ class RecipeSearchScreen extends Component {
   };
   async componentDidMount() {
     await this.props.navigation.state.params.detectedObjects;
-    this.setState({ ingredients: filterObject(this.props.navigation.state.params.detectedObjects) })
+    const newArray = await this.props.navigation.state.params.detectedObjects.map(object => {
+      return `${object.name}`
+    });
+    let foodArray = [];
+
+    await newArray.forEach(item => {
+      if (item === 'Fruit' || item === 'Food' || item === 'Tableware' || item === 'Vegetable' || item === 'Light' || item === 'Kitchenware' || item === 'Baked goods' || item === 'Drink') {
+        return;
+      } else {
+        foodArray.push(item.toLowerCase());
+      }
+    });
+    await this.setState({ ingredients: foodArray })
   }
+
   render() {
     return (
-      <View>
+      <ScrollView>
         <Title style={{ textAlign: 'center' }}>We found these ingredients:</Title>
         {this.state.ingredients.map((ingredient, ind) => {
           return (
@@ -54,14 +83,35 @@ class RecipeSearchScreen extends Component {
         <View>
           <Button
             mode="contained"
-            onPress={() => { this.props.navigation.push('Found', { ingredients: this.state.ingredients }) }}>Done</Button>
+            onPress={() => {
+              this.props.navigation.push('Found', { ingredients: this.state.ingredients })
+              console.log(this.state.ingredients);
+            }}>Done</Button>
           <Button
             mode="contained" style={{ marginTop: 5 }}
             onPress={() => { this.props.navigation.popToTop() }}>Retake</Button>
         </View>
 
+        {/* <Query query={getRecipes} variables={{ ingredients: this.state.ingredients }}>
+          {({ refetch, loading, error, data }) => {
+            if (loading) {
+              return <Text>Loading</Text>
+            }
 
-      </View>
+            if (error) {
+              return <Text>{error}</Text>
+            }
+
+            //console.log('inside ', data);
+
+            return (
+              <Text>{JSON.stringify(data)}</Text>
+            )
+          }}
+        </Query> */}
+
+
+      </ScrollView>
     );
   }
 }

@@ -71,9 +71,9 @@ class RecipeAPI extends RESTDataSource {
   }
 
   async getRecipeByIngredientList(ingredientList) {
+
     let yummlyQuery = '';
-
-
+    console.log(ingredientList);
     ingredientList.ingredients.forEach(ingredient => {
       yummlyQuery += this.buildQuery(ingredient);
     });
