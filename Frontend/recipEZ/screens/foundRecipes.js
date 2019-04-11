@@ -43,7 +43,7 @@ class FoundRecipesScreen extends Component {
         <Title>Here's what we've found...</Title>
         <View>
           {!this.state.ingredients.length ? null : (
-            <Query navigation={this.props.navigation} query={getRecipes} variables={{ ingredients: this.state.ingredients }}>
+            <Query navigation={this.props.navigation} query={getRecipes} variables={{ ingredients: ['apple', 'banana'] }}>
               {({ loading, error, data }) => {
                 if (loading || this.state.ingredients.length === 0) {
                   return (
