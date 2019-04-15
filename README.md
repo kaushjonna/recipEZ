@@ -5,12 +5,12 @@ RecipEZ
 ### Application
 The purpose of this application is to recognize common food items and return ingredients that would then be fed to an API allowing for recommendations of recipes to be made.
 
-### Dependancies
+### Dependencies
 ##### Note: You must install Android SDK or Xcode to be able to build on emulators. Alternatively, you can run it on your smartphone while on the same network.
 
 - React Native
 - Expo
 - GraphQL
 
-All other required dependancies are not global and will be included in the respective `Package.JSON` files
+All other required dependencies are not global and will be included in the respective `Package.JSON` files
 
